@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">amusic_app</string>
+    <string name="facebook_app_id">56430427733373229</string>
+    <string name="fb_login_protocol_scheme">fb56430427733373229</string>
+    <string name="facebook_client_token">9fcae9d026a02fcd5a41333c69c9786b34</string>
+
+
+</resources>
