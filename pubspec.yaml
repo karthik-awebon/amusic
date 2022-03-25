@@ -41,6 +41,9 @@ dependencies:
   shared_preferences: ^2.0.13
   flushbar: ^1.10.4
   basic_utils: ^4.2.0
+  carousel_slider:
+  custom_navigation_bar:
+  
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +74,8 @@ flutter:
     - lib/img/0-AMusic-app-icon.png
     - lib/img/back3img.jpg
     - lib/img/backimg.jpg
+    - lib/img/back4img.jpg
+    - lib/img/back.jpeg
    #assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

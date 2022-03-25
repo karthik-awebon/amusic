@@ -54,10 +54,10 @@ android {
 
     signingConfigs {
         debug {
-            keyAlias 'key0'
-            keyPassword 'Leo@0837'
-            storeFile file('keystore.jks')
-            storePassword 'Leo@0837'
+            // keyAlias 'key0'
+            // keyPassword 'Leo@0837'
+            // storeFile file('keystore.jks')
+            // storePassword 'Leo@0837'
         }
     }
 

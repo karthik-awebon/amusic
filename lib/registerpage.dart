@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:amusic_app/loginpage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 
 class   Registerpage extends StatefulWidget{
   @override
@@ -174,14 +176,14 @@ class RegisterpageState extends State<Registerpage>{
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30) ,
       width: double.infinity,
-      child: OutlineButton(
+      child: FlatButton(
         padding: EdgeInsets.all(15),
         shape: StadiumBorder(),
-        highlightedBorderColor: Colors.white,
-        borderSide: BorderSide(
-            width: 2,
-            color: Colors.white
-        ),
+        // highlightedBorderColor: Colors.white,
+        // borderSide: BorderSide(
+        //     width: 2,
+        //     color: Colors.white
+        // ),
         onPressed: () {postData();
 
           },

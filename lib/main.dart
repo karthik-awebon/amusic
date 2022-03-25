@@ -1,3 +1,4 @@
+import 'package:amusic_app/AudioPlayerActivity.dart';
 import 'package:amusic_app/loginpage.dart';
 import 'package:amusic_app/registerpage.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: AudioPlayerActivity(token: "",),
+       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -52,10 +54,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-Widget buildloginBtn(){
+  Widget buildloginBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 30) ,
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
       width: double.infinity,
       // decoration: BoxDecoration(
       //   color: Colors.grey.shade300,
@@ -77,77 +78,72 @@ Widget buildloginBtn(){
       //   //
       //   // ]
       // ),
-      child: OutlineButton(
+      child: FlatButton(
         padding: EdgeInsets.all(15),
         shape: StadiumBorder(),
-        highlightedBorderColor: Colors.white,
-        borderSide: BorderSide(
-            width: 2,
-            color: Colors.white
-        ),
-        onPressed: () {  Navigator.push(context, MaterialPageRoute(builder: (context) => Loginpage()));},
-        textColor: Color.alphaBlend(Colors.white, Colors.black),
-        child: Text('LOGIN',
-          style: TextStyle(
-            color: Color(0xFFFFFFFF),
-                fontSize: 18,
-            fontWeight: FontWeight.bold
-          ),
-
-        ),
-
-      ),
-    );
-}
-  Widget buildSingupBtn(){
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 30) ,
-      width: double.infinity,
-      child: OutlineButton(
-        padding: EdgeInsets.all(15),
-        shape: StadiumBorder(),
-        highlightedBorderColor: Colors.white,
-        borderSide: BorderSide(
-            width: 2,
-            color: Colors.white
-        ),
+        // highlightedBorderColor: Colors.white,
+        // borderSide: BorderSide(
+        //     width: 2,
+        //     color: Colors.white
+        // ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Registerpage()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Loginpage()));
         },
         textColor: Color.alphaBlend(Colors.white, Colors.black),
-        child: Text('REGISTER',
+        child: Text(
+          'LOGIN',
           style: TextStyle(
               color: Color(0xFFFFFFFF),
               fontSize: 18,
-              fontWeight: FontWeight.bold
-          ),
-
+              fontWeight: FontWeight.bold),
         ),
-
       ),
     );
   }
 
-Widget buildlogo() => Card(
-  child: Stack(
-    children: [
-      Container(
-        height: 100,
-        width: 100,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("lib/img/0-AMusic-app-icon.png"),
-                fit: BoxFit.cover
-            )
-
+  Widget buildSingupBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+      width: double.infinity,
+      child: FlatButton(
+        padding: EdgeInsets.all(15),
+        shape: StadiumBorder(),
+        // highlightedBorderColor: Colors.white,
+        // borderSide: BorderSide(
+        //     width: 2,
+        //     color: Colors.white
+        // ),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Registerpage()));
+        },
+        textColor: Color.alphaBlend(Colors.white, Colors.black),
+        child: Text(
+          'REGISTER',
+          style: TextStyle(
+              color: Color(0xFFFFFFFF),
+              fontSize: 18,
+              fontWeight: FontWeight.bold),
         ),
-      )
-    ],
-  ),
-);
+      ),
+    );
+  }
 
-
-
+  Widget buildlogo() => Card(
+        child: Stack(
+          children: [
+            Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("lib/img/0-AMusic-app-icon.png"),
+                      fit: BoxFit.cover)),
+            )
+          ],
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -158,27 +154,20 @@ Widget buildlogo() => Card(
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-
-      body:
-        AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-            child: Stack(
-              children: <Widget>[
-                Container(
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          child: Stack(
+            children: <Widget>[
+              Container(
                   height: double.maxFinite,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("lib/img/back2img.jpg"),
-                          fit: BoxFit.cover
-                      )
-
-                  ),
-
+                          fit: BoxFit.cover)),
                   child: SingleChildScrollView(
-                    child:  Column(
-
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(height: 50),
@@ -189,15 +178,11 @@ Widget buildlogo() => Card(
                         buildSingupBtn()
                       ],
                     ),
-                  )
-
-                )
-              ],
-            ),
+                  ))
+            ],
           ),
         ),
-
-
+      ),
 
       // This trailing comma makes auto-formatting nicer for build methods.
     );
