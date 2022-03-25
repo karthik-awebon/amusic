@@ -745,7 +745,7 @@ class _HomeActivityState extends State<HomeActivity> {
                 image: AssetImage("lib/img/backimg.jpg"),
                 fit: BoxFit.fill,
               )),
-              child: Text('Drawer Header'),
+              child: Text(''),
             ),
             ListTile(
               leading: Icon(
