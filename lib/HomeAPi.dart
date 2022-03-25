@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-class AudioPlayerApi {
+class HomeApi {
   Future getBannerList() async {
     http.Response response = await http.get(Uri.parse(
         "http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/banner/list?page=1&number_per_page=10"));

@@ -1,4 +1,4 @@
-import 'package:amusic_app/AudioPlayerActivity.dart';
+import 'package:amusic_app/HomeActivity.dart';
 import 'package:amusic_app/loginpage.dart';
 import 'package:amusic_app/registerpage.dart';
 import 'package:flutter/material.dart';

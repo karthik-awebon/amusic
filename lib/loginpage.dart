@@ -1,5 +1,5 @@
 //import 'package:amusic_app/audio/AudioPlayerActivity.dart';
-import 'package:amusic_app/AudioPlayerActivity.dart';
+import 'package:amusic_app/HomeActivity.dart';
 import 'package:amusic_app/main.dart';
 import 'package:amusic_app/registerpage.dart';
 import 'package:flutter/material.dart';
@@ -391,14 +391,15 @@ class LoginpageState extends State<Loginpage> {
         print("Login Response ${response.body}");
         print(x);
         print("jenish token ${x['data']['token']}");
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("SUCCESSFUL")));
+
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => AudioPlayerActivity(
+                builder: (context) => HomeActivity(
                       token: x['data']['token'],
                     )));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("SUCCESSFUL")));
       } else {
         print(response.body);
         ScaffoldMessenger.of(context).showSnackBar(

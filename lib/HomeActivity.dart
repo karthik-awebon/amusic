@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:amusic_app/AudioApi.dart';
+import 'package:amusic_app/HomeAPi.dart';
 import 'package:amusic_app/loginpage.dart';
 import 'package:amusic_app/registerpage.dart';
 import 'package:flutter/material.dart';
@@ -9,16 +9,16 @@ import 'package:flutter/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 
-class AudioPlayerActivity extends StatefulWidget {
-  const AudioPlayerActivity({Key? key, required this.token}) : super(key: key);
+class HomeActivity extends StatefulWidget {
+  const HomeActivity({Key? key, required this.token}) : super(key: key);
 
   final String token;
   @override
-  State<AudioPlayerActivity> createState() => _AudioPlayerActivityState();
+  State<HomeActivity> createState() => _HomeActivityState();
 }
 
-class _AudioPlayerActivityState extends State<AudioPlayerActivity> {
-  AudioPlayerApi audioPlayerApi = AudioPlayerApi();
+class _HomeActivityState extends State<HomeActivity> {
+  HomeApi homeapi = HomeApi();
   final List<String> imgList = [
     'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
     'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
@@ -45,7 +45,7 @@ class _AudioPlayerActivityState extends State<AudioPlayerActivity> {
         leading: InkWell(
           onTap: () {
             print("logout token ${widget.token}");
-            audioPlayerApi.LogOut(widget.token).then((value) {
+            homeapi.LogOut(widget.token).then((value) {
               if (value == 200 || value == 201) {
                 Navigator.pushAndRemoveUntil(
                     context,
@@ -93,7 +93,7 @@ class _AudioPlayerActivityState extends State<AudioPlayerActivity> {
                 child: Column(
                   children: [
                     FutureBuilder(
-                        future: audioPlayerApi.getBannerList(),
+                        future: homeapi.getBannerList(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
@@ -154,7 +154,7 @@ class _AudioPlayerActivityState extends State<AudioPlayerActivity> {
                     Container(
                       height: _height * 12,
                       child: FutureBuilder(
-                          future: audioPlayerApi.getCategoryList(),
+                          future: homeapi.getCategoryList(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
@@ -227,7 +227,7 @@ class _AudioPlayerActivityState extends State<AudioPlayerActivity> {
                     Container(
                       height: _height * 15,
                       child: FutureBuilder(
-                          future: audioPlayerApi.getPlayListMusic(),
+                          future: homeapi.getPlayListMusic(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
@@ -301,7 +301,7 @@ class _AudioPlayerActivityState extends State<AudioPlayerActivity> {
                     Container(
                       height: _height * 15,
                       child: FutureBuilder(
-                          future: audioPlayerApi.getPlayListMusic(),
+                          future: homeapi.getPlayListMusic(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
@@ -375,7 +375,7 @@ class _AudioPlayerActivityState extends State<AudioPlayerActivity> {
                     Container(
                       height: _height * 15,
                       child: FutureBuilder(
-                          future: audioPlayerApi.getPlayListMusic(),
+                          future: homeapi.getPlayListMusic(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
@@ -450,7 +450,7 @@ class _AudioPlayerActivityState extends State<AudioPlayerActivity> {
                     Container(
                       height: _height * 15,
                       child: FutureBuilder(
-                          future: audioPlayerApi.getPlayListMusic(),
+                          future: homeapi.getPlayListMusic(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
@@ -515,7 +515,7 @@ class _AudioPlayerActivityState extends State<AudioPlayerActivity> {
                       ),
                     ),
                     FutureBuilder(
-                        future: audioPlayerApi.getListCategotyForNewSongs(),
+                        future: homeapi.getListCategotyForNewSongs(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
