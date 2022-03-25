@@ -30,6 +30,7 @@ class _HomeActivityState extends State<HomeActivity> {
   bool isplay = false;
   bool flag = false;
   int index = 1;
+  int _bannercurrentIndex = 1;
   String playingSong = "Baru Dukha";
   String playingSongArtist = "Deep Shresstha";
   String songImage =
@@ -42,24 +43,24 @@ class _HomeActivityState extends State<HomeActivity> {
       backgroundColor: Color.fromARGB(255, 194, 103, 233),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 9, 52, 102),
-        leading: InkWell(
-          onTap: () {
-            print("logout token ${widget.token}");
-            homeapi.LogOut(widget.token).then((value) {
-              if (value == 200 || value == 201) {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => Loginpage()),
-                    (route) => false);
-              }
-            });
-          },
-          child: Icon(
-            Icons.menu,
-            color: Colors.white,
-            size: 30,
-          ),
-        ),
+        // leading: InkWell(
+        //   onTap: () {
+        // print("logout token ${widget.token}");
+        // homeapi.LogOut(widget.token).then((value) {
+        //   if (value == 200 || value == 201) {
+        //     Navigator.pushAndRemoveUntil(
+        //         context,
+        //         MaterialPageRoute(builder: (context) => Loginpage()),
+        //         (route) => false);
+        //   }
+        // });
+        //   },
+        //   child: Icon(
+        //     Icons.menu,
+        //     color: Colors.white,
+        //     size: 30,
+        //   ),
+        // ),
         title: const Center(
           child: Text(
             "JhanKar",
@@ -98,24 +99,56 @@ class _HomeActivityState extends State<HomeActivity> {
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
                             List l = snapshot.data;
-                            return Container(
-                                child: CarouselSlider(
-                              options: CarouselOptions(
-                                  height: _height * 25,
-                                  viewportFraction: 1.0,
-                                  enlargeCenterPage: true,
-                                  disableCenter: true),
-                              items: l
-                                  .map((item) => Container(
-                                        child: Center(
-                                            child: Image.network(
-                                          item,
-                                          width: 1000,
-                                          fit: BoxFit.fill,
-                                        )),
-                                      ))
-                                  .toList(),
-                            ));
+                            return Stack(
+                              alignment: Alignment.bottomLeft,
+                              children: [
+                                Container(
+                                    child: CarouselSlider(
+                                  options: CarouselOptions(
+                                    height: _height * 25,
+                                    viewportFraction: 1.0,
+                                    enlargeCenterPage: true,
+                                    disableCenter: true,
+                                    autoPlay: true,
+                                    onPageChanged: (index, reason) {
+                                      setState(
+                                        () {
+                                          _bannercurrentIndex = index;
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  items: l
+                                      .map((item) => Container(
+                                            child: Center(
+                                                child: Image.network(
+                                              item,
+                                              width: 1000,
+                                              fit: BoxFit.fill,
+                                            )),
+                                          ))
+                                      .toList(),
+                                )),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: l.map((urlOfItem) {
+                                    int index = l.indexOf(urlOfItem);
+                                    return Container(
+                                      width: 10.0,
+                                      height: 10.0,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 10.0, horizontal: 5.0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: _bannercurrentIndex == index
+                                            ? Colors.white
+                                            : Colors.grey.withOpacity(0.5),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
                           } else if (snapshot.hasError) {
                             return Text("error");
                           } else {
@@ -700,6 +733,79 @@ class _HomeActivityState extends State<HomeActivity> {
                 )
               : Center()
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage("lib/img/backimg.jpg"),
+                fit: BoxFit.fill,
+              )),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.message,
+                color: Colors.black,
+              ),
+              title: const Text('About us'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.star_border_outlined,
+                color: Colors.black,
+              ),
+              title: const Text('Privacy Policy'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.info,
+                color: Colors.black,
+              ),
+              title: const Text('Term & Conditions'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.logout,
+                color: Colors.black,
+              ),
+              title: const Text('Logout'),
+              onTap: () {
+                print("logout token ${widget.token}");
+                homeapi.LogOut(widget.token).then((value) {
+                  if (value == 200 || value == 201) {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => Loginpage()),
+                        (route) => false);
+                  }
+                });
+              },
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: CustomNavigationBar(
         elevation: 10,

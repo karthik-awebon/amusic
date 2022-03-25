@@ -45,7 +45,7 @@ class LoginpageState extends State<Loginpage> {
             Container(
               height: 100,
               width: 100,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("lib/img/0-AMusic-app-icon.png"),
                       fit: BoxFit.cover)),
@@ -134,7 +134,9 @@ class LoginpageState extends State<Loginpage> {
       width: double.infinity,
       child: FlatButton(
         padding: EdgeInsets.all(15),
-        shape: StadiumBorder(),
+        shape: new RoundedRectangleBorder(
+            side: BorderSide(color: Colors.white, width: 2),
+            borderRadius: new BorderRadius.circular(30.0)),
         // highlightedBorderColor: Colors.white,
         // borderSide: BorderSide(
         //     width: 2,

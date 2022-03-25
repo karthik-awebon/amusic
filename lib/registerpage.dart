@@ -178,7 +178,9 @@ class RegisterpageState extends State<Registerpage>{
       width: double.infinity,
       child: FlatButton(
         padding: EdgeInsets.all(15),
-        shape: StadiumBorder(),
+       shape: new RoundedRectangleBorder(
+            side: BorderSide(color: Colors.white, width: 2),
+            borderRadius: new BorderRadius.circular(30.0)),
         // highlightedBorderColor: Colors.white,
         // borderSide: BorderSide(
         //     width: 2,

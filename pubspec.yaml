@@ -43,6 +43,7 @@ dependencies:
   basic_utils: ^4.2.0
   carousel_slider:
   custom_navigation_bar:
+  cached_network_image:
   
 
 dev_dependencies:
