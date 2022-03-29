@@ -1,6 +1,10 @@
 import 'package:amusic_app/HomeActivity.dart';
 import 'package:amusic_app/loginpage.dart';
 import 'package:amusic_app/registerpage.dart';
+import 'package:amusic_app/screens/categories_home.dart';
+import 'package:amusic_app/screens/category_home.dart';
+import 'package:amusic_app/screens/playlist_home.dart';
+import 'package:amusic_app/screens/playlists_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -30,7 +34,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: AudioPlayerActivity(token: "",),
-       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        CategoriesHome.routeName: (context) => CategoriesHome(),
+        CategoryHome.routeName: (context) => CategoryHome(),
+        PlaylistHome.routeName: (context) => PlaylistHome(),
+        PlaylistsHome.routeName: (context) => PlaylistsHome()
+      },
     );
   }
 }

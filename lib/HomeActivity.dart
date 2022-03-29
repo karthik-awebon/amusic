@@ -3,6 +3,10 @@
 import 'package:amusic_app/HomeAPi.dart';
 import 'package:amusic_app/loginpage.dart';
 import 'package:amusic_app/registerpage.dart';
+import 'package:amusic_app/screens/categories_home.dart';
+import 'package:amusic_app/screens/category_home.dart';
+import 'package:amusic_app/screens/playlist_home.dart';
+import 'package:amusic_app/screens/playlists_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -42,7 +46,7 @@ class _HomeActivityState extends State<HomeActivity> {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 194, 103, 233),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 9, 52, 102),
+        backgroundColor: Color.fromARGB(255, 52, 89, 131),
         // leading: InkWell(
         //   onTap: () {
         // print("logout token ${widget.token}");
@@ -63,7 +67,7 @@ class _HomeActivityState extends State<HomeActivity> {
         // ),
         title: const Center(
           child: Text(
-            "JhanKar",
+            "Jhankar",
             style: TextStyle(
                 fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
           ),
@@ -119,14 +123,19 @@ class _HomeActivityState extends State<HomeActivity> {
                                     },
                                   ),
                                   items: l
-                                      .map((item) => Container(
+                                      .map((item) => InkWell(
+                                          onTap: () {
+                                            Navigator.of(context).pushNamed(
+                                                PlaylistHome.routeName);
+                                          },
+                                          child: Container(
                                             child: Center(
                                                 child: Image.network(
                                               item,
                                               width: 1000,
                                               fit: BoxFit.fill,
                                             )),
-                                          ))
+                                          ))) 
                                       .toList(),
                                 )),
                                 Row(
@@ -174,13 +183,18 @@ class _HomeActivityState extends State<HomeActivity> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Text(
+                          InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(CategoriesHome.routeName);
+                              },
+                              child: Text(
                             'More',
                             style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400),
-                          ),
+                              )),
                         ],
                       ),
                     ),
@@ -201,7 +215,12 @@ class _HomeActivityState extends State<HomeActivity> {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8),
-                                      child: Container(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.of(context).pushNamed(
+                                                CategoryHome.routeName);
+                                          }, 
+                                          child: Container(
                                           width: _width * 39,
                                           decoration: BoxDecoration(
                                             color:
@@ -226,6 +245,7 @@ class _HomeActivityState extends State<HomeActivity> {
                                                   fontSize: 20),
                                             ),
                                           )),
+                                        ) 
                                     );
                                   });
                             } else if (snapshot.hasError) {
@@ -247,13 +267,18 @@ class _HomeActivityState extends State<HomeActivity> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Text(
+                          InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(PlaylistsHome.routeName);
+                              },
+                              child: Text(
                             'More',
                             style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400),
-                          ),
+                              )),
                         ],
                       ),
                     ),
@@ -274,7 +299,12 @@ class _HomeActivityState extends State<HomeActivity> {
                                     return Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
-                                        child: Container(
+                                        child: InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).pushNamed(
+                                                  PlaylistHome.routeName);
+                                            },
+                                            child: Container(
                                             width: _width * 30,
                                             decoration: BoxDecoration(
                                               borderRadius:
@@ -300,7 +330,7 @@ class _HomeActivityState extends State<HomeActivity> {
                                                       fontSize: 18),
                                                 ),
                                               ),
-                                            )));
+                                                ))));
                                   });
                             } else if (snapshot.hasError) {
                               return Text("errir");
@@ -321,13 +351,18 @@ class _HomeActivityState extends State<HomeActivity> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Text(
+                          InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(PlaylistsHome.routeName);
+                              },
+                              child: Text(
                             'More',
                             style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400),
-                          ),
+                              )),
                         ],
                       ),
                     ),
@@ -348,7 +383,12 @@ class _HomeActivityState extends State<HomeActivity> {
                                     return Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
-                                        child: Container(
+                                        child: InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).pushNamed(
+                                                  PlaylistHome.routeName);
+                                            },
+                                            child: Container(
                                             width: _width * 30,
                                             decoration: BoxDecoration(
                                               borderRadius:
@@ -374,7 +414,7 @@ class _HomeActivityState extends State<HomeActivity> {
                                                       fontSize: 18),
                                                 ),
                                               ),
-                                            )));
+                                                ))));
                                   });
                             } else if (snapshot.hasError) {
                               return Text("errir");
@@ -395,13 +435,18 @@ class _HomeActivityState extends State<HomeActivity> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Text(
+                          InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(PlaylistsHome.routeName);
+                              },
+                              child: Text(
                             'More',
                             style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400),
-                          ),
+                              )),
                         ],
                       ),
                     ),
@@ -422,7 +467,12 @@ class _HomeActivityState extends State<HomeActivity> {
                                     return Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
-                                        child: Container(
+                                        child: InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).pushNamed(
+                                                  PlaylistHome.routeName);
+                                            },
+                                            child: Container(
                                             width: _width * 30,
                                             decoration: BoxDecoration(
                                               borderRadius:
@@ -448,7 +498,7 @@ class _HomeActivityState extends State<HomeActivity> {
                                                       fontSize: 18),
                                                 ),
                                               ),
-                                            )));
+                                                ))));
                                   });
                             } else if (snapshot.hasError) {
                               return Text("errir");
@@ -469,13 +519,18 @@ class _HomeActivityState extends State<HomeActivity> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Text(
+                          InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(PlaylistsHome.routeName);
+                              },
+                              child: Text(
                             'More',
                             style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400),
-                          ),
+                              )),
                         ],
                       ),
                     ),
@@ -497,7 +552,12 @@ class _HomeActivityState extends State<HomeActivity> {
                                     return Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
-                                        child: Container(
+                                        child: InkWell(
+                                            onTap: () {
+                                              Navigator.of(context).pushNamed(
+                                                  PlaylistHome.routeName);
+                                            },
+                                            child: Container(
                                             width: _width * 30,
                                             decoration: BoxDecoration(
                                               borderRadius:
@@ -523,7 +583,7 @@ class _HomeActivityState extends State<HomeActivity> {
                                                       fontSize: 18),
                                                 ),
                                               ),
-                                            )));
+                                                ))));
                                   });
                             } else if (snapshot.hasError) {
                               return Text("errir");
