@@ -1,7 +1,7 @@
 //import 'package:amusic_app/audio/AudioPlayerActivity.dart';
-import 'package:amusic_app/HomeActivity.dart';
+import 'package:amusic_app/screens/home.dart';
 import 'package:amusic_app/main.dart';
-import 'package:amusic_app/registerpage.dart';
+import 'package:amusic_app/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -224,7 +224,7 @@ class LoginpageState extends State<Loginpage> {
         width: double.maxFinite,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("lib/img/back2img.jpg"), fit: BoxFit.fill)),
+                image: AssetImage("lib/img/back4img.jpg"), fit: BoxFit.fill)),
         child: Form(
             child: SingleChildScrollView(
           child: Column(
@@ -288,8 +288,6 @@ class LoginpageState extends State<Loginpage> {
       if (x['status'] == "SUCCESS") {
         print(response.body);
         print(x);
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("SUCCESSFUL")));
       }
 
       setState(() {});
@@ -323,8 +321,6 @@ class LoginpageState extends State<Loginpage> {
       if (x['status'] == "SUCCESS") {
         print(response.body);
         print(x);
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("SUCCESSFUL")));
         // Navigator.push(context,
         //     MaterialPageRoute(builder: (context) => AudioPlayerActivity()));
       } else {
@@ -364,8 +360,6 @@ class LoginpageState extends State<Loginpage> {
       if (x['status'] == "SUCCESS") {
         print(response.body);
         print(x);
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("SUCCESSFUL")));
       }
     } catch (e) {
       print('Error signing in $e');
@@ -392,16 +386,14 @@ class LoginpageState extends State<Loginpage> {
       if (x['status'] == "SUCCESS") {
         print("Login Response ${response.body}");
         print(x);
-        print("jenish token ${x['data']['token']}");
+        print("token ${x['data']['token']}");
 
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => HomeActivity(
+                builder: (context) => Home(
                       token: x['data']['token'],
                     )));
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("SUCCESSFUL")));
       } else {
         print(response.body);
         ScaffoldMessenger.of(context).showSnackBar(

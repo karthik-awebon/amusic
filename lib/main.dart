@@ -1,10 +1,13 @@
-import 'package:amusic_app/HomeActivity.dart';
-import 'package:amusic_app/loginpage.dart';
-import 'package:amusic_app/registerpage.dart';
+import 'package:amusic_app/screens/home.dart';
+import 'package:amusic_app/screens/login.dart';
+import 'package:amusic_app/screens/register.dart';
+import 'package:amusic_app/screens/account_home.dart';
 import 'package:amusic_app/screens/categories_home.dart';
 import 'package:amusic_app/screens/category_home.dart';
+import 'package:amusic_app/screens/downloads_home.dart';
 import 'package:amusic_app/screens/playlist_home.dart';
 import 'package:amusic_app/screens/playlists_home.dart';
+import 'package:amusic_app/screens/videos_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -36,10 +39,14 @@ class MyApp extends StatelessWidget {
       //home: AudioPlayerActivity(token: "",),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
       routes: {
+        Home.routeName: (context) => Home(token: 'xxxx'),
         CategoriesHome.routeName: (context) => CategoriesHome(),
         CategoryHome.routeName: (context) => CategoryHome(),
         PlaylistHome.routeName: (context) => PlaylistHome(),
-        PlaylistsHome.routeName: (context) => PlaylistsHome()
+        PlaylistsHome.routeName: (context) => PlaylistsHome(),
+        VideosHome.routeName: (context) => VideosHome(),
+        DownloadsHome.routeName: (context) => DownloadsHome(),
+        AccountHome.routeName: (context) => AccountHome(),
       },
     );
   }
