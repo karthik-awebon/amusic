@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/logo.dart';
+
 class Registerpage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -203,20 +205,6 @@ class RegisterpageState extends State<Registerpage> {
     );
   }
 
-  Widget buildlogo() => Card(
-        child: Stack(
-          children: [
-            Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("lib/img/0-AMusic-app-icon.png"),
-                      fit: BoxFit.cover)),
-            )
-          ],
-        ),
-      );
   Widget buildrem() => Card(
       color: Colors.transparent,
       shadowColor: Colors.transparent,
@@ -271,7 +259,7 @@ class RegisterpageState extends State<Registerpage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: 50),
-              buildlogo(),
+              JhankarLogo(),
               SizedBox(height: 20),
               Text(
                 'Register',

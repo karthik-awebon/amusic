@@ -8,6 +8,7 @@ import 'package:amusic_app/screens/downloads_home.dart';
 import 'package:amusic_app/screens/playlist_home.dart';
 import 'package:amusic_app/screens/playlists_home.dart';
 import 'package:amusic_app/screens/videos_home.dart';
+import 'package:amusic_app/widgets/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -169,20 +170,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildlogo() => Card(
-        child: Stack(
-          children: [
-            Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("lib/img/0-AMusic-app-icon.png"),
-                      fit: BoxFit.cover)),
-            )
-          ],
-        ),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(height: 50),
-                        buildlogo(),
+                        JhankarLogo(),
                         SizedBox(height: 250),
                         buildloginBtn(),
                         // SizedBox(height: 0),

@@ -78,6 +78,7 @@ flutter:
     - lib/img/backimg.jpg
     - lib/img/back4img.jpg
     - lib/img/back.jpeg
+    - lib/img/logo.png
    #assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

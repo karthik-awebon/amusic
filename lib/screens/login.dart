@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/http_exception.dart';
 import '../provider/auth.dart';
+import '../widgets/logo.dart';
 
 class Loginpage extends StatefulWidget {
   @override
@@ -45,20 +46,6 @@ class LoginpageState extends State<Loginpage> {
   AccessToken? _accessToken;
   UserModel? _currentUser;
 
-  Widget buildlogo() => Card(
-        child: Stack(
-          children: [
-            Container(
-              height: 100,
-              width: 100,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("lib/img/0-AMusic-app-icon.png"),
-                      fit: BoxFit.cover)),
-            )
-          ],
-        ),
-      );
 
   Widget _buildemail() {
     return Container(
@@ -237,7 +224,7 @@ class LoginpageState extends State<Loginpage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: 50),
-              buildlogo(),
+              JhankarLogo(),
               SizedBox(height: 20),
               Text(
                 'Login',
