@@ -7,9 +7,13 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/http_exception.dart';
+import '../provider/auth.dart';
 
 class Loginpage extends StatefulWidget {
   @override
@@ -369,38 +373,69 @@ class LoginpageState extends State<Loginpage> {
   }
 
   Future<void> loginCheck() async {
-    if (passController.text.isNotEmpty && emailController.text.isNotEmpty) {
-      var endpointUrl =
-          'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
-      Map<String, String> queryParams = {
-        'username': emailController.text,
-        'login_type': 'n',
-        'password': passController.text
-      };
-      String queryString = Uri(queryParameters: queryParams).query;
-
-      var requestUrl = endpointUrl +
-          '?' +
-          queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
-      var response = await http.get(Uri.parse(requestUrl));
-      var x = json.decode(response.body.toString());
-
-      if (x['status'] == "SUCCESS") {
-        final prefs = await SharedPreferences.getInstance();
-        prefs.setString('jhankar_token', x['data']['token']);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Home()));
-      } else {
-        print(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Invaild Email or Password.")));
-      }
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Password or Email Empty")));
+    try {
+      await Provider.of<Auth>(context, listen: false).login(
+        emailController.text,
+        passController.text,
+      );
+      Navigator.of(context).pushNamed(Home.routeName);
+    } on HttpException catch (error) {
+      _showErrorDialog(error.toString());
+    } catch (error) {
+      const errorMessage =
+          'Could not authenticate you. Please try again later.';
+      _showErrorDialog(errorMessage);
     }
+    // if (passController.text.isNotEmpty && emailController.text.isNotEmpty) {
+    //   var endpointUrl =
+    //       'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
+    //   Map<String, String> queryParams = {
+    //     'username': emailController.text,
+    //     'login_type': 'n',
+    //     'password': passController.text
+    //   };
+    //   String queryString = Uri(queryParameters: queryParams).query;
+
+    //   var requestUrl = endpointUrl +
+    //       '?' +
+    //       queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
+    //   var response = await http.get(Uri.parse(requestUrl));
+    //   var x = json.decode(response.body.toString());
+
+    //   if (x['status'] == "SUCCESS") {
+    //     final prefs = await SharedPreferences.getInstance();
+    //     prefs.setString('jhankar_token', x['data']['token']);
+    //     Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //             builder: (context) => Home()));
+    //   } else {
+    //     print(response.body);
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //         SnackBar(content: Text("Invaild Email or Password.")));
+    //   }
+    // } else {
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(SnackBar(content: Text("Password or Email Empty")));
+    // }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
   }
 }
 
@@ -432,3 +467,5 @@ class PictureModel {
   factory PictureModel.fromJson(Map<String, dynamic> json) => PictureModel(
       url: json['url'], width: json['width'], height: json['height']);
 }
+
+
