@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../HomeAPi.dart';
+import '../home_api.dart';
 import '../screens/login.dart';
 
 class JhankarDrawer extends StatelessWidget {
@@ -67,7 +67,7 @@ class JhankarDrawer extends StatelessWidget {
             ),
             title: const Text('Logout'),
             onTap: () {
-              homeapi.LogOut('xxx').then((value) {
+              homeapi.LogOut().then((value) {
                 //if (value == 200 || value == 201) {
                 Navigator.pushAndRemoveUntil(
                     context,

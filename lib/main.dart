@@ -22,8 +22,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Jhankar Music',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -37,9 +38,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       //home: AudioPlayerActivity(token: "",),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Jhankar'),
       routes: {
-        Home.routeName: (context) => Home(token: 'xxxx'),
+        Home.routeName: (context) => Home(),
         CategoriesHome.routeName: (context) => CategoriesHome(),
         CategoryHome.routeName: (context) => CategoryHome(),
         PlaylistHome.routeName: (context) => PlaylistHome(),
@@ -185,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage("lib/img/back2img.jpg"),
+                          image: AssetImage("lib/img/back4img.jpg"),
                           fit: BoxFit.cover)),
                   child: SingleChildScrollView(
                     child: Column(

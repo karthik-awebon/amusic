@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeApi {
   String API_BASE_URL =
       "http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api";
 
   Future getBannerList() async {
-    http.Response response = await http.get(Uri.parse(
-        "$API_BASE_URL/banner/list?page=1&number_per_page=10"));
+    http.Response response = await http
+        .get(Uri.parse("$API_BASE_URL/banner/list?page=1&number_per_page=10"));
 
     print("${response.statusCode} ${response.body}");
     var parsed = jsonDecode(response.body);
@@ -42,10 +43,14 @@ class HomeApi {
     return jsonDecode(response.body);
   }
 
-  Future LogOut(token) async {
-    http.Response response = await http.get(Uri.parse(
-        "$API_BASE_URL/user/logout?token=$token"));
+  Future LogOut() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jhankar_token');
+
+    http.Response response =
+        await http.get(Uri.parse("$API_BASE_URL/user/logout?token=$token"));
     print("Logout ${response.statusCode} ${response.body}");
+    prefs.clear();
     return response.statusCode;
   }
 }

@@ -9,6 +9,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Loginpage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -384,16 +386,12 @@ class LoginpageState extends State<Loginpage> {
       var x = json.decode(response.body.toString());
 
       if (x['status'] == "SUCCESS") {
-        print("Login Response ${response.body}");
-        print(x);
-        print("token ${x['data']['token']}");
-
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('jhankar_token', x['data']['token']);
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => Home(
-                      token: x['data']['token'],
-                    )));
+                builder: (context) => Home()));
       } else {
         print(response.body);
         ScaffoldMessenger.of(context).showSnackBar(

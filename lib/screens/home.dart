@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:amusic_app/HomeAPi.dart';
+import 'package:amusic_app/home_api.dart';
 import 'package:amusic_app/screens/login.dart';
 import 'package:amusic_app/screens/register.dart';
 import 'package:amusic_app/screens/account_home.dart';
@@ -20,10 +20,8 @@ import '../widgets/bottombar.dart';
 import '../widgets/drawer.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key, required this.token}) : super(key: key);
   static const routeName = './home';
 
-  final String token;
   @override
   State<Home> createState() => _HomeState();
 }
