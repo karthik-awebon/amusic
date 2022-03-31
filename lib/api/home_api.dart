@@ -43,6 +43,14 @@ class HomeApi {
     return jsonDecode(response.body);
   }
 
+  static Future getCategorySongs(categoryId) async {
+    http.Response response = await http.get(Uri.parse(
+        "$API_BASE_URL/list-song/category?category_id=$categoryId&page=1&number_per_page=10"));
+    print(
+        "List Category songs for new songs ${response.statusCode} ${response.body}");
+    return jsonDecode(response.body);
+  }
+
   static Future LogOut() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('jhankar_token');

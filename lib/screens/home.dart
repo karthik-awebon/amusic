@@ -224,7 +224,13 @@ class _HomeState extends State<Home> {
                                           child: InkWell(
                                             onTap: () {
                                               Navigator.of(context).pushNamed(
-                                                  CategoryHome.routeName);
+                                                  CategoryHome.routeName,
+                                                  arguments: CategoryArguments(
+                                                      snapshot.data['data']
+                                                              [index]['id']
+                                                          .toString(),
+                                                      snapshot.data['data']
+                                                          [index]['name']));
                                             },
                                             child: Container(
                                                 width: _width * 39,
@@ -830,4 +836,11 @@ class _HomeState extends State<Home> {
         drawer: JhankarDrawer(),
         bottomNavigationBar: JhankarBottomBar());
   }
+}
+
+class CategoryArguments {
+  final String categoryId;
+  final String categoryName;
+
+  CategoryArguments(this.categoryId, this.categoryName);
 }
