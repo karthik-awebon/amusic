@@ -5,8 +5,12 @@ import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../models/http_exception.dart';
+import '../provider/auth.dart';
 import '../widgets/logo.dart';
+import 'home.dart';
 
 class Registerpage extends StatefulWidget {
   @override
@@ -290,34 +294,19 @@ class RegisterpageState extends State<Registerpage> {
         passController.text.isNotEmpty &&
         nameController.text.isNotEmpty) {
       if (passController.text == conpassController.text) {
-        var endpointUrl =
-            'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/register';
-        Map<String, String> queryParams = {
-          'username': emailController.text,
-          'password': passController.text,
-          'name': nameController.text,
-        };
-        String queryString = Uri(queryParameters: queryParams).query;
-
-        var requestUrl = endpointUrl +
-            '?' +
-            queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
-        var response = await http.get(Uri.parse(requestUrl));
-        var x = json.decode(response.body.toString());
-
-        if (x['status'] == "SUCCESS") {
-          print(response.body);
-          print(x);
+        try {
+          await Provider.of<Auth>(context, listen: false).signup(
+              emailController.text, passController.text, nameController.text);
+          Navigator.of(context).pushNamed(Home.routeName);
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("SUCCESSFUL")));
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Loginpage()));
-        } else if (x['status'] == "ERROR") {
+              .showSnackBar(SnackBar(content: Text('Registered Successfully')));
+        } on HttpException catch (error) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Error")));
-        } else if (x['message'] == "This email already registered!") {
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("This email already registered!")));
+              .showSnackBar(SnackBar(content: Text(error.toString())));
+        } catch (error) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content:
+                  Text('Could not authenticate you. Please try again later.')));
         }
       } else {
         ScaffoldMessenger.of(context)

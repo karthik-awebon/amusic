@@ -44,7 +44,33 @@ class Auth with ChangeNotifier {
         _token = responseData['data']['token'];
         notifyListeners();
       } else {
-        throw HttpException(responseData['error']['message']);
+        throw HttpException(responseData['message']);
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<void> signup(String email, String password, String name) async {
+    var endpointUrl =
+        'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/register';
+
+    try {
+      Map<String, String> queryParams = {
+        'username': email,
+        'password': password,
+        'name': name,
+      };
+      String queryString = Uri(queryParameters: queryParams).query;
+
+      var requestUrl = endpointUrl + '?' + queryString;
+      var response = await http.get(Uri.parse(requestUrl));
+      var responseData = json.decode(response.body.toString());
+
+      if (responseData['status'] == "SUCCESS") {
+        this.login(email, password);
+      } else {
+        throw HttpException(responseData['message']);
       }
     } catch (error) {
       throw error;

@@ -46,7 +46,6 @@ class LoginpageState extends State<Loginpage> {
   AccessToken? _accessToken;
   UserModel? _currentUser;
 
-
   Widget _buildemail() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -360,51 +359,25 @@ class LoginpageState extends State<Loginpage> {
   }
 
   Future<void> loginCheck() async {
-    try {
-      await Provider.of<Auth>(context, listen: false).login(
-        emailController.text,
-        passController.text,
-      );
-      Navigator.of(context).pushNamed(Home.routeName);
-    } on HttpException catch (error) {
-      _showErrorDialog(error.toString());
-    } catch (error) {
-      const errorMessage =
-          'Could not authenticate you. Please try again later.';
-      _showErrorDialog(errorMessage);
+    if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
+      try {
+        await Provider.of<Auth>(context, listen: false).login(
+          emailController.text,
+          passController.text,
+        );
+        Navigator.of(context).pushNamed(Home.routeName);
+      } on HttpException catch (error) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(error.toString())));
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text('Could not authenticate you. Please try again later.')));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("username and password is must")));
     }
-    // if (passController.text.isNotEmpty && emailController.text.isNotEmpty) {
-    //   var endpointUrl =
-    //       'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
-    //   Map<String, String> queryParams = {
-    //     'username': emailController.text,
-    //     'login_type': 'n',
-    //     'password': passController.text
-    //   };
-    //   String queryString = Uri(queryParameters: queryParams).query;
-
-    //   var requestUrl = endpointUrl +
-    //       '?' +
-    //       queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
-    //   var response = await http.get(Uri.parse(requestUrl));
-    //   var x = json.decode(response.body.toString());
-
-    //   if (x['status'] == "SUCCESS") {
-    //     final prefs = await SharedPreferences.getInstance();
-    //     prefs.setString('jhankar_token', x['data']['token']);
-    //     Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //             builder: (context) => Home()));
-    //   } else {
-    //     print(response.body);
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //         SnackBar(content: Text("Invaild Email or Password.")));
-    //   }
-    // } else {
-    //   ScaffoldMessenger.of(context)
-    //       .showSnackBar(SnackBar(content: Text("Password or Email Empty")));
-    // }
   }
 
   void _showErrorDialog(String message) {
@@ -454,5 +427,3 @@ class PictureModel {
   factory PictureModel.fromJson(Map<String, dynamic> json) => PictureModel(
       url: json['url'], width: json['width'], height: json['height']);
 }
-
-
