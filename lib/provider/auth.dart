@@ -22,6 +22,35 @@ class Auth with ChangeNotifier {
     return null;
   }
 
+  Future<void> socialLogin(String email, String name) async {
+    var endpointUrl =
+        'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
+
+    try {
+      Map<String, String> queryParams = {
+        'username': email,
+        'login_type': 's',
+        'name': name
+      };
+      String queryString = Uri(queryParameters: queryParams).query;
+
+      var requestUrl = endpointUrl + '?' + queryString;
+      var response = await http.get(Uri.parse(requestUrl));
+      var responseData = json.decode(response.body.toString());
+
+      if (responseData['status'] == "SUCCESS") {
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('jhankar_token', responseData['data']['token']);
+        _token = responseData['data']['token'];
+        notifyListeners();
+      } else {
+        throw HttpException(responseData['message']);
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<void> login(String email, String password) async {
     var endpointUrl =
         'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';

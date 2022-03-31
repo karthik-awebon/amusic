@@ -262,36 +262,28 @@ class LoginpageState extends State<Loginpage> {
 
       _currentUser = model;
 
-      var endpointUrl =
-          'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
-      Map<String, String> queryParams = {
-        'username': model.email.toString(),
-        'login_type': 'S',
-        'password': model.password.toString()
-      };
-      String queryString = Uri(queryParameters: queryParams).query;
-
-      var requestUrl = endpointUrl +
-          '?' +
-          queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
-      var response = await http.get(Uri.parse(requestUrl));
-      var x = json.decode(response.body.toString());
-
-      if (x['status'] == "SUCCESS") {
-        print(response.body);
-        print(x);
+      try {
+        await Provider.of<Auth>(context, listen: false).socialLogin(
+          model.email.toString(),
+          model.name.toString(),
+        );
+        Navigator.of(context).pushNamed(Home.routeName);
+      } on HttpException catch (error) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(error.toString())));
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content:
+                Text('Could not authenticate you. Please try again later.')));
       }
-
-      setState(() {});
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+              Text("Could not authenticate you. Please try again later.")));
     }
   }
 
-  Future<void> signOut() async {
-    await FacebookAuth.i.logOut();
-    _currentUser = null;
-    _accessToken = null;
-    setState(() {});
-  }
+ 
 
   Future<void> login() async {
     if (passController.text.isNotEmpty && emailController.text.isNotEmpty) {
@@ -380,23 +372,6 @@ class LoginpageState extends State<Loginpage> {
     }
   }
 
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred!'),
-        content: Text(message),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Okay'),
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-          )
-        ],
-      ),
-    );
-  }
 }
 
 class UserModel {
