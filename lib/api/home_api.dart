@@ -11,14 +11,12 @@ class HomeApi {
     http.Response response = await http
         .get(Uri.parse("$API_BASE_URL/banner/list?page=1&number_per_page=10"));
 
-    print("${response.statusCode} ${response.body}");
     var parsed = jsonDecode(response.body);
-    List<String> banner = [];
+    List banners = [];
     for (var i = 0; i < parsed['data'].length; i++) {
-      banner.add(parsed['data'][i]['image']);
+      banners.add(parsed['data'][i]);
     }
-    print("${banner}");
-    return banner;
+    return banners;
   }
 
   static Future getCategoryList() async {
@@ -46,6 +44,14 @@ class HomeApi {
   static Future getCategorySongs(categoryId) async {
     http.Response response = await http.get(Uri.parse(
         "$API_BASE_URL/list-song/category?category_id=$categoryId&page=1&number_per_page=10"));
+    print(
+        "List Category songs for new songs ${response.statusCode} ${response.body}");
+    return jsonDecode(response.body);
+  }
+
+  static Future getPlaylistSongs(playlistId) async {
+    http.Response response = await http.get(Uri.parse(
+        "$API_BASE_URL/list-song/playlist?playlist_id=$playlistId&page=1&number_per_page=10"));
     print(
         "List Category songs for new songs ${response.statusCode} ${response.body}");
     return jsonDecode(response.body);
