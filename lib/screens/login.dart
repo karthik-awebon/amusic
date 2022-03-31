@@ -283,70 +283,40 @@ class LoginpageState extends State<Loginpage> {
     }
   }
 
- 
-
-  Future<void> login() async {
-    if (passController.text.isNotEmpty && emailController.text.isNotEmpty) {
-      var endpointUrl =
-          'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
-      Map<String, String> queryParams = {
-        'username': emailController.text,
-        'login_type': 'S',
-        'password': passController.text
-      };
-      String queryString = Uri(queryParameters: queryParams).query;
-
-      var requestUrl = endpointUrl +
-          '?' +
-          queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
-      var response = await http.get(Uri.parse(requestUrl));
-      var x = json.decode(response.body.toString());
-
-      if (x['status'] == "SUCCESS") {
-        print(response.body);
-        print(x);
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => AudioPlayerActivity()));
-      } else {
-        print(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Invaild Email or Password.")));
-      }
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Password or Email Empty")));
-    }
-  }
-
-  void signOut1() {
-    _googleSignIn.disconnect();
-  }
-
   Future<void> signIn1() async {
     try {
       await _googleSignIn.signIn();
+      await Provider.of<Auth>(context, listen: false).socialLogin(
+        _currentUser1!.email.toString(),
+        _currentUser1!.id.toString(),
+      );
+      Navigator.of(context).pushNamed(Home.routeName);
+      //   var endpointUrl =
+      //       'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
+      //   Map<String, String> queryParams = {
+      //     'username': _currentUser1!.email.toString(),
+      //     'login_type': 'S',
+      //     'password': _currentUser1!.id.toString()
+      //   };
+      //   String queryString = Uri(queryParameters: queryParams).query;
 
-      var endpointUrl =
-          'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
-      Map<String, String> queryParams = {
-        'username': _currentUser1!.email.toString(),
-        'login_type': 'S',
-        'password': _currentUser1!.id.toString()
-      };
-      String queryString = Uri(queryParameters: queryParams).query;
+      //   var requestUrl = endpointUrl +
+      //       '?' +
+      //       queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
+      //   var response = await http.get(Uri.parse(requestUrl));
+      //   var x = json.decode(response.body.toString());
 
-      var requestUrl = endpointUrl +
-          '?' +
-          queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
-      var response = await http.get(Uri.parse(requestUrl));
-      var x = json.decode(response.body.toString());
-
-      if (x['status'] == "SUCCESS") {
-        print(response.body);
-        print(x);
-      }
+      //   if (x['status'] == "SUCCESS") {
+      //     print(response.body);
+      //     print(x);
+      //   }
+    } on HttpException catch (error) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.toString())));
     } catch (e) {
-      print('Error signing in $e');
+      //print('Error signing in $e');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
     }
   }
 
