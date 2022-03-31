@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:amusic_app/home_api.dart';
+import 'package:amusic_app/api/home_api.dart';
 import 'package:amusic_app/screens/login.dart';
 import 'package:amusic_app/screens/register.dart';
 import 'package:amusic_app/screens/account_home.dart';
@@ -27,7 +27,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  HomeApi homeapi = HomeApi();
   final List<String> imgList = [
     'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
     'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
@@ -55,7 +54,7 @@ class _HomeState extends State<Home> {
           // leading: InkWell(
           //   onTap: () {
           // print("logout token ${widget.token}");
-          // homeapi.LogOut(widget.token).then((value) {
+          // HomeApi.LogOut(widget.token).then((value) {
           //   if (value == 200 || value == 201) {
           //     Navigator.pushAndRemoveUntil(
           //         context,
@@ -105,7 +104,7 @@ class _HomeState extends State<Home> {
                   child: Column(
                     children: [
                       FutureBuilder(
-                          future: homeapi.getBannerList(),
+                          future: HomeApi.getBannerList(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
@@ -208,7 +207,7 @@ class _HomeState extends State<Home> {
                       Container(
                         height: _height * 12,
                         child: FutureBuilder(
-                            future: homeapi.getCategoryList(),
+                            future: HomeApi.getCategoryList(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
@@ -296,7 +295,7 @@ class _HomeState extends State<Home> {
                       Container(
                         height: _height * 15,
                         child: FutureBuilder(
-                            future: homeapi.getPlayListMusic(),
+                            future: HomeApi.getPlayListMusic(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
@@ -385,7 +384,7 @@ class _HomeState extends State<Home> {
                       Container(
                         height: _height * 15,
                         child: FutureBuilder(
-                            future: homeapi.getPlayListMusic(),
+                            future: HomeApi.getPlayListMusic(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
@@ -474,7 +473,7 @@ class _HomeState extends State<Home> {
                       Container(
                         height: _height * 15,
                         child: FutureBuilder(
-                            future: homeapi.getPlayListMusic(),
+                            future: HomeApi.getPlayListMusic(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
@@ -564,7 +563,7 @@ class _HomeState extends State<Home> {
                       Container(
                         height: _height * 15,
                         child: FutureBuilder(
-                            future: homeapi.getPlayListMusic(),
+                            future: HomeApi.getPlayListMusic(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
@@ -639,7 +638,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       FutureBuilder(
-                          future: homeapi.getListCategotyForNewSongs(),
+                          future: HomeApi.getListCategotyForNewSongs(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {

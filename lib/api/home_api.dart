@@ -4,10 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeApi {
-  String API_BASE_URL =
+  static String API_BASE_URL =
       "http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api";
 
-  Future getBannerList() async {
+  static Future getBannerList() async {
     http.Response response = await http
         .get(Uri.parse("$API_BASE_URL/banner/list?page=1&number_per_page=10"));
 
@@ -21,21 +21,21 @@ class HomeApi {
     return banner;
   }
 
-  Future getCategoryList() async {
+  static Future getCategoryList() async {
     http.Response response = await http.get(Uri.parse(
         "$API_BASE_URL/category/list?number_per_page=10&page=1&is_video=0"));
     print("category ${response.statusCode} ${response.body}");
     return jsonDecode(response.body);
   }
 
-  Future getPlayListMusic() async {
+  static Future getPlayListMusic() async {
     http.Response response = await http.get(Uri.parse(
         "$API_BASE_URL/playlist/list?number_per_page=10&page=1&is_new=1&is_hot=1&is_top=1"));
     print("Play List ${response.statusCode} ${response.body}");
     return jsonDecode(response.body);
   }
 
-  Future getListCategotyForNewSongs() async {
+  static Future getListCategotyForNewSongs() async {
     http.Response response = await http.get(Uri.parse(
         "$API_BASE_URL/list-song/category?category_id=4&page=1&number_per_page=10"));
     print(
@@ -43,7 +43,7 @@ class HomeApi {
     return jsonDecode(response.body);
   }
 
-  Future LogOut() async {
+  static Future LogOut() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('jhankar_token');
 
