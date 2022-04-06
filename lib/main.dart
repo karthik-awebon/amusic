@@ -16,6 +16,8 @@ import 'package:provider/provider.dart';
 
 import 'provider/auth.dart';
 import 'screens/splash_screen.dart';
+import 'screens/video_categories_home.dart';
+import 'screens/video_category_home.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,6 +65,10 @@ class MyApp extends StatelessWidget {
                     CategoryHome.routeName: (context) => CategoryHome(),
                     PlaylistHome.routeName: (context) => PlaylistHome(),
                     PlaylistsHome.routeName: (context) => PlaylistsHome(),
+                    VideoCategoriesHome.routeName: (context) =>
+                        VideoCategoriesHome(),
+                    VideoCategoryHome.routeName: (context) =>
+                        VideoCategoryHome(),
                     VideosHome.routeName: (context) => VideosHome(),
                     DownloadsHome.routeName: (context) => DownloadsHome(),
                     AccountHome.routeName: (context) => AccountHome(),
