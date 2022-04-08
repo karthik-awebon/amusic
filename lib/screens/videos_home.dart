@@ -179,7 +179,7 @@ class VideosHome extends StatelessWidget {
                       Container(
                         height: _height * 15,
                         child: FutureBuilder(
-                            future: VideosApi.getVideosCategoryList(),
+                            future: VideosApi.getCategoryVideos(17),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
@@ -196,16 +196,13 @@ class VideosHome extends StatelessWidget {
                                           child: InkWell(
                                               onTap: () {},
                                               child: Container(
-                                                  width: _width * 30,
+                                                  width: _width * 50,
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
                                                     image: DecorationImage(
                                                       image: NetworkImage(
                                                           snapshot.data['data']
                                                                   [index]
-                                                              ['img_thumb']),
+                                                              ['image']),
                                                       scale: 3.5,
                                                       fit: BoxFit.cover,
                                                     ),
@@ -219,10 +216,10 @@ class VideosHome extends StatelessWidget {
                                                               .withOpacity(
                                                                   0.5)),
                                                       child: Text(
-                                                        "  ${snapshot.data['data'][index]['songs_count']} items",
+                                                        "4:06",
                                                         style: TextStyle(
                                                             color: Colors.white,
-                                                            fontSize: 18),
+                                                            fontSize: 14),
                                                       ),
                                                     ),
                                                   ))));
@@ -265,7 +262,7 @@ class VideosHome extends StatelessWidget {
                       Container(
                         height: _height * 15,
                         child: FutureBuilder(
-                            future: VideosApi.getVideosCategoryList(),
+                            future: VideosApi.getCategoryVideos(17),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.hasData) {
@@ -282,16 +279,13 @@ class VideosHome extends StatelessWidget {
                                           child: InkWell(
                                               onTap: () {},
                                               child: Container(
-                                                  width: _width * 30,
+                                                  width: _width * 50,
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
                                                     image: DecorationImage(
                                                       image: NetworkImage(
                                                           snapshot.data['data']
                                                                   [index]
-                                                              ['img_thumb']),
+                                                              ['image']),
                                                       scale: 3.5,
                                                       fit: BoxFit.cover,
                                                     ),
@@ -305,10 +299,10 @@ class VideosHome extends StatelessWidget {
                                                               .withOpacity(
                                                                   0.5)),
                                                       child: Text(
-                                                        "  ${snapshot.data['data'][index]['songs_count']} items",
+                                                        "4:06",
                                                         style: TextStyle(
                                                             color: Colors.white,
-                                                            fontSize: 18),
+                                                            fontSize: 14),
                                                       ),
                                                     ),
                                                   ))));
