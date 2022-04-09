@@ -1,3 +1,4 @@
+import 'package:amusic_app/widgets/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,7 +16,7 @@ class AccountHome extends StatelessWidget {
           backgroundColor: const Color.fromARGB(255, 52, 89, 131),
           centerTitle: true,
         ),
-        body: Container(          
+        body: Container(
           height: double.maxFinite,
           width: double.maxFinite,
           decoration: const BoxDecoration(
@@ -167,9 +168,11 @@ class AccountHome extends StatelessWidget {
                             )),
                         Text('Songs')
                       ]),
-                      const Icon(
-                        Icons.arrow_circle_right_outlined,
-                      ),
+                      InkWell(
+                          onTap: () {},
+                          child: Icon(
+                            Icons.arrow_circle_right_outlined,
+                          )),
                     ])),
           ]),
         ),

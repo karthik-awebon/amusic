@@ -1,4 +1,5 @@
 import 'package:amusic_app/api/videos_api.dart';
+import 'package:amusic_app/screens/video_player_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -201,8 +202,7 @@ class VideosHome extends StatelessWidget {
                                                     image: DecorationImage(
                                                       image: NetworkImage(
                                                           snapshot.data['data']
-                                                                  [index]
-                                                              ['image']),
+                                                              [index]['image']),
                                                       scale: 3.5,
                                                       fit: BoxFit.cover,
                                                     ),
@@ -284,8 +284,7 @@ class VideosHome extends StatelessWidget {
                                                     image: DecorationImage(
                                                       image: NetworkImage(
                                                           snapshot.data['data']
-                                                                  [index]
-                                                              ['image']),
+                                                              [index]['image']),
                                                       scale: 3.5,
                                                       fit: BoxFit.cover,
                                                     ),
@@ -345,7 +344,19 @@ class VideosHome extends StatelessWidget {
                                       padding: const EdgeInsets.fromLTRB(
                                           10, 10, 10, 0),
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              VideoPlayerScreen.routeName,
+                                              arguments:
+                                                  VideoPlayerScreenArguments(
+                                                      snapshot
+                                                          .data['data'][index]
+                                                              ['video']
+                                                          .toString(),
+                                                      snapshot.data['data']
+                                                              [index]['id']
+                                                          .toString()));
+                                        },
                                         child: Container(
                                           child: Row(
                                             children: [
@@ -424,6 +435,13 @@ class VideosHome extends StatelessWidget {
         drawer: JhankarDrawer(),
         bottomNavigationBar: JhankarBottomBar());
   }
+}
+
+class VideoPlayerScreenArguments {
+  final String videoUrl;
+  final String playlistId;
+
+  VideoPlayerScreenArguments(this.videoUrl, this.playlistId);
 }
 
 class VideoCategoryArguments {

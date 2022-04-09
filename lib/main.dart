@@ -7,6 +7,8 @@ import 'package:amusic_app/screens/category_home.dart';
 import 'package:amusic_app/screens/downloads_home.dart';
 import 'package:amusic_app/screens/playlist_home.dart';
 import 'package:amusic_app/screens/playlists_home.dart';
+import 'package:amusic_app/screens/video_player_screen.dart';
+import 'package:amusic_app/widgets/video_player.dart';
 import 'package:amusic_app/screens/videos_home.dart';
 import 'package:amusic_app/widgets/logo.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +75,8 @@ class MyApp extends StatelessWidget {
                     VideosHome.routeName: (context) => VideosHome(),
                     DownloadsHome.routeName: (context) => DownloadsHome(),
                     AccountHome.routeName: (context) => AccountHome(),
+                    VideoPlayerScreen.routeName: (context) =>
+                        VideoPlayerScreen(),
                   },
                 )));
   }
