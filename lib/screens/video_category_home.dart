@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../api/home_api.dart';
+import 'video_player_screen.dart';
 
 class VideoCategoryHome extends StatelessWidget {
   static const routeName = './video-category-home';
@@ -46,7 +47,16 @@ class VideoCategoryHome extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 10, 0),
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                        VideoPlayerScreen.routeName,
+                                        arguments: VideoPlayerScreenArguments(
+                                            snapshot.data['data'][index]
+                                                    ['video']
+                                                .toString(),
+                                            snapshot.data['data'][index]['id']
+                                                .toString()));
+                                  },
                                   child: Container(
                                     child: Row(
                                       children: [
@@ -60,7 +70,7 @@ class VideoCategoryHome extends StatelessWidget {
                                                   fit: BoxFit.cover,
                                                   image: NetworkImage(snapshot
                                                           .data['data'][index]
-                                                      ['img_banner']))),
+                                                      ['image']))),
                                         ),
                                         SizedBox(
                                           width: 10,
@@ -81,9 +91,7 @@ class VideoCategoryHome extends StatelessWidget {
                                                       color: Colors.white,
                                                       fontSize: 18)),
                                               Text(
-                                                  snapshot.data['data'][index]
-                                                          ['musicArtists'][0]
-                                                      ['name'],
+                                                  '4:30',
                                                   style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 15)),

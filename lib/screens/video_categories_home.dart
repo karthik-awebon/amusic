@@ -1,3 +1,6 @@
+import 'package:amusic_app/api/videos_api.dart';
+import 'package:amusic_app/screens/video_category_home.dart';
+import 'package:amusic_app/screens/videos_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -26,7 +29,7 @@ class VideoCategoriesHome extends StatelessWidget {
                   image: AssetImage("lib/img/back4img.jpg"), fit: BoxFit.fill)),
           child: Container(
             child: FutureBuilder(
-                future: HomeApi.getCategoryList(),
+                future: VideosApi.getVideosCategoryList(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return GridView.builder(
@@ -38,8 +41,8 @@ class VideoCategoriesHome extends StatelessWidget {
                             child: InkWell(
                               onTap: () {
                                 Navigator.of(context).pushNamed(
-                                    CategoryHome.routeName,
-                                    arguments: CategoryArguments(
+                                    VideoCategoryHome.routeName,
+                                    arguments: VideoCategoryArguments(
                                         snapshot.data['data'][index]['id']
                                             .toString(),
                                         snapshot.data['data'][index]['name']));

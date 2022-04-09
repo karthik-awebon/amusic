@@ -165,7 +165,10 @@ class VideosHome extends StatelessWidget {
                             InkWell(
                                 onTap: () {
                                   Navigator.of(context)
-                                      .pushNamed(VideoCategoryHome.routeName);
+                                      .pushNamed(
+                                      VideoCategoryHome.routeName,
+                                      arguments:
+                                          VideoCategoryArguments('17', 'Name'));
                                 },
                                 child: Text(
                                   'More',
@@ -195,7 +198,22 @@ class VideosHome extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 8),
                                           child: InkWell(
-                                              onTap: () {},
+                                              onTap: () {
+                                                Navigator.of(context).pushNamed(
+                                                    VideoPlayerScreen.routeName,
+                                                    arguments:
+                                                        VideoPlayerScreenArguments(
+                                                            snapshot
+                                                                .data['data']
+                                                                    [index]
+                                                                    ['video']
+                                                                .toString(),
+                                                            snapshot
+                                                                .data['data']
+                                                                    [index]
+                                                                    ['id']
+                                                                .toString()));
+                                              },
                                               child: Container(
                                                   width: _width * 50,
                                                   decoration: BoxDecoration(
@@ -247,7 +265,10 @@ class VideosHome extends StatelessWidget {
                             InkWell(
                                 onTap: () {
                                   Navigator.of(context)
-                                      .pushNamed(VideoCategoryHome.routeName);
+                                      .pushNamed(
+                                      VideoCategoryHome.routeName,
+                                      arguments:
+                                          VideoCategoryArguments('17', 'Name'));
                                 },
                                 child: Text(
                                   'More',
@@ -277,7 +298,22 @@ class VideosHome extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 8),
                                           child: InkWell(
-                                              onTap: () {},
+                                              onTap: () {
+                                                Navigator.of(context).pushNamed(
+                                                    VideoPlayerScreen.routeName,
+                                                    arguments:
+                                                        VideoPlayerScreenArguments(
+                                                            snapshot
+                                                                .data['data']
+                                                                    [index]
+                                                                    ['video']
+                                                                .toString(),
+                                                            snapshot
+                                                                .data['data']
+                                                                    [index]
+                                                                    ['id']
+                                                                .toString()));
+                                              },
                                               child: Container(
                                                   width: _width * 50,
                                                   decoration: BoxDecoration(

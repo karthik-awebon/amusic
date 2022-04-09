@@ -42,9 +42,15 @@ class VideoPlayerScreen extends StatelessWidget {
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                               child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(VideoPlayerScreen.routeName);
+                                onTap: () {                                 
+                                  Navigator.of(context).pushNamed(
+                                      VideoPlayerScreen.routeName,
+                                      arguments: VideoPlayerScreenArguments(
+                                          snapshot.data['data'][index]['video']
+                                              .toString(),
+                                          snapshot.data['data'][index]['id']
+                                              .toString()));
+                                  ;
                                 },
                                 child: Container(
                                   child: Row(
