@@ -47,8 +47,9 @@ dependencies:
   provider: ^6.0.2
   flick_video_player:
   video_player:
-  audioplayers:
   path_provider:
+  just_audio:
+  audio_video_progress_bar:
   
 
 dev_dependencies:

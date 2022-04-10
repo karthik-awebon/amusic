@@ -18,6 +18,7 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
+import 'audio_player_screen.dart';
 
 class Home extends StatefulWidget {
   static const routeName = './home';
@@ -705,16 +706,27 @@ class _HomeState extends State<Home> {
                                           10, 10, 10, 0),
                                       child: InkWell(
                                         onTap: () {
-                                          setState(() {
-                                            flag = true;
-                                            playingSong = snapshot.data['data']
-                                                [index]['name'];
-                                            playingSongArtist =
-                                                snapshot.data['data'][index]
-                                                    ['musicArtists'][0]['name'];
-                                            songImage = snapshot.data['data']
-                                                [index]['img_banner'];
-                                          });
+                                          Navigator.of(context).pushNamed(
+                                              AudioPlayerScreen.routeName,
+                                              arguments:
+                                                  AudioPlayerScreenArguments(
+                                                      snapshot.data['data']
+                                                              [index]
+                                                              ['song_file']
+                                                          .toString(),
+                                                      snapshot.data['data']
+                                                              [index]['id']
+                                                          .toString()));
+                                          // setState(() {
+                                          //   flag = true;
+                                          //   playingSong = snapshot.data['data']
+                                          //       [index]['name'];
+                                          //   playingSongArtist =
+                                          //       snapshot.data['data'][index]
+                                          //           ['musicArtists'][0]['name'];
+                                          //   songImage = snapshot.data['data']
+                                          //       [index]['img_banner'];
+                                          // });
                                         },
                                         child: Container(
                                           child: Row(
@@ -881,6 +893,13 @@ class _HomeState extends State<Home> {
         drawer: JhankarDrawer(),
         bottomNavigationBar: JhankarBottomBar());
   }
+}
+
+class AudioPlayerScreenArguments {
+  final String audioUrl;
+  final String playlistId;
+
+  AudioPlayerScreenArguments(this.audioUrl, this.playlistId);
 }
 
 class CategoryArguments {

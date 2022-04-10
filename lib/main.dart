@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
                     VideoPlayerScreen.routeName: (context) =>
                         VideoPlayerScreen(),
                     AudioPlayerScreen.routeName: (context) =>
-                        AudioPlayerScreen()
+                        AudioPlayerScreen(),
                   },
                 )));
   }
