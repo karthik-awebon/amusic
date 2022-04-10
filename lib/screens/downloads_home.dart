@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../api/home_api.dart';
-import '../widgets/bottombar.dart';
+import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 
 class DownloadsHome extends StatelessWidget {

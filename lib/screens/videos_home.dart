@@ -3,7 +3,7 @@ import 'package:amusic_app/screens/video_player_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../widgets/bottombar.dart';
+import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 import 'video_categories_home.dart';
 import 'video_category_home.dart';

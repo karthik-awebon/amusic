@@ -1,5 +1,5 @@
 import 'package:amusic_app/screens/videos_home.dart';
-import 'package:amusic_app/widgets/video_player.dart';
+import 'package:amusic_app/widgets/video_player_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -28,7 +28,7 @@ class VideoPlayerScreen extends StatelessWidget {
                     image: AssetImage("lib/img/back4img.jpg"),
                     fit: BoxFit.fill)),
             child: Column(children: <Widget>[
-              VideoPlayer(videoUrl: videoPlayerData.videoUrl),
+              VideoPlayerWidget(videoUrl: videoPlayerData.videoUrl),
               FutureBuilder(
                   future: VideosApi.getVideos(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {

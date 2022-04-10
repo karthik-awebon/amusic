@@ -1,8 +1,9 @@
-import 'package:amusic_app/widgets/video_player.dart';
+import 'package:amusic_app/screens/audio_player_screen.dart';
+import 'package:amusic_app/widgets/video_player_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../widgets/bottombar.dart';
+import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 
 class AccountHome extends StatelessWidget {
@@ -169,7 +170,10 @@ class AccountHome extends StatelessWidget {
                         Text('Songs')
                       ]),
                       InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(AudioPlayerScreen.routeName);
+                          },
                           child: Icon(
                             Icons.arrow_circle_right_outlined,
                           )),

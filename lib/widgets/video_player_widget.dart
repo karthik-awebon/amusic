@@ -2,16 +2,16 @@ import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPlayer extends StatefulWidget {
+class VideoPlayerWidget extends StatefulWidget {
   String videoUrl = '';
 
-  VideoPlayer({Key? key, required this.videoUrl}) : super(key: key);
+  VideoPlayerWidget({Key? key, required this.videoUrl}) : super(key: key);
 
   @override
   _VideoPlayerState createState() => _VideoPlayerState();
 }
 
-class _VideoPlayerState extends State<VideoPlayer> {
+class _VideoPlayerState extends State<VideoPlayerWidget> {
   late FlickManager flickManager;
   late Future<void> _initializeVideoPlayerFuture;
 
