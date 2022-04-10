@@ -715,7 +715,7 @@ class _HomeState extends State<Home> {
                                                               ['song_file']
                                                           .toString(),
                                                       snapshot.data['data']
-                                                              [index]['id']
+                                                              [index]['name']
                                                           .toString()));
                                           // setState(() {
                                           //   flag = true;
@@ -897,9 +897,9 @@ class _HomeState extends State<Home> {
 
 class AudioPlayerScreenArguments {
   final String audioUrl;
-  final String playlistId;
+  final String audioName;
 
-  AudioPlayerScreenArguments(this.audioUrl, this.playlistId);
+  AudioPlayerScreenArguments(this.audioUrl, this.audioName);
 }
 
 class CategoryArguments {

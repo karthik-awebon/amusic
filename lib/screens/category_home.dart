@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../api/home_api.dart';
+import 'audio_player_screen.dart';
 
 class CategoryHome extends StatelessWidget {
   static const routeName = './category-home';
@@ -44,7 +45,16 @@ class CategoryHome extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 10, 0),
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                        AudioPlayerScreen.routeName,
+                                        arguments: AudioPlayerScreenArguments(
+                                            snapshot.data['data'][index]
+                                                    ['song_file']
+                                                .toString(),
+                                            snapshot.data['data'][index]['name']
+                                                .toString()));
+                                  },
                                   child: Container(
                                     child: Row(
                                       children: [
