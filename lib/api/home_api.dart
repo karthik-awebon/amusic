@@ -57,14 +57,4 @@ class HomeApi {
     return jsonDecode(response.body);
   }
 
-  static Future LogOut() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('jhankar_token');
-
-    http.Response response =
-        await http.get(Uri.parse("$API_BASE_URL/user/logout?token=$token"));
-    print("Logout ${response.statusCode} ${response.body}");
-    prefs.clear();
-    return response.statusCode;
-  }
 }

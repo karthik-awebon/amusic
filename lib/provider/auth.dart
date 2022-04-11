@@ -10,6 +10,7 @@ import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
+  String? _userId;
 
   bool get isAuth {
     return token != null;
@@ -18,6 +19,13 @@ class Auth with ChangeNotifier {
   String? get token {
     if (_token != null) {
       return _token;
+    }
+    return null;
+  }
+
+  String? get userId {
+    if (_userId != null) {
+      return _userId;
     }
     return null;
   }
@@ -40,7 +48,12 @@ class Auth with ChangeNotifier {
 
       if (responseData['status'] == "SUCCESS") {
         final prefs = await SharedPreferences.getInstance();
-        prefs.setString('jhankar_token', responseData['data']['token']);
+        prefs.setString(
+            'jhankar_token',
+            json.encode({
+              'user_id': responseData['data']['id'],
+              'token': responseData['data']['token']
+            }));
         _token = responseData['data']['token'];
         notifyListeners();
       } else {
@@ -69,7 +82,12 @@ class Auth with ChangeNotifier {
 
       if (responseData['status'] == "SUCCESS") {
         final prefs = await SharedPreferences.getInstance();
-        prefs.setString('jhankar_token', responseData['data']['token']);
+        prefs.setString(
+            'jhankar_token',
+            json.encode({
+              'user_id': responseData['data']['id'],
+              'token': responseData['data']['token']
+            }));
         _token = responseData['data']['token'];
         notifyListeners();
       } else {
@@ -111,8 +129,9 @@ class Auth with ChangeNotifier {
     if (!prefs.containsKey('jhankar_token')) {
       return false;
     }
-    final userToken = prefs.getString('jhankar_token');
-    _token = userToken;
+
+    final userData = json.decode(prefs.getString('jhankar_token').toString());
+    _token = userData.token;
     notifyListeners();
     return true;
   }

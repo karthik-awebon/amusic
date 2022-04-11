@@ -5,7 +5,7 @@
 
 
     <application
-        android:label="amusic_app"
+        android:label="Jhankar app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
