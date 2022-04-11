@@ -21,13 +21,13 @@ class AuthApi {
     return jsonDecode(response.body);
   }
 
-  static Future LogOut() async {
-    final prefs = await SharedPreferences.getInstance();
-    final userData = json.decode(prefs.getString('jhankar_token').toString());
-
-    http.Response response = await http
-        .get(Uri.parse("$API_BASE_URL/user/logout?token=${userData['token']}"));
-    prefs.clear();
-    return response.statusCode;
+  static Future LogOut(token) async {
+    http.Response response =
+        await http.get(Uri.parse("$API_BASE_URL/user/logout?token=$token"));
+    var responseData = jsonDecode(response.body);
+    if (responseData['status'] == 'SUCCESS') {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.clear();
+    }
   }
 }

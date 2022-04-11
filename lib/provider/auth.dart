@@ -131,7 +131,7 @@ class Auth with ChangeNotifier {
     }
 
     final userData = json.decode(prefs.getString('jhankar_token').toString());
-    _token = userData.token;
+    _token = userData['token'];
     notifyListeners();
     return true;
   }

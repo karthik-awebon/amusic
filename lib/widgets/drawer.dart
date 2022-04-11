@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../api/auth_api.dart';
+import '../provider/auth.dart';
 import '../screens/login.dart';
 
 class JhankarDrawer extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
+    
     return Drawer(
       child: ListView(
         // Important: Remove any padding from the ListView.
@@ -64,8 +68,10 @@ class JhankarDrawer extends StatelessWidget {
               color: Colors.black,
             ),
             title: const Text('Logout'),
-            onTap: () {
-              AuthApi.LogOut().then((value) {
+            onTap: () async {
+              AuthApi.LogOut(
+                      await Provider.of<Auth>(context, listen: false).token)
+                  .then((value) {
                 //if (value == 200 || value == 201) {
                 Navigator.pushAndRemoveUntil(
                     context,
