@@ -10,7 +10,7 @@ import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
-  String? _userId;
+  int? _userId;
 
   bool get isAuth {
     return token != null;
@@ -23,7 +23,7 @@ class Auth with ChangeNotifier {
     return null;
   }
 
-  String? get userId {
+  int? get userId {
     if (_userId != null) {
       return _userId;
     }
@@ -55,6 +55,7 @@ class Auth with ChangeNotifier {
               'token': responseData['data']['token']
             }));
         _token = responseData['data']['token'];
+        _userId = responseData['data']['id'];
         notifyListeners();
       } else {
         throw HttpException(responseData['message']);
@@ -89,6 +90,7 @@ class Auth with ChangeNotifier {
               'token': responseData['data']['token']
             }));
         _token = responseData['data']['token'];
+        _userId = responseData['data']['id'];
         notifyListeners();
       } else {
         throw HttpException(responseData['message']);
@@ -132,6 +134,7 @@ class Auth with ChangeNotifier {
 
     final userData = json.decode(prefs.getString('jhankar_token').toString());
     _token = userData['token'];
+    _userId = userData['user_id'];
     notifyListeners();
     return true;
   }

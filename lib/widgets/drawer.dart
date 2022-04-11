@@ -68,9 +68,9 @@ class JhankarDrawer extends StatelessWidget {
               color: Colors.black,
             ),
             title: const Text('Logout'),
-            onTap: () async {
+            onTap: () {
               AuthApi.LogOut(
-                      await Provider.of<Auth>(context, listen: false).token)
+                       Provider.of<Auth>(context, listen: false).token)
                   .then((value) {
                 //if (value == 200 || value == 201) {
                 Navigator.pushAndRemoveUntil(

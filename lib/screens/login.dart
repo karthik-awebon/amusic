@@ -259,7 +259,7 @@ class LoginpageState extends State<Loginpage> {
       _currentUser = model;
 
       try {
-        await Provider.of<Auth>(context, listen: false).socialLogin(
+        Provider.of<Auth>(context, listen: false).socialLogin(
           model.email.toString(),
           model.name.toString(),
         );
@@ -282,7 +282,7 @@ class LoginpageState extends State<Loginpage> {
   Future<void> signIn1() async {
     try {
       await _googleSignIn.signIn();
-      await Provider.of<Auth>(context, listen: false).socialLogin(
+      Provider.of<Auth>(context, listen: false).socialLogin(
         _currentUser1!.email.toString(),
         _currentUser1!.id.toString(),
       );
@@ -316,10 +316,10 @@ class LoginpageState extends State<Loginpage> {
     }
   }
 
-  Future<void> loginCheck() async {
+  void loginCheck() {
     if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
       try {
-        await Provider.of<Auth>(context, listen: false).login(
+        Provider.of<Auth>(context, listen: false).login(
           emailController.text,
           passController.text,
         );

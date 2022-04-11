@@ -14,11 +14,10 @@ class AuthApi {
     return token;
   }
 
-  static Future getUserProfile() async {
-    final userToken = AuthApi.getUserToken();
+  static Future getUserProfile(String token, int userId) async {
     http.Response response = await http.get(Uri.parse(
-        "$API_BASE_URL/video/title-view-more?page=1&number_per_page=10&video_title_id=4"));
-    return jsonDecode(response.body);
+        "$API_BASE_URL/user/profile?user_id=$userId&token=$token"));
+    return jsonDecode(response.body)['data'];
   }
 
   static Future LogOut(token) async {

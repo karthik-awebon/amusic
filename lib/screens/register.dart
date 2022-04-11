@@ -289,13 +289,13 @@ class RegisterpageState extends State<Registerpage> {
     );
   }
 
-  postData() async {
+  postData() {
     if (emailController.text.isNotEmpty &&
         passController.text.isNotEmpty &&
         nameController.text.isNotEmpty) {
       if (passController.text == conpassController.text) {
         try {
-          await Provider.of<Auth>(context, listen: false).signup(
+          Provider.of<Auth>(context, listen: false).signup(
               emailController.text, passController.text, nameController.text);
           Navigator.of(context).pushNamed(Home.routeName);
           ScaffoldMessenger.of(context)
