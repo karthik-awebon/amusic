@@ -1,23 +1,17 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:amusic_app/api/home_api.dart';
-import 'package:amusic_app/screens/login.dart';
-import 'package:amusic_app/screens/register.dart';
-import 'package:amusic_app/screens/account_home.dart';
 import 'package:amusic_app/screens/categories_home.dart';
 import 'package:amusic_app/screens/category_home.dart';
-import 'package:amusic_app/screens/downloads_home.dart';
 import 'package:amusic_app/screens/playlist_home.dart';
 import 'package:amusic_app/screens/playlists_home.dart';
-import 'package:amusic_app/screens/videos_home.dart';
+import 'package:amusic_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
+import '../widgets/songs_list.dart';
 import 'audio_player_screen.dart';
 
 class Home extends StatefulWidget {
@@ -71,11 +65,16 @@ class _HomeState extends State<Home> {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          actions: const [
-            Icon(
-              Icons.search,
-              color: Colors.white,
-              size: 30,
+          actions: [
+            InkWell(
+              child: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 30,
+              ),
+              onTap: () {
+                Navigator.of(context).pushNamed(SearchScreen.routeName);
+              },
             ),
             SizedBox(
               width: 10,
@@ -694,102 +693,7 @@ class _HomeState extends State<Home> {
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
-                              return ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  physics: BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: snapshot.data['data'].length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 10, 10, 0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).pushNamed(
-                                              AudioPlayerScreen.routeName,
-                                              arguments:
-                                                  AudioPlayerScreenArguments(
-                                                      snapshot.data['data']
-                                                              [index]
-                                                              ['song_file']
-                                                          .toString(),
-                                                      snapshot.data['data']
-                                                              [index]['name']
-                                                          .toString()));
-                                          // setState(() {
-                                          //   flag = true;
-                                          //   playingSong = snapshot.data['data']
-                                          //       [index]['name'];
-                                          //   playingSongArtist =
-                                          //       snapshot.data['data'][index]
-                                          //           ['musicArtists'][0]['name'];
-                                          //   songImage = snapshot.data['data']
-                                          //       [index]['img_banner'];
-                                          // });
-                                        },
-                                        child: Container(
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: NetworkImage(
-                                                            snapshot.data[
-                                                                        'data']
-                                                                    [index][
-                                                                'img_banner']))),
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Flexible(
-                                                flex: 7,
-                                                fit: FlexFit.tight,
-                                                child: Column(
-                                                  // mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        "${snapshot.data['data'][index]['name']}",
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 18)),
-                                                    Text(
-                                                        snapshot.data['data']
-                                                                    [index]
-                                                                ['musicArtists']
-                                                            [0]['name'],
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 15)),
-                                                  ],
-                                                ),
-                                              ),
-                                              Flexible(
-                                                child: SizedBox(),
-                                                fit: FlexFit.tight,
-                                              ),
-                                              Icon(
-                                                Icons.more_vert,
-                                                size: 30,
-                                                color: Colors.white,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  });
+                              return SongsList(songsList: snapshot.data);
                             } else if (snapshot.hasError) {
                               return Text("errir");
                             } else {

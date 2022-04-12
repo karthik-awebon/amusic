@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:amusic_app/screens/audio_player_screen.dart';
 import 'package:amusic_app/screens/home.dart';
 import 'package:amusic_app/screens/login.dart';
@@ -8,13 +10,13 @@ import 'package:amusic_app/screens/category_home.dart';
 import 'package:amusic_app/screens/downloads_home.dart';
 import 'package:amusic_app/screens/playlist_home.dart';
 import 'package:amusic_app/screens/playlists_home.dart';
+import 'package:amusic_app/screens/search_screen.dart';
 import 'package:amusic_app/screens/video_player_screen.dart';
 import 'package:amusic_app/widgets/video_player_widget.dart';
 import 'package:amusic_app/screens/videos_home.dart';
 import 'package:amusic_app/widgets/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/auth.dart';
@@ -80,6 +82,7 @@ class MyApp extends StatelessWidget {
                         VideoPlayerScreen(),
                     AudioPlayerScreen.routeName: (context) =>
                         AudioPlayerScreen(),
+                    SearchScreen.routeName: (context) => SearchScreen()
                   },
                 )));
   }

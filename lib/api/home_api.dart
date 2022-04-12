@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/song.dart';
 
 class HomeApi {
   static String API_BASE_URL =
@@ -33,12 +34,29 @@ class HomeApi {
     return jsonDecode(response.body);
   }
 
-  static Future getListCategotyForNewSongs() async {
+
+  static Future<List<Song>> getListCategotyForNewSongs() async {
     http.Response response = await http.get(Uri.parse(
         "$API_BASE_URL/list-song/category?category_id=4&page=1&number_per_page=10"));
-    print(
-        "List Category songs for new songs ${response.statusCode} ${response.body}");
-    return jsonDecode(response.body);
+
+    var responseData = jsonDecode(response.body);
+    List<Song> songsList = [];
+    for (var i = 0; i < responseData['data'].length; i++) {
+      MusicArtist musicArtist = MusicArtist(
+          id: responseData['data'][i]['musicArtists'][0]['id'],
+          name: responseData['data'][i]['musicArtists'][0]['name'],
+          imgBanner: responseData['data'][i]['musicArtists'][0]['img_banner']);
+      List<MusicArtist> musicArtistList = [];
+      musicArtistList.add(musicArtist);
+      Song song = Song(
+          id: responseData['data'][i]['id'],
+          name: responseData['data'][i]['name'],
+          imgBanner: responseData['data'][i]['img_banner'],
+          songFile: responseData['data'][i]['song_file'],
+          musicArtists: musicArtistList);
+      songsList.add(song);
+    }
+    return songsList;
   }
 
   static Future getCategorySongs(categoryId) async {
@@ -56,5 +74,4 @@ class HomeApi {
         "List Category songs for new songs ${response.statusCode} ${response.body}");
     return jsonDecode(response.body);
   }
-
 }
