@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../models/song.dart';
+import '../screens/audio_player_screen.dart';
+import '../screens/home.dart';
 
 class SongsList extends StatelessWidget {
   List<Song> songsList = [];
@@ -17,7 +19,12 @@ class SongsList extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(AudioPlayerScreen.routeName,
+                    arguments: AudioPlayerScreenArguments(
+                        songsList[index].songFile.toString(),
+                        songsList[index].name.toString()));
+              },
               child: Container(
                 child: Row(
                   children: [
@@ -44,9 +51,12 @@ class SongsList extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18)),
-                          Text(songsList[index].musicArtists[0].name,
+                          (songsList[index].musicArtists.length > 0)
+                              ? Text(songsList[index].musicArtists[0].name,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 15)),
+                                  TextStyle(
+                                      color: Colors.white, fontSize: 15))
+                              : Text(''),
                         ],
                       ),
                     ),

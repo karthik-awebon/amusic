@@ -53,6 +53,12 @@ class MyApp extends StatelessWidget {
                     // is not restarted.
                     brightness: Brightness.dark,
                     primaryColor: Color.fromARGB(255, 52, 89, 131),
+                    textTheme: const TextTheme(
+                      headline1: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                   //home: AudioPlayerActivity(token: "",),
                   home: auth.isAuth

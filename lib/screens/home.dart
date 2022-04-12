@@ -181,10 +181,7 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               'Category',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                             InkWell(
                                 onTap: () {
@@ -275,10 +272,7 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               'New Albums',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                             InkWell(
                                 onTap: () {
@@ -376,10 +370,7 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               'Hot Albums',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                             InkWell(
                                 onTap: () {
@@ -477,10 +468,7 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               'Top Albums',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                             InkWell(
                                 onTap: () {
@@ -578,10 +566,7 @@ class _HomeState extends State<Home> {
                           children: [
                             Text(
                               'Bindashi Albums',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                             InkWell(
                                 onTap: () {
@@ -681,10 +666,7 @@ class _HomeState extends State<Home> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'New Songs',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600),
+                            style: Theme.of(context).textTheme.headline1,
                           ),
                         ),
                       ),

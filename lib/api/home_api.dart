@@ -34,20 +34,49 @@ class HomeApi {
     return jsonDecode(response.body);
   }
 
-
   static Future<List<Song>> getListCategotyForNewSongs() async {
     http.Response response = await http.get(Uri.parse(
         "$API_BASE_URL/list-song/category?category_id=4&page=1&number_per_page=10"));
 
-    var responseData = jsonDecode(response.body);
+    return constructSongsList(jsonDecode(response.body));
+  }
+
+  static Future getCategorySongs(categoryId) async {
+    http.Response response = await http.get(Uri.parse(
+        "$API_BASE_URL/list-song/category?category_id=$categoryId&page=1&number_per_page=10"));
+    print(
+        "List Category songs for new songs ${response.statusCode} ${response.body}");
+    return constructSongsList(jsonDecode(response.body));
+  }
+
+  static Future getPlaylistSongs(playlistId) async {
+    http.Response response = await http.get(Uri.parse(
+        "$API_BASE_URL/list-song/playlist?playlist_id=$playlistId&page=1&number_per_page=10"));
+
+    return constructSongsList(jsonDecode(response.body));
+  }
+
+  static Future<List<Song>> searchSongsByKeyword(String keyword) async {
+    http.Response response = await http.get(Uri.parse(
+        "$API_BASE_URL/list/song?page=1&number_per_page=10&keyword=$keyword"));
+
+    return constructSongsList(jsonDecode(response.body));
+  }
+
+  static List<Song> constructSongsList(responseData) {
     List<Song> songsList = [];
     for (var i = 0; i < responseData['data'].length; i++) {
-      MusicArtist musicArtist = MusicArtist(
-          id: responseData['data'][i]['musicArtists'][0]['id'],
-          name: responseData['data'][i]['musicArtists'][0]['name'],
-          imgBanner: responseData['data'][i]['musicArtists'][0]['img_banner']);
       List<MusicArtist> musicArtistList = [];
-      musicArtistList.add(musicArtist);
+      if (responseData['data'][i]['musicArtists'].length > 0) {
+        MusicArtist musicArtist = MusicArtist(
+            id: responseData['data'][i]['musicArtists'][0]['id'],
+            name: responseData['data'][i]['musicArtists'][0]['name'],
+            imgBanner: responseData['data'][i]['musicArtists'][0]
+                ['img_banner']);
+
+        musicArtistList.add(musicArtist);
+      }
+
       Song song = Song(
           id: responseData['data'][i]['id'],
           name: responseData['data'][i]['name'],
@@ -57,21 +86,5 @@ class HomeApi {
       songsList.add(song);
     }
     return songsList;
-  }
-
-  static Future getCategorySongs(categoryId) async {
-    http.Response response = await http.get(Uri.parse(
-        "$API_BASE_URL/list-song/category?category_id=$categoryId&page=1&number_per_page=10"));
-    print(
-        "List Category songs for new songs ${response.statusCode} ${response.body}");
-    return jsonDecode(response.body);
-  }
-
-  static Future getPlaylistSongs(playlistId) async {
-    http.Response response = await http.get(Uri.parse(
-        "$API_BASE_URL/list-song/playlist?playlist_id=$playlistId&page=1&number_per_page=10"));
-    print(
-        "List Category songs for new songs ${response.statusCode} ${response.body}");
-    return jsonDecode(response.body);
   }
 }
