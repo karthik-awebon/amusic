@@ -3,9 +3,18 @@ import 'package:flutter/material.dart';
 import '../api/home_api.dart';
 import '../widgets/songs_list.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   static const routeName = './search';
-  const SearchScreen({Key? key}) : super(key: key);
+
+  SearchScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  String searchString = '';
+  final searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +26,12 @@ class SearchScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(5)),
             child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  searchString = value;
+                });
+              },
+              controller: searchController,
               decoration: InputDecoration(
                   fillColor: Color.fromARGB(255, 52, 89, 131),
                   filled: true,
@@ -35,8 +50,9 @@ class SearchScreen extends StatelessWidget {
                     image: AssetImage("lib/img/back4img.jpg"),
                     fit: BoxFit.fill)),
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-                child: Column(children: [
+                physics: BouncingScrollPhysics(),
+                child: (searchString.isNotEmpty)
+                    ? Column(children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     child: Align(
@@ -48,7 +64,7 @@ class SearchScreen extends StatelessWidget {
                     ),
                   ),
                   FutureBuilder(
-                      future: HomeApi.searchSongsByKeyword('tim'),
+                            future: HomeApi.searchSongsByKeyword(searchString),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (snapshot.hasData) {
                           return SongsList(songsList: snapshot.data);
@@ -58,7 +74,7 @@ class SearchScreen extends StatelessWidget {
                           return Center(child: CircularProgressIndicator());
                         }
                       }),
-                ])
-            )));
+                      ])
+                    : null)));
   }
 }
