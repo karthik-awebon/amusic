@@ -9,6 +9,7 @@ import 'package:amusic_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../models/category.dart';
 import '../models/playlist.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
@@ -196,86 +197,70 @@ class _HomeState extends State<Home> {
                                   ],
                                 ),
                               ),
-                              // Container(
-                              //   height: _height * 12,
-                              //   child: FutureBuilder(
-                              //       future: HomeApi.getCategoryList(),
-                              //       builder: (BuildContext context,
-                              //           AsyncSnapshot snapshot) {
-                              //         if (snapshot.hasData) {
-                              //           return ListView.builder(
-                              //               scrollDirection: Axis.horizontal,
-                              //               physics: BouncingScrollPhysics(),
-                              //               shrinkWrap: true,
-                              //               itemCount:
-                              //                   snapshot.data['data'].length,
-                              //               itemBuilder: (BuildContext context,
-                              //                   int index) {
-                              //                 return Padding(
-                              //                     padding: const EdgeInsets
-                              //                         .symmetric(horizontal: 8),
-                              //                     child: InkWell(
-                              //                       onTap: () {
-                              //                         Navigator.of(context).pushNamed(
-                              //                             CategoryHome
-                              //                                 .routeName,
-                              //                             arguments: CategoryArguments(
-                              //                                 snapshot
-                              //                                     .data['data']
-                              //                                         [index]
-                              //                                         ['id']
-                              //                                     .toString(),
-                              //                                 snapshot.data[
-                              //                                             'data']
-                              //                                         [index]
-                              //                                     ['name']));
-                              //                       },
-                              //                       child: Container(
-                              //                           width: _width * 39,
-                              //                           decoration:
-                              //                               BoxDecoration(
-                              //                             color: Colors.black
-                              //                                 .withOpacity(0.9),
-                              //                             image:
-                              //                                 DecorationImage(
-                              //                               colorFilter:
-                              //                                   ColorFilter.mode(
-                              //                                       Colors
-                              //                                           .black
-                              //                                           .withOpacity(
-                              //                                               0.8),
-                              //                                       BlendMode
-                              //                                           .dstATop),
-                              //                               image: NetworkImage(
-                              //                                   snapshot.data[
-                              //                                               'data']
-                              //                                           [index][
-                              //                                       'img_thumb']),
-                              //                               scale: 3.5,
-                              //                               fit: BoxFit.cover,
-                              //                             ),
-                              //                           ),
-                              //                           child: Center(
-                              //                             child: Text(
-                              //                               snapshot.data[
-                              //                                       'data']
-                              //                                   [index]['name'],
-                              //                               style: TextStyle(
-                              //                                   color: Colors
-                              //                                       .white,
-                              //                                   fontSize: 20),
-                              //                             ),
-                              //                           )),
-                              //                     ));
-                              //               });
-                              //         } else if (snapshot.hasError) {
-                              //           return Text("errir");
-                              //         } else {
-                              //           return Center(
-                              //               child: CircularProgressIndicator());
-                              //         }
-                              //       }),
-                              // ),
+                              Container(
+                                  height: _height * 12,
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      physics: BouncingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          snapshot.data['categories'].length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8),
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).pushNamed(
+                                                    CategoryHome.routeName,
+                                                    arguments: CategoryArguments(
+                                                        snapshot
+                                                            .data['categories']
+                                                                [index]
+                                                            .id
+                                                            .toString(),
+                                                        snapshot
+                                                            .data['categories']
+                                                                [index]
+                                                            .name));
+                                              },
+                                              child: Container(
+                                                  width: _width * 39,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black
+                                                        .withOpacity(0.9),
+                                                    image: DecorationImage(
+                                                      colorFilter:
+                                                          ColorFilter.mode(
+                                                              Colors.black
+                                                                  .withOpacity(
+                                                                      0.8),
+                                                              BlendMode
+                                                                  .dstATop),
+                                                      image: NetworkImage(
+                                                          snapshot
+                                                              .data[
+                                                                  'categories']
+                                                                  [index]
+                                                              .imgThumb),
+                                                      scale: 3.5,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      snapshot
+                                                          .data['categories']
+                                                              [index]
+                                                          .name,
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 20),
+                                                    ),
+                                                  )),
+                                            ));
+                                      })),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 20, 10),
