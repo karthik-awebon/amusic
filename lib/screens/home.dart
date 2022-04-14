@@ -6,6 +6,7 @@ import 'package:amusic_app/screens/category_home.dart';
 import 'package:amusic_app/screens/playlist_home.dart';
 import 'package:amusic_app/screens/playlists_home.dart';
 import 'package:amusic_app/screens/search_screen.dart';
+import 'package:amusic_app/widgets/playlists_list.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -100,6 +101,7 @@ class _HomeState extends State<Home> {
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (snapshot.hasData) {
                           return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Stack(
                                 alignment: Alignment.bottomLeft,
@@ -288,90 +290,11 @@ class _HomeState extends State<Home> {
                                   ],
                                 ),
                               ),
-                              // Container(
-                              //   height: _height * 15,
-                              //   child: FutureBuilder(
-                              //       future: HomeApi.getPlayListMusic(),
-                              //       builder: (BuildContext context,
-                              //           AsyncSnapshot snapshot) {
-                              //         if (snapshot.hasData) {
-                              //           return ListView.builder(
-                              //               scrollDirection: Axis.horizontal,
-                              //               physics: BouncingScrollPhysics(),
-                              //               shrinkWrap: true,
-                              //               itemCount:
-                              //                   snapshot.data['data'].length,
-                              //               itemBuilder: (BuildContext context,
-                              //                   int index) {
-                              //                 return Padding(
-                              //                     padding: const EdgeInsets
-                              //                         .symmetric(horizontal: 8),
-                              //                     child: InkWell(
-                              //                         onTap: () {
-                              //                           Navigator.of(context).pushNamed(
-                              //                               PlaylistHome
-                              //                                   .routeName,
-                              //                               arguments: PlaylistArguments(
-                              //                                   snapshot.data[
-                              //                                           'data']
-                              //                                           [index]
-                              //                                           ['id']
-                              //                                       .toString(),
-                              //                                   snapshot.data[
-                              //                                           'data']
-                              //                                           [index][
-                              //                                           'img_thumb']
-                              //                                       .toString()));
-                              //                         },
-                              //                         child: Container(
-                              //                             width: _width * 30,
-                              //                             decoration:
-                              //                                 BoxDecoration(
-                              //                               borderRadius:
-                              //                                   BorderRadius
-                              //                                       .circular(
-                              //                                           10),
-                              //                               image:
-                              //                                   DecorationImage(
-                              //                                 image: NetworkImage(
-                              //                                     snapshot.data[
-                              //                                                 'data']
-                              //                                             [
-                              //                                             index]
-                              //                                         [
-                              //                                         'img_thumb']),
-                              //                                 scale: 3.5,
-                              //                                 fit: BoxFit.cover,
-                              //                               ),
-                              //                             ),
-                              //                             child: Align(
-                              //                               alignment: Alignment
-                              //                                   .bottomRight,
-                              //                               child: Container(
-                              //                                 decoration: BoxDecoration(
-                              //                                     color: Colors
-                              //                                         .black
-                              //                                         .withOpacity(
-                              //                                             0.5)),
-                              //                                 child: Text(
-                              //                                   "  ${snapshot.data['data'][index]['songs_count']} items",
-                              //                                   style: TextStyle(
-                              //                                       color: Colors
-                              //                                           .white,
-                              //                                       fontSize:
-                              //                                           18),
-                              //                                 ),
-                              //                               ),
-                              //                             ))));
-                              //               });
-                              //         } else if (snapshot.hasError) {
-                              //           return Text("errir");
-                              //         } else {
-                              //           return Center(
-                              //               child: CircularProgressIndicator());
-                              //         }
-                              //       }),
-                              // ),
+                              Container(
+                                  height: _height * 15,
+                                  child: PlaylistsList(
+                                      playlistsList:
+                                          snapshot.data['new_albums'])),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -399,90 +322,11 @@ class _HomeState extends State<Home> {
                                   ],
                                 ),
                               ),
-                              // Container(
-                              //   height: _height * 15,
-                              //   child: FutureBuilder(
-                              //       future: HomeApi.getPlayListMusic(),
-                              //       builder: (BuildContext context,
-                              //           AsyncSnapshot snapshot) {
-                              //         if (snapshot.hasData) {
-                              //           return ListView.builder(
-                              //               scrollDirection: Axis.horizontal,
-                              //               physics: BouncingScrollPhysics(),
-                              //               shrinkWrap: true,
-                              //               itemCount:
-                              //                   snapshot.data['data'].length,
-                              //               itemBuilder: (BuildContext context,
-                              //                   int index) {
-                              //                 return Padding(
-                              //                     padding: const EdgeInsets
-                              //                         .symmetric(horizontal: 8),
-                              //                     child: InkWell(
-                              //                         onTap: () {
-                              //                           Navigator.of(context).pushNamed(
-                              //                               PlaylistHome
-                              //                                   .routeName,
-                              //                               arguments: PlaylistArguments(
-                              //                                   snapshot.data[
-                              //                                           'data']
-                              //                                           [index]
-                              //                                           ['id']
-                              //                                       .toString(),
-                              //                                   snapshot.data[
-                              //                                           'data']
-                              //                                           [index][
-                              //                                           'img_thumb']
-                              //                                       .toString()));
-                              //                         },
-                              //                         child: Container(
-                              //                             width: _width * 30,
-                              //                             decoration:
-                              //                                 BoxDecoration(
-                              //                               borderRadius:
-                              //                                   BorderRadius
-                              //                                       .circular(
-                              //                                           10),
-                              //                               image:
-                              //                                   DecorationImage(
-                              //                                 image: NetworkImage(
-                              //                                     snapshot.data[
-                              //                                                 'data']
-                              //                                             [
-                              //                                             index]
-                              //                                         [
-                              //                                         'img_thumb']),
-                              //                                 scale: 3.5,
-                              //                                 fit: BoxFit.cover,
-                              //                               ),
-                              //                             ),
-                              //                             child: Align(
-                              //                               alignment: Alignment
-                              //                                   .bottomRight,
-                              //                               child: Container(
-                              //                                 decoration: BoxDecoration(
-                              //                                     color: Colors
-                              //                                         .black
-                              //                                         .withOpacity(
-                              //                                             0.5)),
-                              //                                 child: Text(
-                              //                                   "  ${snapshot.data['data'][index]['songs_count']} items",
-                              //                                   style: TextStyle(
-                              //                                       color: Colors
-                              //                                           .white,
-                              //                                       fontSize:
-                              //                                           18),
-                              //                                 ),
-                              //                               ),
-                              //                             ))));
-                              //               });
-                              //         } else if (snapshot.hasError) {
-                              //           return Text("errir");
-                              //         } else {
-                              //           return Center(
-                              //               child: CircularProgressIndicator());
-                              //         }
-                              //       }),
-                              // ),
+                              Container(
+                                  height: _height * 15,
+                                  child: PlaylistsList(
+                                      playlistsList:
+                                          snapshot.data['hot_albums'])),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -510,90 +354,11 @@ class _HomeState extends State<Home> {
                                   ],
                                 ),
                               ),
-                              // Container(
-                              //   height: _height * 15,
-                              //   child: FutureBuilder(
-                              //       future: HomeApi.getPlayListMusic(),
-                              //       builder: (BuildContext context,
-                              //           AsyncSnapshot snapshot) {
-                              //         if (snapshot.hasData) {
-                              //           return ListView.builder(
-                              //               scrollDirection: Axis.horizontal,
-                              //               physics: BouncingScrollPhysics(),
-                              //               shrinkWrap: true,
-                              //               itemCount:
-                              //                   snapshot.data['data'].length,
-                              //               itemBuilder: (BuildContext context,
-                              //                   int index) {
-                              //                 return Padding(
-                              //                     padding: const EdgeInsets
-                              //                         .symmetric(horizontal: 8),
-                              //                     child: InkWell(
-                              //                         onTap: () {
-                              //                           Navigator.of(context).pushNamed(
-                              //                               PlaylistHome
-                              //                                   .routeName,
-                              //                               arguments: PlaylistArguments(
-                              //                                   snapshot.data[
-                              //                                           'data']
-                              //                                           [index]
-                              //                                           ['id']
-                              //                                       .toString(),
-                              //                                   snapshot.data[
-                              //                                           'data']
-                              //                                           [index][
-                              //                                           'img_thumb']
-                              //                                       .toString()));
-                              //                         },
-                              //                         child: Container(
-                              //                             width: _width * 30,
-                              //                             decoration:
-                              //                                 BoxDecoration(
-                              //                               borderRadius:
-                              //                                   BorderRadius
-                              //                                       .circular(
-                              //                                           10),
-                              //                               image:
-                              //                                   DecorationImage(
-                              //                                 image: NetworkImage(
-                              //                                     snapshot.data[
-                              //                                                 'data']
-                              //                                             [
-                              //                                             index]
-                              //                                         [
-                              //                                         'img_thumb']),
-                              //                                 scale: 3.5,
-                              //                                 fit: BoxFit.cover,
-                              //                               ),
-                              //                             ),
-                              //                             child: Align(
-                              //                               alignment: Alignment
-                              //                                   .bottomRight,
-                              //                               child: Container(
-                              //                                 decoration: BoxDecoration(
-                              //                                     color: Colors
-                              //                                         .black
-                              //                                         .withOpacity(
-                              //                                             0.5)),
-                              //                                 child: Text(
-                              //                                   "  ${snapshot.data['data'][index]['songs_count']} items",
-                              //                                   style: TextStyle(
-                              //                                       color: Colors
-                              //                                           .white,
-                              //                                       fontSize:
-                              //                                           18),
-                              //                                 ),
-                              //                               ),
-                              //                             ))));
-                              //               });
-                              //         } else if (snapshot.hasError) {
-                              //           return Text("errir");
-                              //         } else {
-                              //           return Center(
-                              //               child: CircularProgressIndicator());
-                              //         }
-                              //       }),
-                              // ),
+                              Container(
+                                  height: _height * 15,
+                                  child: PlaylistsList(
+                                      playlistsList:
+                                          snapshot.data['top_albums'])),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -621,92 +386,11 @@ class _HomeState extends State<Home> {
                                   ],
                                 ),
                               ),
-
-                              // Container(
-                              //   height: _height * 15,
-                              //   child: FutureBuilder(
-                              //       future: HomeApi.getPlayListMusic(),
-                              //       builder: (BuildContext context,
-                              //           AsyncSnapshot snapshot) {
-                              //         if (snapshot.hasData) {
-                              //           return ListView.builder(
-                              //               scrollDirection: Axis.horizontal,
-                              //               physics: BouncingScrollPhysics(),
-                              //               shrinkWrap: true,
-                              //               itemCount:
-                              //                   snapshot.data['data'].length,
-                              //               itemBuilder: (BuildContext context,
-                              //                   int index) {
-                              //                 return Padding(
-                              //                     padding: const EdgeInsets
-                              //                         .symmetric(horizontal: 8),
-                              //                     child: InkWell(
-                              //                         onTap: () {
-                              //                           Navigator.of(context).pushNamed(
-                              //                               PlaylistHome
-                              //                                   .routeName,
-                              //                               arguments: PlaylistArguments(
-                              //                                   snapshot.data[
-                              //                                           'data']
-                              //                                           [index]
-                              //                                           ['id']
-                              //                                       .toString(),
-                              //                                   snapshot.data[
-                              //                                           'data']
-                              //                                           [index][
-                              //                                           'img_thumb']
-                              //                                       .toString()));
-                              //                         },
-                              //                         child: Container(
-                              //                             width: _width * 30,
-                              //                             decoration:
-                              //                                 BoxDecoration(
-                              //                               borderRadius:
-                              //                                   BorderRadius
-                              //                                       .circular(
-                              //                                           10),
-                              //                               image:
-                              //                                   DecorationImage(
-                              //                                 image: NetworkImage(
-                              //                                     snapshot.data[
-                              //                                                 'data']
-                              //                                             [
-                              //                                             index]
-                              //                                         [
-                              //                                         'img_thumb']),
-                              //                                 scale: 3.5,
-                              //                                 fit: BoxFit.cover,
-                              //                               ),
-                              //                             ),
-                              //                             child: Align(
-                              //                               alignment: Alignment
-                              //                                   .bottomRight,
-                              //                               child: Container(
-                              //                                 decoration: BoxDecoration(
-                              //                                     color: Colors
-                              //                                         .black
-                              //                                         .withOpacity(
-                              //                                             0.5)),
-                              //                                 child: Text(
-                              //                                   "  ${snapshot.data['data'][index]['songs_count']} items",
-                              //                                   style: TextStyle(
-                              //                                       color: Colors
-                              //                                           .white,
-                              //                                       fontSize:
-                              //                                           18),
-                              //                                 ),
-                              //                               ),
-                              //                             ))));
-                              //               });
-                              //         } else if (snapshot.hasError) {
-                              //           return Text("errir");
-                              //         } else {
-                              //           return Center(
-                              //               child: CircularProgressIndicator());
-                              //         }
-                              //       }),
-                              // ),
-
+                              Container(
+                                  height: _height * 15,
+                                  child: PlaylistsList(
+                                      playlistsList:
+                                          snapshot.data['bindashi_albums'])),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
@@ -719,20 +403,7 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              // FutureBuilder(
-                              //     future: HomeApi.getListCategotyForNewSongs(),
-                              //     builder: (BuildContext context,
-                              //         AsyncSnapshot snapshot) {
-                              //       if (snapshot.hasData) {
-                              //         return SongsList(
-                              //             songsList: snapshot.data);
-                              //       } else if (snapshot.hasError) {
-                              //         return Text("errir");
-                              //       } else {
-                              //         return Center(
-                              //             child: CircularProgressIndicator());
-                              //       }
-                              //     }),
+                              SongsList(songsList: snapshot.data['new_songs']),
 
                               SizedBox(
                                 height: 50,
