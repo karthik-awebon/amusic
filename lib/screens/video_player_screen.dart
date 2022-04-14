@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../api/videos_api.dart';
+import '../models/video.dart';
 
 class VideoPlayerScreen extends StatelessWidget {
   static const routeName = './video-player-screen';

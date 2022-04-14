@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../api/home_api.dart';
+import '../models/video.dart';
 import 'video_player_screen.dart';
 
 class VideoCategoryHome extends StatelessWidget {

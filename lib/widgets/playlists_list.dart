@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../models/playlist.dart';
 import '../screens/playlist_home.dart';
 
-class PlaylistList extends StatelessWidget {
+class PlaylistsList extends StatelessWidget {
   List<Playlist> playlistsList = [];
-  PlaylistList({Key? key, required this.playlistsList}) : super(key: key);
+  PlaylistsList({Key? key, required this.playlistsList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

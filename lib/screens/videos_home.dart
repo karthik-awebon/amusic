@@ -3,6 +3,7 @@ import 'package:amusic_app/screens/video_player_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../models/video.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 import 'video_categories_home.dart';
@@ -473,16 +474,4 @@ class VideosHome extends StatelessWidget {
   }
 }
 
-class VideoPlayerScreenArguments {
-  final String videoUrl;
-  final String playlistId;
 
-  VideoPlayerScreenArguments(this.videoUrl, this.playlistId);
-}
-
-class VideoCategoryArguments {
-  final String categoryId;
-  final String categoryName;
-
-  VideoCategoryArguments(this.categoryId, this.categoryName);
-}

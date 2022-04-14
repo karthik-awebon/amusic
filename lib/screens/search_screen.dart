@@ -1,4 +1,5 @@
-import 'package:amusic_app/widgets/playlist_list.dart';
+import 'package:amusic_app/widgets/playlists_list.dart';
+import 'package:amusic_app/widgets/videos_list.dart';
 import 'package:flutter/material.dart';
 
 import '../api/home_api.dart';
@@ -111,9 +112,41 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   ),
                                                   Container(
                                                     height: _height * 15,
-                                                    child: PlaylistList(
+                                                    child: PlaylistsList(
                                                         playlistsList: snapshot
                                                             .data['playlists']),
+                                                  )
+                                                ])
+                                          : null,
+                                    ),
+                                    Container(
+                                      child: (snapshot
+                                              .data['videos'].isNotEmpty)
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 10),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        'Videos',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    height: _height * 15,
+                                                    child: VideosList(
+                                                        videosList: snapshot
+                                                            .data['videos']),
                                                   )
                                                 ])
                                           : null,

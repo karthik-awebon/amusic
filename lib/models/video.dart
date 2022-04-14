@@ -10,3 +10,17 @@ class Video {
       required this.image,
       required this.video});
 }
+
+class VideoPlayerScreenArguments {
+  final String videoUrl;
+  final String playlistId;
+
+  VideoPlayerScreenArguments(this.videoUrl, this.playlistId);
+}
+
+class VideoCategoryArguments {
+  final String categoryId;
+  final String categoryName;
+
+  VideoCategoryArguments(this.categoryId, this.categoryName);
+}
