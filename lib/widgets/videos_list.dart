@@ -43,13 +43,15 @@ class VideosList extends StatelessWidget {
                                     child: const Text('e-Sewa'),
                                     onPressed: () => Navigator.of(context)
                                         .pushNamed(
-                                            SelectPackageScreen.routeName),
+                                            SelectPackageScreen.routeName,
+                                            arguments: 'esewa'),
                                   ),
                                   ElevatedButton(
                                     child: const Text('khalti'),
                                     onPressed: () => Navigator.of(context)
                                         .pushNamed(
-                                            SelectPackageScreen.routeName),
+                                            SelectPackageScreen.routeName,
+                                            arguments: 'khalti'),
                                   )
                                 ],
                               ),

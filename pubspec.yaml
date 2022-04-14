@@ -50,6 +50,7 @@ dependencies:
   path_provider:
   just_audio:
   audio_video_progress_bar:
+  esewa_pnp:
   
 
 dev_dependencies:

@@ -1,9 +1,16 @@
 import 'package:amusic_app/models/package.dart';
+import 'package:esewa_pnp/esewa.dart';
+import 'package:esewa_pnp/esewa_pnp.dart';
 import 'package:flutter/material.dart';
 
 class PackagesList extends StatelessWidget {
   List<Package> packagesList = [];
-  PackagesList({Key? key, required this.packagesList}) : super(key: key);
+  String selectedPaymentMethod = '';
+  PackagesList(
+      {Key? key,
+      required this.packagesList,
+      required this.selectedPaymentMethod})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +23,30 @@ class PackagesList extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: InkWell(
-              onTap: () {},
+              onTap: () async {
+                if (selectedPaymentMethod == 'esewa') {
+                  try {
+                    ESewaConfiguration _configuration = ESewaConfiguration(
+                        clientID:
+                            "JB0BBQ4aD0UqIThFJwAKBgAXEUkEGQUBBAwdOgABHD4DChwUAB0R",
+                        secretKey: "BhwIWQQADhIYSxILExMcAgFXFhcOBwAKBgAXEQ==",
+                        environment: ESewaConfiguration
+                            .ENVIRONMENT_TEST //ENVIRONMENT_LIVE
+                        );
+                    ESewaPnp _eSewaPnp =
+                        ESewaPnp(configuration: _configuration);
+                    ESewaPayment _payment = ESewaPayment(
+                        amount: packagesList[index].price.toDouble(),
+                        productName: packagesList[index].name,
+                        productID: packagesList[index].id.toString(),
+                        callBackURL:
+                            "http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/payment/esewa");
+                    final _res = await _eSewaPnp.initPayment(payment: _payment);
+                  } on ESewaPaymentException catch (e) {
+                    // Handle error
+                  }
+                }
+              },
               child: InkWell(child: Text(packagesList[index].name)),
             ),
           );

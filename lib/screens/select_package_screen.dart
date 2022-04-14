@@ -10,6 +10,8 @@ class SelectPackageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedPaymentMethod =
+        ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
         appBar: AppBar(
           title: Text('Select A Package'),
@@ -29,7 +31,10 @@ class SelectPackageScreen extends StatelessWidget {
                     future: GeneralApi.getPackagesList(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
-                        return PackagesList(packagesList: snapshot.data);
+                        return PackagesList(
+                          packagesList: snapshot.data,
+                          selectedPaymentMethod: selectedPaymentMethod,
+                        );
                       } else if (snapshot.hasError) {
                         return Text("errir");
                       } else {
