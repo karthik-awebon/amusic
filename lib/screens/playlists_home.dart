@@ -2,6 +2,7 @@ import 'package:amusic_app/api/home_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../models/playlist.dart';
 import 'home.dart';
 import 'playlist_home.dart';
 

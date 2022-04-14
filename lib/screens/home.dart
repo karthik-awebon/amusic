@@ -9,6 +9,7 @@ import 'package:amusic_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../models/playlist.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 import '../widgets/songs_list.dart';
@@ -795,10 +796,3 @@ class CategoryArguments {
   CategoryArguments(this.categoryId, this.categoryName);
 }
 
-
-class PlaylistArguments {
-  final String playlistId;
-  final String imageUrl;
-
-  PlaylistArguments(this.playlistId, this.imageUrl);
-}

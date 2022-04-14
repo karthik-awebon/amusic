@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:amusic_app/models/playlist.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/song.dart';
+import '../models/video.dart';
 
 class HomeApi {
   static String API_BASE_URL =
@@ -63,11 +65,17 @@ class HomeApi {
     return constructSongsList(jsonDecode(response.body)['data']);
   }
 
-  static Future<List<Song>> searchAll(String keyword) async {
+  static Future searchAll(String keyword) async {
     http.Response response =
         await http.get(Uri.parse("$API_BASE_URL/search/index?query=$keyword"));
+    var searchResult = {
+      "songs": constructSongsList(jsonDecode(response.body)['data']['songs']),
+      "playlists": constructPlaylistsList(
+          jsonDecode(response.body)['data']['playlists']),
+      "videos": constructVideosList(jsonDecode(response.body)['data']['videos'])
+    };
 
-    return constructSongsList(jsonDecode(response.body)['data']['songs']);
+    return searchResult;
   }
 
   static List<Song> constructSongsList(responseData) {
@@ -78,8 +86,7 @@ class HomeApi {
         MusicArtist musicArtist = MusicArtist(
             id: responseData[i]['musicArtists'][0]['id'],
             name: responseData[i]['musicArtists'][0]['name'],
-            imgBanner: responseData[i]['musicArtists'][0]
-                ['img_banner']);
+            imgBanner: responseData[i]['musicArtists'][0]['img_banner']);
 
         musicArtistList.add(musicArtist);
       }
@@ -93,5 +100,31 @@ class HomeApi {
       songsList.add(song);
     }
     return songsList;
+  }
+
+  static List<Playlist> constructPlaylistsList(responseData) {
+    List<Playlist> playlistsList = [];
+    for (var i = 0; i < responseData.length; i++) {
+      Playlist playlist = Playlist(
+          id: responseData[i]['id'],
+          name: responseData[i]['name'],
+          imgThumb: responseData[i]['img_thumb'],
+          songsCount: responseData[i]['songs_count']);
+      playlistsList.add(playlist);
+    }
+    return playlistsList;
+  }
+
+  static List<Video> constructVideosList(responseData) {
+    List<Video> videosList = [];
+    for (var i = 0; i < responseData.length; i++) {
+      Video video = Video(
+          id: responseData[i]['id'],
+          name: responseData[i]['name'],
+          image: responseData[i]['image'],
+          video: responseData[i]['video']);
+      videosList.add(video);
+    }
+    return videosList;
   }
 }

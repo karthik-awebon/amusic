@@ -1,3 +1,4 @@
+import 'package:amusic_app/widgets/playlist_list.dart';
 import 'package:flutter/material.dart';
 
 import '../api/home_api.dart';
@@ -18,6 +19,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double _height = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
         appBar: AppBar(
           title: Container(
@@ -52,29 +54,80 @@ class _SearchScreenState extends State<SearchScreen> {
             child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: (searchString.isNotEmpty)
-                    ? Column(children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Songs',
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                    ),
-                  ),
-                  FutureBuilder(
-                            future: HomeApi.searchSongsByKeyword(searchString),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        if (snapshot.hasData) {
-                          return SongsList(songsList: snapshot.data);
-                        } else if (snapshot.hasError) {
-                          return Text("errir");
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      }),
-                      ])
+                    ? Container(
+                        child: FutureBuilder(
+                            future: HomeApi.searchAll(searchString),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.hasData) {
+                                return Column(
+                                  children: [
+                                    Container(
+                                      child: (snapshot.data['songs'].isNotEmpty)
+                                          ? Column(children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 10),
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    'Songs',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline1,
+                                                  ),
+                                                ),
+                                              ),
+                                              SongsList(
+                                                  songsList:
+                                                      snapshot.data['songs'])
+                                            ])
+                                          : null,
+                                    ),
+                                    Container(
+                                      child: (snapshot
+                                              .data['playlists'].isNotEmpty)
+                                          ? Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10,
+                                                            vertical: 10),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        'Playlists',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline1,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    height: _height * 15,
+                                                    child: PlaylistList(
+                                                        playlistsList: snapshot
+                                                            .data['playlists']),
+                                                  )
+                                                ])
+                                          : null,
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text("errir");
+                              } else {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            }),
+                      )
                     : null)));
   }
 }
