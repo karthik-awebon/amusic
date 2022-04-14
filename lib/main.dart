@@ -11,6 +11,7 @@ import 'package:amusic_app/screens/downloads_home.dart';
 import 'package:amusic_app/screens/playlist_home.dart';
 import 'package:amusic_app/screens/playlists_home.dart';
 import 'package:amusic_app/screens/search_screen.dart';
+import 'package:amusic_app/screens/select_package_screen.dart';
 import 'package:amusic_app/screens/video_player_screen.dart';
 import 'package:amusic_app/widgets/video_player_widget.dart';
 import 'package:amusic_app/screens/videos_home.dart';
@@ -88,7 +89,9 @@ class MyApp extends StatelessWidget {
                         VideoPlayerScreen(),
                     AudioPlayerScreen.routeName: (context) =>
                         AudioPlayerScreen(),
-                    SearchScreen.routeName: (context) => SearchScreen()
+                    SearchScreen.routeName: (context) => SearchScreen(),
+                    SelectPackageScreen.routeName: (context) =>
+                        SelectPackageScreen()
                   },
                 )));
   }

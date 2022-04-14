@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/video.dart';
+import '../screens/select_package_screen.dart';
 import '../screens/video_player_screen.dart';
 
 class VideosList extends StatelessWidget {
@@ -20,10 +21,43 @@ class VideosList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: InkWell(
                   onTap: () {
-                    Navigator.of(context).pushNamed(VideoPlayerScreen.routeName,
+                    if (videosList[index].isFree) {
+                      Navigator.of(context).pushNamed(
+                          VideoPlayerScreen.routeName,
                         arguments: VideoPlayerScreenArguments(
                             videosList[index].video,
                             videosList[index].id.toString()));
+                    } else {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            height: 200,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Text('Payment Method'),
+                                  ElevatedButton(
+                                    child: const Text('e-Sewa'),
+                                    onPressed: () => Navigator.of(context)
+                                        .pushNamed(
+                                            SelectPackageScreen.routeName),
+                                  ),
+                                  ElevatedButton(
+                                    child: const Text('khalti'),
+                                    onPressed: () => Navigator.of(context)
+                                        .pushNamed(
+                                            SelectPackageScreen.routeName),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }                   
                   },
                   child: Container(
                       width: _width * 50,

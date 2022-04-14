@@ -247,7 +247,7 @@ class VideosHome extends StatelessWidget {
                                   physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount:
-                                      snapshot.data['dance_videos'].length,
+                                      snapshot.data['videos'].length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     return Padding(
@@ -260,11 +260,11 @@ class VideosHome extends StatelessWidget {
                                               arguments:
                                                   VideoPlayerScreenArguments(
                                                       snapshot
-                                                          .data['dance_videos']
+                                                          .data['videos']
                                                               [index]
                                                           .video,
                                                       snapshot
-                                                          .data['dance_videos']
+                                                          .data['videos']
                                                               [index]
                                                           .id
                                                           .toString()));
@@ -284,7 +284,7 @@ class VideosHome extends StatelessWidget {
                                                         image: NetworkImage(
                                                             snapshot
                                                                 .data[
-                                                                    'dance_videos']
+                                                                    'videos']
                                                                     [index]
                                                                 .image))),
                                               ),
@@ -300,7 +300,7 @@ class VideosHome extends StatelessWidget {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                        "${snapshot.data['dance_videos'][index].name}",
+                                                        "${snapshot.data['videos'][index].name}",
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         style: TextStyle(
@@ -309,7 +309,7 @@ class VideosHome extends StatelessWidget {
                                                     Text(
                                                         snapshot
                                                             .data[
-                                                                'dance_videos']
+                                                                'videos']
                                                                 [index]
                                                             .description,
                                                         style: TextStyle(

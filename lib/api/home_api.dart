@@ -149,7 +149,8 @@ class HomeApi {
           name: responseData[i]['name'],
           image: responseData[i]['image'],
           video: responseData[i]['video'],
-          description: responseData[i]['description']);
+          description: responseData[i]['description'],
+          isFree: responseData[i]['is_free'] == 0 ? false : true);
       videosList.add(video);
     }
     return videosList;

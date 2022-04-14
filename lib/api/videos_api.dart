@@ -45,13 +45,14 @@ class VideosApi {
   static List<Video> constructVideosList(responseData) {
     List<Video> videosList = [];
     for (var i = 0; i < responseData.length; i++) {
-      Video song = Video(
+      Video video = Video(
           id: responseData[i]['id'],
           name: responseData[i]['name'],
           image: responseData[i]['image'],
           video: responseData[i]['video'],
-          description: responseData[i]['description']);
-      videosList.add(song);
+          description: responseData[i]['description'],
+          isFree: responseData[i]['is_free'] == 0 ? false : true);
+      videosList.add(video);
     }
     return videosList;
   }
