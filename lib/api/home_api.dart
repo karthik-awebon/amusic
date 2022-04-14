@@ -148,7 +148,8 @@ class HomeApi {
           id: responseData[i]['id'],
           name: responseData[i]['name'],
           image: responseData[i]['image'],
-          video: responseData[i]['video']);
+          video: responseData[i]['video'],
+          description: responseData[i]['description']);
       videosList.add(video);
     }
     return videosList;
