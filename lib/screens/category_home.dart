@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../api/home_api.dart';
+import '../models/category.dart';
 import '../widgets/songs_list.dart';
 import 'audio_player_screen.dart';
 

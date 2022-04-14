@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../api/home_api.dart';
+import '../models/category.dart';
 import 'category_home.dart';
 import 'home.dart';
 

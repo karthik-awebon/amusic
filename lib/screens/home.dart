@@ -94,15 +94,13 @@ class _HomeState extends State<Home> {
                       fit: BoxFit.fill)),
               child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      FutureBuilder(
-                          future: HomeApi.getBannerList(),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasData) {
-                              List l = snapshot.data;
-                              return Stack(
+                  child: FutureBuilder(
+                      future: HomeApi.homeData(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          return Column(
+                            children: [
+                              Stack(
                                 alignment: Alignment.bottomLeft,
                                 children: [
                                   Container(
@@ -121,21 +119,21 @@ class _HomeState extends State<Home> {
                                         );
                                       },
                                     ),
-                                    items: l
-                                        .map((item) => InkWell(
+                                    items: snapshot.data['banners']
+                                        .map<Widget>((item) => InkWell(
                                             onTap: () {
                                               Navigator.of(context).pushNamed(
                                                   PlaylistHome.routeName,
                                                   arguments: PlaylistArguments(
-                                                      item['playlist_id']
+                                                      item.playlistId
                                                           .toString(),
-                                                      item['image']
+                                                      item.image
                                                           .toString()));
                                             },
                                             child: Container(
                                               child: Center(
                                                   child: Image.network(
-                                                item['image'],
+                                                item.image,
                                                 width: 1000,
                                                 fit: BoxFit.fill,
                                               )),
@@ -144,8 +142,10 @@ class _HomeState extends State<Home> {
                                   )),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
-                                    children: l.map((urlOfItem) {
-                                      int index = l.indexOf(urlOfItem);
+                                    children: snapshot.data['banners']
+                                        .map<Widget>((urlOfItem) {
+                                      int index = snapshot.data['banners']
+                                          .indexOf(urlOfItem);
                                       return Container(
                                         width: 10.0,
                                         height: 10.0,
@@ -161,534 +161,605 @@ class _HomeState extends State<Home> {
                                     }).toList(),
                                   ),
                                 ],
-                              );
-                            } else if (snapshot.hasError) {
-                              return Text("error");
-                            } else {
-                              return CircularProgressIndicator();
-                            }
-                          }),
-                      // Image.asset(
-                      //   "lib/img/back2img.jpg",
-                      //   height: _height * 30,
-                      //   width: _width * 100,
-                      //   fit: BoxFit.cover,
-                      // )
+                              ),
+                              // Image.asset(
+                              //   "lib/img/back2img.jpg",
+                              //   height: _height * 30,
+                              //   width: _width * 100,
+                              //   fit: BoxFit.cover,
+                              // )
 
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Category',
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(CategoriesHome.routeName);
-                                },
-                                child: Text(
-                                  'More',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400),
-                                )),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: _height * 12,
-                        child: FutureBuilder(
-                            future: HomeApi.getCategoryList(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data['data'].length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).pushNamed(
-                                                  CategoryHome.routeName,
-                                                  arguments: CategoryArguments(
-                                                      snapshot.data['data']
-                                                              [index]['id']
-                                                          .toString(),
-                                                      snapshot.data['data']
-                                                          [index]['name']));
-                                            },
-                                            child: Container(
-                                                width: _width * 39,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black
-                                                      .withOpacity(0.9),
-                                                  image: DecorationImage(
-                                                    colorFilter:
-                                                        ColorFilter.mode(
-                                                            Colors
-                                                                .black
-                                                                .withOpacity(
-                                                                    0.8),
-                                                            BlendMode.dstATop),
-                                                    image: NetworkImage(snapshot
-                                                            .data['data'][index]
-                                                        ['img_thumb']),
-                                                    scale: 3.5,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    snapshot.data['data'][index]
-                                                        ['name'],
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 20),
-                                                  ),
-                                                )),
-                                          ));
-                                    });
-                              } else if (snapshot.hasError) {
-                                return Text("errir");
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            }),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'New Albums',
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(PlaylistsHome.routeName);
-                                },
-                                child: Text(
-                                  'More',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400),
-                                )),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: _height * 15,
-                        child: FutureBuilder(
-                            future: HomeApi.getPlayListMusic(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data['data'].length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).pushNamed(
-                                                    PlaylistHome.routeName,
-                                                    arguments:
-                                                        PlaylistArguments(
-                                                            snapshot
-                                                                .data['data']
-                                                                    [index]
-                                                                    ['id']
-                                                                .toString(),
-                                                            snapshot
-                                                                .data['data']
-                                                                    [index][
-                                                                    'img_thumb']
-                                                                .toString()));
-                                              },
-                                              child: Container(
-                                                  width: _width * 30,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    image: DecorationImage(
-                                                      image: NetworkImage(
-                                                          snapshot.data['data']
-                                                                  [index]
-                                                              ['img_thumb']),
-                                                      scale: 3.5,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.bottomRight,
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black
-                                                              .withOpacity(
-                                                                  0.5)),
-                                                      child: Text(
-                                                        "  ${snapshot.data['data'][index]['songs_count']} items",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 18),
-                                                      ),
-                                                    ),
-                                                  ))));
-                                    });
-                              } else if (snapshot.hasError) {
-                                return Text("errir");
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            }),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Hot Albums',
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(PlaylistsHome.routeName);
-                                },
-                                child: Text(
-                                  'More',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400),
-                                )),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: _height * 15,
-                        child: FutureBuilder(
-                            future: HomeApi.getPlayListMusic(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data['data'].length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).pushNamed(
-                                                    PlaylistHome.routeName,
-                                                    arguments:
-                                                        PlaylistArguments(
-                                                            snapshot
-                                                                .data['data']
-                                                                    [index]
-                                                                    ['id']
-                                                                .toString(),
-                                                            snapshot
-                                                                .data['data']
-                                                                    [index][
-                                                                    'img_thumb']
-                                                                .toString()));
-                                              },
-                                              child: Container(
-                                                  width: _width * 30,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    image: DecorationImage(
-                                                      image: NetworkImage(
-                                                          snapshot.data['data']
-                                                                  [index]
-                                                              ['img_thumb']),
-                                                      scale: 3.5,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.bottomRight,
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black
-                                                              .withOpacity(
-                                                                  0.5)),
-                                                      child: Text(
-                                                        "  ${snapshot.data['data'][index]['songs_count']} items",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 18),
-                                                      ),
-                                                    ),
-                                                  ))));
-                                    });
-                              } else if (snapshot.hasError) {
-                                return Text("errir");
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            }),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Top Albums',
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(PlaylistsHome.routeName);
-                                },
-                                child: Text(
-                                  'More',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400),
-                                )),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: _height * 15,
-                        child: FutureBuilder(
-                            future: HomeApi.getPlayListMusic(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data['data'].length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).pushNamed(
-                                                    PlaylistHome.routeName,
-                                                    arguments:
-                                                        PlaylistArguments(
-                                                            snapshot
-                                                                .data['data']
-                                                                    [index]
-                                                                    ['id']
-                                                                .toString(),
-                                                            snapshot
-                                                                .data['data']
-                                                                    [index][
-                                                                    'img_thumb']
-                                                                .toString()));
-                                              },
-                                              child: Container(
-                                                  width: _width * 30,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    image: DecorationImage(
-                                                      image: NetworkImage(
-                                                          snapshot.data['data']
-                                                                  [index]
-                                                              ['img_thumb']),
-                                                      scale: 3.5,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.bottomRight,
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black
-                                                              .withOpacity(
-                                                                  0.5)),
-                                                      child: Text(
-                                                        "  ${snapshot.data['data'][index]['songs_count']} items",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 18),
-                                                      ),
-                                                    ),
-                                                  ))));
-                                    });
-                              } else if (snapshot.hasError) {
-                                return Text("errir");
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            }),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 20, 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Bindashi Albums',
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed(PlaylistsHome.routeName);
-                                },
-                                child: Text(
-                                  'More',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400),
-                                )),
-                          ],
-                        ),
-                      ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 20, 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Category',
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              CategoriesHome.routeName);
+                                        },
+                                        child: Text(
+                                          'More',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400),
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              // Container(
+                              //   height: _height * 12,
+                              //   child: FutureBuilder(
+                              //       future: HomeApi.getCategoryList(),
+                              //       builder: (BuildContext context,
+                              //           AsyncSnapshot snapshot) {
+                              //         if (snapshot.hasData) {
+                              //           return ListView.builder(
+                              //               scrollDirection: Axis.horizontal,
+                              //               physics: BouncingScrollPhysics(),
+                              //               shrinkWrap: true,
+                              //               itemCount:
+                              //                   snapshot.data['data'].length,
+                              //               itemBuilder: (BuildContext context,
+                              //                   int index) {
+                              //                 return Padding(
+                              //                     padding: const EdgeInsets
+                              //                         .symmetric(horizontal: 8),
+                              //                     child: InkWell(
+                              //                       onTap: () {
+                              //                         Navigator.of(context).pushNamed(
+                              //                             CategoryHome
+                              //                                 .routeName,
+                              //                             arguments: CategoryArguments(
+                              //                                 snapshot
+                              //                                     .data['data']
+                              //                                         [index]
+                              //                                         ['id']
+                              //                                     .toString(),
+                              //                                 snapshot.data[
+                              //                                             'data']
+                              //                                         [index]
+                              //                                     ['name']));
+                              //                       },
+                              //                       child: Container(
+                              //                           width: _width * 39,
+                              //                           decoration:
+                              //                               BoxDecoration(
+                              //                             color: Colors.black
+                              //                                 .withOpacity(0.9),
+                              //                             image:
+                              //                                 DecorationImage(
+                              //                               colorFilter:
+                              //                                   ColorFilter.mode(
+                              //                                       Colors
+                              //                                           .black
+                              //                                           .withOpacity(
+                              //                                               0.8),
+                              //                                       BlendMode
+                              //                                           .dstATop),
+                              //                               image: NetworkImage(
+                              //                                   snapshot.data[
+                              //                                               'data']
+                              //                                           [index][
+                              //                                       'img_thumb']),
+                              //                               scale: 3.5,
+                              //                               fit: BoxFit.cover,
+                              //                             ),
+                              //                           ),
+                              //                           child: Center(
+                              //                             child: Text(
+                              //                               snapshot.data[
+                              //                                       'data']
+                              //                                   [index]['name'],
+                              //                               style: TextStyle(
+                              //                                   color: Colors
+                              //                                       .white,
+                              //                                   fontSize: 20),
+                              //                             ),
+                              //                           )),
+                              //                     ));
+                              //               });
+                              //         } else if (snapshot.hasError) {
+                              //           return Text("errir");
+                              //         } else {
+                              //           return Center(
+                              //               child: CircularProgressIndicator());
+                              //         }
+                              //       }),
+                              // ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 20, 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'New Albums',
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              PlaylistsHome.routeName);
+                                        },
+                                        child: Text(
+                                          'More',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400),
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              // Container(
+                              //   height: _height * 15,
+                              //   child: FutureBuilder(
+                              //       future: HomeApi.getPlayListMusic(),
+                              //       builder: (BuildContext context,
+                              //           AsyncSnapshot snapshot) {
+                              //         if (snapshot.hasData) {
+                              //           return ListView.builder(
+                              //               scrollDirection: Axis.horizontal,
+                              //               physics: BouncingScrollPhysics(),
+                              //               shrinkWrap: true,
+                              //               itemCount:
+                              //                   snapshot.data['data'].length,
+                              //               itemBuilder: (BuildContext context,
+                              //                   int index) {
+                              //                 return Padding(
+                              //                     padding: const EdgeInsets
+                              //                         .symmetric(horizontal: 8),
+                              //                     child: InkWell(
+                              //                         onTap: () {
+                              //                           Navigator.of(context).pushNamed(
+                              //                               PlaylistHome
+                              //                                   .routeName,
+                              //                               arguments: PlaylistArguments(
+                              //                                   snapshot.data[
+                              //                                           'data']
+                              //                                           [index]
+                              //                                           ['id']
+                              //                                       .toString(),
+                              //                                   snapshot.data[
+                              //                                           'data']
+                              //                                           [index][
+                              //                                           'img_thumb']
+                              //                                       .toString()));
+                              //                         },
+                              //                         child: Container(
+                              //                             width: _width * 30,
+                              //                             decoration:
+                              //                                 BoxDecoration(
+                              //                               borderRadius:
+                              //                                   BorderRadius
+                              //                                       .circular(
+                              //                                           10),
+                              //                               image:
+                              //                                   DecorationImage(
+                              //                                 image: NetworkImage(
+                              //                                     snapshot.data[
+                              //                                                 'data']
+                              //                                             [
+                              //                                             index]
+                              //                                         [
+                              //                                         'img_thumb']),
+                              //                                 scale: 3.5,
+                              //                                 fit: BoxFit.cover,
+                              //                               ),
+                              //                             ),
+                              //                             child: Align(
+                              //                               alignment: Alignment
+                              //                                   .bottomRight,
+                              //                               child: Container(
+                              //                                 decoration: BoxDecoration(
+                              //                                     color: Colors
+                              //                                         .black
+                              //                                         .withOpacity(
+                              //                                             0.5)),
+                              //                                 child: Text(
+                              //                                   "  ${snapshot.data['data'][index]['songs_count']} items",
+                              //                                   style: TextStyle(
+                              //                                       color: Colors
+                              //                                           .white,
+                              //                                       fontSize:
+                              //                                           18),
+                              //                                 ),
+                              //                               ),
+                              //                             ))));
+                              //               });
+                              //         } else if (snapshot.hasError) {
+                              //           return Text("errir");
+                              //         } else {
+                              //           return Center(
+                              //               child: CircularProgressIndicator());
+                              //         }
+                              //       }),
+                              // ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 20, 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Hot Albums',
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              PlaylistsHome.routeName);
+                                        },
+                                        child: Text(
+                                          'More',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400),
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              // Container(
+                              //   height: _height * 15,
+                              //   child: FutureBuilder(
+                              //       future: HomeApi.getPlayListMusic(),
+                              //       builder: (BuildContext context,
+                              //           AsyncSnapshot snapshot) {
+                              //         if (snapshot.hasData) {
+                              //           return ListView.builder(
+                              //               scrollDirection: Axis.horizontal,
+                              //               physics: BouncingScrollPhysics(),
+                              //               shrinkWrap: true,
+                              //               itemCount:
+                              //                   snapshot.data['data'].length,
+                              //               itemBuilder: (BuildContext context,
+                              //                   int index) {
+                              //                 return Padding(
+                              //                     padding: const EdgeInsets
+                              //                         .symmetric(horizontal: 8),
+                              //                     child: InkWell(
+                              //                         onTap: () {
+                              //                           Navigator.of(context).pushNamed(
+                              //                               PlaylistHome
+                              //                                   .routeName,
+                              //                               arguments: PlaylistArguments(
+                              //                                   snapshot.data[
+                              //                                           'data']
+                              //                                           [index]
+                              //                                           ['id']
+                              //                                       .toString(),
+                              //                                   snapshot.data[
+                              //                                           'data']
+                              //                                           [index][
+                              //                                           'img_thumb']
+                              //                                       .toString()));
+                              //                         },
+                              //                         child: Container(
+                              //                             width: _width * 30,
+                              //                             decoration:
+                              //                                 BoxDecoration(
+                              //                               borderRadius:
+                              //                                   BorderRadius
+                              //                                       .circular(
+                              //                                           10),
+                              //                               image:
+                              //                                   DecorationImage(
+                              //                                 image: NetworkImage(
+                              //                                     snapshot.data[
+                              //                                                 'data']
+                              //                                             [
+                              //                                             index]
+                              //                                         [
+                              //                                         'img_thumb']),
+                              //                                 scale: 3.5,
+                              //                                 fit: BoxFit.cover,
+                              //                               ),
+                              //                             ),
+                              //                             child: Align(
+                              //                               alignment: Alignment
+                              //                                   .bottomRight,
+                              //                               child: Container(
+                              //                                 decoration: BoxDecoration(
+                              //                                     color: Colors
+                              //                                         .black
+                              //                                         .withOpacity(
+                              //                                             0.5)),
+                              //                                 child: Text(
+                              //                                   "  ${snapshot.data['data'][index]['songs_count']} items",
+                              //                                   style: TextStyle(
+                              //                                       color: Colors
+                              //                                           .white,
+                              //                                       fontSize:
+                              //                                           18),
+                              //                                 ),
+                              //                               ),
+                              //                             ))));
+                              //               });
+                              //         } else if (snapshot.hasError) {
+                              //           return Text("errir");
+                              //         } else {
+                              //           return Center(
+                              //               child: CircularProgressIndicator());
+                              //         }
+                              //       }),
+                              // ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 20, 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Top Albums',
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              PlaylistsHome.routeName);
+                                        },
+                                        child: Text(
+                                          'More',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400),
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              // Container(
+                              //   height: _height * 15,
+                              //   child: FutureBuilder(
+                              //       future: HomeApi.getPlayListMusic(),
+                              //       builder: (BuildContext context,
+                              //           AsyncSnapshot snapshot) {
+                              //         if (snapshot.hasData) {
+                              //           return ListView.builder(
+                              //               scrollDirection: Axis.horizontal,
+                              //               physics: BouncingScrollPhysics(),
+                              //               shrinkWrap: true,
+                              //               itemCount:
+                              //                   snapshot.data['data'].length,
+                              //               itemBuilder: (BuildContext context,
+                              //                   int index) {
+                              //                 return Padding(
+                              //                     padding: const EdgeInsets
+                              //                         .symmetric(horizontal: 8),
+                              //                     child: InkWell(
+                              //                         onTap: () {
+                              //                           Navigator.of(context).pushNamed(
+                              //                               PlaylistHome
+                              //                                   .routeName,
+                              //                               arguments: PlaylistArguments(
+                              //                                   snapshot.data[
+                              //                                           'data']
+                              //                                           [index]
+                              //                                           ['id']
+                              //                                       .toString(),
+                              //                                   snapshot.data[
+                              //                                           'data']
+                              //                                           [index][
+                              //                                           'img_thumb']
+                              //                                       .toString()));
+                              //                         },
+                              //                         child: Container(
+                              //                             width: _width * 30,
+                              //                             decoration:
+                              //                                 BoxDecoration(
+                              //                               borderRadius:
+                              //                                   BorderRadius
+                              //                                       .circular(
+                              //                                           10),
+                              //                               image:
+                              //                                   DecorationImage(
+                              //                                 image: NetworkImage(
+                              //                                     snapshot.data[
+                              //                                                 'data']
+                              //                                             [
+                              //                                             index]
+                              //                                         [
+                              //                                         'img_thumb']),
+                              //                                 scale: 3.5,
+                              //                                 fit: BoxFit.cover,
+                              //                               ),
+                              //                             ),
+                              //                             child: Align(
+                              //                               alignment: Alignment
+                              //                                   .bottomRight,
+                              //                               child: Container(
+                              //                                 decoration: BoxDecoration(
+                              //                                     color: Colors
+                              //                                         .black
+                              //                                         .withOpacity(
+                              //                                             0.5)),
+                              //                                 child: Text(
+                              //                                   "  ${snapshot.data['data'][index]['songs_count']} items",
+                              //                                   style: TextStyle(
+                              //                                       color: Colors
+                              //                                           .white,
+                              //                                       fontSize:
+                              //                                           18),
+                              //                                 ),
+                              //                               ),
+                              //                             ))));
+                              //               });
+                              //         } else if (snapshot.hasError) {
+                              //           return Text("errir");
+                              //         } else {
+                              //           return Center(
+                              //               child: CircularProgressIndicator());
+                              //         }
+                              //       }),
+                              // ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 10, 20, 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Bindashi Albums',
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pushNamed(
+                                              PlaylistsHome.routeName);
+                                        },
+                                        child: Text(
+                                          'More',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w400),
+                                        )),
+                                  ],
+                                ),
+                              ),
 
-                      Container(
-                        height: _height * 15,
-                        child: FutureBuilder(
-                            future: HomeApi.getPlayListMusic(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                return ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: BouncingScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: snapshot.data['data'].length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).pushNamed(
-                                                    PlaylistHome.routeName,
-                                                    arguments:
-                                                        PlaylistArguments(
-                                                            snapshot
-                                                                .data['data']
-                                                                    [index]
-                                                                    ['id']
-                                                                .toString(),
-                                                            snapshot
-                                                                .data['data']
-                                                                    [index][
-                                                                    'img_thumb']
-                                                                .toString()));
-                                              },
-                                              child: Container(
-                                                  width: _width * 30,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    image: DecorationImage(
-                                                      image: NetworkImage(
-                                                          snapshot.data['data']
-                                                                  [index]
-                                                              ['img_thumb']),
-                                                      scale: 3.5,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  child: Align(
-                                                    alignment:
-                                                        Alignment.bottomRight,
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.black
-                                                              .withOpacity(
-                                                                  0.5)),
-                                                      child: Text(
-                                                        "  ${snapshot.data['data'][index]['songs_count']} items",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 18),
-                                                      ),
-                                                    ),
-                                                  ))));
-                                    });
-                              } else if (snapshot.hasError) {
-                                return Text("errir");
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            }),
-                      ),
+                              // Container(
+                              //   height: _height * 15,
+                              //   child: FutureBuilder(
+                              //       future: HomeApi.getPlayListMusic(),
+                              //       builder: (BuildContext context,
+                              //           AsyncSnapshot snapshot) {
+                              //         if (snapshot.hasData) {
+                              //           return ListView.builder(
+                              //               scrollDirection: Axis.horizontal,
+                              //               physics: BouncingScrollPhysics(),
+                              //               shrinkWrap: true,
+                              //               itemCount:
+                              //                   snapshot.data['data'].length,
+                              //               itemBuilder: (BuildContext context,
+                              //                   int index) {
+                              //                 return Padding(
+                              //                     padding: const EdgeInsets
+                              //                         .symmetric(horizontal: 8),
+                              //                     child: InkWell(
+                              //                         onTap: () {
+                              //                           Navigator.of(context).pushNamed(
+                              //                               PlaylistHome
+                              //                                   .routeName,
+                              //                               arguments: PlaylistArguments(
+                              //                                   snapshot.data[
+                              //                                           'data']
+                              //                                           [index]
+                              //                                           ['id']
+                              //                                       .toString(),
+                              //                                   snapshot.data[
+                              //                                           'data']
+                              //                                           [index][
+                              //                                           'img_thumb']
+                              //                                       .toString()));
+                              //                         },
+                              //                         child: Container(
+                              //                             width: _width * 30,
+                              //                             decoration:
+                              //                                 BoxDecoration(
+                              //                               borderRadius:
+                              //                                   BorderRadius
+                              //                                       .circular(
+                              //                                           10),
+                              //                               image:
+                              //                                   DecorationImage(
+                              //                                 image: NetworkImage(
+                              //                                     snapshot.data[
+                              //                                                 'data']
+                              //                                             [
+                              //                                             index]
+                              //                                         [
+                              //                                         'img_thumb']),
+                              //                                 scale: 3.5,
+                              //                                 fit: BoxFit.cover,
+                              //                               ),
+                              //                             ),
+                              //                             child: Align(
+                              //                               alignment: Alignment
+                              //                                   .bottomRight,
+                              //                               child: Container(
+                              //                                 decoration: BoxDecoration(
+                              //                                     color: Colors
+                              //                                         .black
+                              //                                         .withOpacity(
+                              //                                             0.5)),
+                              //                                 child: Text(
+                              //                                   "  ${snapshot.data['data'][index]['songs_count']} items",
+                              //                                   style: TextStyle(
+                              //                                       color: Colors
+                              //                                           .white,
+                              //                                       fontSize:
+                              //                                           18),
+                              //                                 ),
+                              //                               ),
+                              //                             ))));
+                              //               });
+                              //         } else if (snapshot.hasError) {
+                              //           return Text("errir");
+                              //         } else {
+                              //           return Center(
+                              //               child: CircularProgressIndicator());
+                              //         }
+                              //       }),
+                              // ),
 
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'New Songs',
-                            style: Theme.of(context).textTheme.headline1,
-                          ),
-                        ),
-                      ),
-                      FutureBuilder(
-                          future: HomeApi.getListCategotyForNewSongs(),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasData) {
-                              return SongsList(songsList: snapshot.data);
-                            } else if (snapshot.hasError) {
-                              return Text("errir");
-                            } else {
-                              return Center(child: CircularProgressIndicator());
-                            }
-                          }),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'New Songs',
+                                    style:
+                                        Theme.of(context).textTheme.headline1,
+                                  ),
+                                ),
+                              ),
+                              // FutureBuilder(
+                              //     future: HomeApi.getListCategotyForNewSongs(),
+                              //     builder: (BuildContext context,
+                              //         AsyncSnapshot snapshot) {
+                              //       if (snapshot.hasData) {
+                              //         return SongsList(
+                              //             songsList: snapshot.data);
+                              //       } else if (snapshot.hasError) {
+                              //         return Text("errir");
+                              //       } else {
+                              //         return Center(
+                              //             child: CircularProgressIndicator());
+                              //       }
+                              //     }),
 
-                      SizedBox(
-                        height: 50,
-                      ),
-                    ],
-                  )),
+                              SizedBox(
+                                height: 50,
+                              ),
+                            ],
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("errir");
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      })),
             ),
             flag
                 ? Row(
@@ -788,11 +859,3 @@ class AudioPlayerScreenArguments {
 
   AudioPlayerScreenArguments(this.audioUrl, this.audioName);
 }
-
-class CategoryArguments {
-  final String categoryId;
-  final String categoryName;
-
-  CategoryArguments(this.categoryId, this.categoryName);
-}
-

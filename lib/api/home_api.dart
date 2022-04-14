@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:amusic_app/models/playlist.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/banner.dart';
+import '../models/category.dart';
 import '../models/song.dart';
 import '../models/video.dart';
 
@@ -63,6 +65,30 @@ class HomeApi {
         "$API_BASE_URL/list/song?page=1&number_per_page=10&keyword=$keyword"));
 
     return constructSongsList(jsonDecode(response.body)['data']);
+  }
+
+  static Future homeData() async {
+    http.Response response =
+        await http.get(Uri.parse("$API_BASE_URL/home/statistics"));
+    var homeData = {
+      "banners":
+          constructBannersList(jsonDecode(response.body)['data']['banner']),
+      "categories": constructCatgoriesList(
+          jsonDecode(response.body)['data']['categories']),
+      "new_albums": constructPlaylistsList(jsonDecode(response.body)['data']
+          ['playlist_title'][0]['list_playlist']),
+      "hot_albums": constructPlaylistsList(jsonDecode(response.body)['data']
+          ['playlist_title'][1]['list_playlist']),
+      "top_albums": constructPlaylistsList(jsonDecode(response.body)['data']
+          ['playlist_title'][2]['list_playlist']),
+      "bindashi_albums": constructPlaylistsList(
+          jsonDecode(response.body)['data']['playlist_title'][3]
+              ['list_playlist']),
+      "new_songs":
+          constructSongsList(jsonDecode(response.body)['data']['songs'])
+    };
+
+    return homeData;
   }
 
   static Future searchAll(String keyword) async {
@@ -126,5 +152,30 @@ class HomeApi {
       videosList.add(video);
     }
     return videosList;
+  }
+
+  static List<Category> constructCatgoriesList(responseData) {
+    List<Category> categoriesList = [];
+    for (var i = 0; i < responseData.length; i++) {
+      Category category = Category(
+          id: responseData[i]['id'],
+          name: responseData[i]['name'],
+          imgThumb: responseData[i]['img_thumb'],
+          imgBanner: responseData[i]['img_banner']);
+      categoriesList.add(category);
+    }
+    return categoriesList;
+  }
+
+  static List<Banner> constructBannersList(responseData) {
+    List<Banner> bannersList = [];
+    for (var i = 0; i < responseData.length; i++) {
+      Banner banner = Banner(
+          id: responseData[i]['id'],
+          image: responseData[i]['image'],
+          playlistId: responseData[i]['playlist_id']);
+      bannersList.add(banner);
+    }
+    return bannersList;
   }
 }
