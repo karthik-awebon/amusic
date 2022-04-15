@@ -16,11 +16,7 @@ class VideoPlayerScreen extends StatelessWidget {
     final videoPlayerData = ModalRoute.of(context)!.settings.arguments
         as VideoPlayerScreenArguments;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(''),
-          backgroundColor: const Color.fromARGB(255, 52, 89, 131),
-          centerTitle: true,
-        ),
+        appBar: null,
         body: Container(
             height: double.maxFinite,
             width: double.maxFinite,

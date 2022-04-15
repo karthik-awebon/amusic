@@ -5,10 +5,12 @@ import 'package:flutter/widgets.dart';
 
 import '../models/video.dart';
 import '../models/video_category.dart';
+import '../widgets/app_bar.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 import '../widgets/videos_list.dart';
 import '../widgets/videos_vertical_list.dart';
+import 'search_screen.dart';
 import 'video_categories_home.dart';
 import 'video_category_home.dart';
 
@@ -21,8 +23,7 @@ class VideosHome extends StatelessWidget {
     double _height = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 194, 103, 233),
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 52, 89, 131),
+        appBar: JhankarAppBar(
           title: const Center(
             child: Text(
               "Jhankar",
@@ -32,11 +33,17 @@ class VideosHome extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          actions: const [
-            Icon(
-              Icons.search,
-              color: Colors.white,
-              size: 30,
+          appBar: AppBar(),
+          widgets: <Widget>[
+            InkWell(
+              child: Icon(
+                Icons.search,
+                color: Colors.white,
+                size: 30,
+              ),
+              onTap: () {
+                Navigator.of(context).pushNamed(SearchScreen.routeName);
+              },
             ),
             SizedBox(
               width: 10,

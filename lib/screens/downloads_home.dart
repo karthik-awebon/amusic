@@ -1,3 +1,4 @@
+import 'package:amusic_app/widgets/app_bar.dart';
 import 'package:amusic_app/widgets/songs_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -12,10 +13,22 @@ class DownloadsHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Downloads'),
-          backgroundColor: Color.fromARGB(255, 52, 89, 131),
-          centerTitle: true,
+        appBar: JhankarAppBar(
+          title: Row(
+            children: const [
+              Icon(
+                Icons.download_sharp,
+                size: 35,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text("Downloads")
+            ],
+          ),
+          appBar: AppBar(),
+          widgets: <Widget>[],
         ),
         body: Container(
           height: double.maxFinite,

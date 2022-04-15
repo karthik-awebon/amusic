@@ -3,6 +3,7 @@ import 'package:amusic_app/widgets/videos_list.dart';
 import 'package:flutter/material.dart';
 
 import '../api/home_api.dart';
+import '../widgets/app_bar.dart';
 import '../widgets/songs_list.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
-        appBar: AppBar(
+        appBar: JhankarAppBar(
           title: Container(
             width: double.infinity,
             height: 40,
@@ -42,8 +43,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   border: InputBorder.none),
             ),
           ),
-          backgroundColor: Color.fromARGB(255, 52, 89, 131),
-          centerTitle: true,
+          appBar: AppBar(),
+          widgets: <Widget>[],
         ),
         body: Container(
             height: double.maxFinite,

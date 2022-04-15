@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../api/general_api.dart';
+import '../widgets/app_bar.dart';
 import '../widgets/packages_list.dart';
 
 class SelectPackageScreen extends StatelessWidget {
@@ -13,7 +14,7 @@ class SelectPackageScreen extends StatelessWidget {
     final selectedPaymentMethod =
         ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
-        appBar: AppBar(
+        appBar: JhankarAppBar(
           title: Row(
             children: const [
               Icon(
@@ -27,8 +28,8 @@ class SelectPackageScreen extends StatelessWidget {
               Text("Select a Package")
             ],
           ),
-          backgroundColor: Color.fromARGB(255, 52, 89, 131),
-          centerTitle: true,
+          appBar: AppBar(),
+          widgets: <Widget>[],
         ),
         body: Container(
           height: double.maxFinite,

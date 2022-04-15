@@ -12,6 +12,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import '../models/category.dart';
 import '../models/playlist.dart';
+import '../widgets/app_bar.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 import '../widgets/songs_list.dart';
@@ -39,26 +40,7 @@ class _HomeState extends State<Home> {
     double _height = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 194, 103, 233),
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 52, 89, 131),
-          // leading: InkWell(
-          //   onTap: () {
-          // print("logout token ${widget.token}");
-          // HomeApi.LogOut(widget.token).then((value) {
-          //   if (value == 200 || value == 201) {
-          //     Navigator.pushAndRemoveUntil(
-          //         context,
-          //         MaterialPageRoute(builder: (context) => Loginpage()),
-          //         (route) => false);
-          //   }
-          // });
-          //   },
-          //   child: Icon(
-          //     Icons.menu,
-          //     color: Colors.white,
-          //     size: 30,
-          //   ),
-          // ),
+        appBar: JhankarAppBar(
           title: const Center(
             child: Text(
               "Jhankar",
@@ -68,7 +50,8 @@ class _HomeState extends State<Home> {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          actions: [
+          appBar: AppBar(),
+          widgets: <Widget>[
             InkWell(
               child: Icon(
                 Icons.search,

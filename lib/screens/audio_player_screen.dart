@@ -29,12 +29,9 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
         as AudioPlayerScreenArguments;
     _audioPlayerWidget = AudioPlayerWidget(url: audioPlayerData.audioUrl);
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(''),
-          backgroundColor: const Color.fromARGB(255, 52, 89, 131),
-          centerTitle: true,
-        ),
+        appBar: null,
         body: Container(
+          padding: const EdgeInsets.symmetric(vertical: 30),
           height: double.maxFinite,
           width: double.maxFinite,
           decoration: const BoxDecoration(

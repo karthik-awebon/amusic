@@ -15,9 +15,7 @@ class PlaylistHome extends StatelessWidget {
     final playlistData =
         ModalRoute.of(context)!.settings.arguments as PlaylistArguments;
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 52, 89, 131),
-        ),
+        appBar: null,
         body: Container(
           height: double.maxFinite,
           width: double.maxFinite,

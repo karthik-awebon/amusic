@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/auth.dart';
+import '../widgets/app_bar.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 
@@ -13,12 +14,9 @@ class AccountHome extends StatelessWidget {
   Widget build(BuildContext context) {
   
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Account'),
-          backgroundColor: const Color.fromARGB(255, 52, 89, 131),
-          centerTitle: true,
-        ),
+        appBar: null,
         body: Container(
+          padding: const EdgeInsets.symmetric(vertical: 30),
           height: double.maxFinite,
           width: double.maxFinite,
           decoration: const BoxDecoration(

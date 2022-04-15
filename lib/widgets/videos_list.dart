@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../api/constants.dart';
 import '../functions/general_functions.dart';
 import '../models/video.dart';
-import '../screens/select_package_screen.dart';
-import '../screens/video_player_screen.dart';
 
 class VideosList extends StatelessWidget {
   List<Video> videosList = [];

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../models/playlist.dart';
+import '../widgets/app_bar.dart';
 import 'home.dart';
 import 'playlist_home.dart';
 
@@ -14,10 +15,10 @@ class PlaylistsHome extends StatelessWidget {
     double _width = MediaQuery.of(context).size.width * 0.01;
     double _height = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
-        appBar: AppBar(
+        appBar: JhankarAppBar(
           title: Text('Playlists'),
-          backgroundColor: Color.fromARGB(255, 52, 89, 131),
-          centerTitle: true,
+          appBar: AppBar(),
+          widgets: <Widget>[],
         ),
         body: Container(
           height: double.maxFinite,

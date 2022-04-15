@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import '../api/home_api.dart';
 import '../models/video.dart';
 import '../models/video_category.dart';
+import '../widgets/app_bar.dart';
 import 'category_home.dart';
 import 'home.dart';
 
@@ -18,10 +19,10 @@ class VideoCategoriesHome extends StatelessWidget {
     double _width = MediaQuery.of(context).size.width * 0.01;
     double _height = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
-        appBar: AppBar(
-          title: Text('All Categories'),
-          backgroundColor: Color.fromARGB(255, 52, 89, 131),
-          centerTitle: true,
+        appBar: JhankarAppBar(
+          title: Text('All Category'),
+          appBar: AppBar(),
+          widgets: <Widget>[],
         ),
         body: Container(
           height: double.maxFinite,
