@@ -2,6 +2,7 @@ import 'package:amusic_app/models/package.dart';
 import 'package:esewa_pnp/esewa.dart';
 import 'package:esewa_pnp/esewa_pnp.dart';
 import 'package:flutter/material.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 
 class PackagesList extends StatelessWidget {
   List<Package> packagesList = [];
@@ -45,6 +46,35 @@ class PackagesList extends StatelessWidget {
                   } on ESewaPaymentException catch (e) {
                     // Handle error
                   }
+                } else {
+                  final config = PaymentConfig(
+                    amount: packagesList[index].price *
+                        100, // Amount should be in paisa
+                    productIdentity: packagesList[index].name,
+                    productName: packagesList[index].name,
+                    productUrl: 'https://www.khalti.com/#/bazaar',
+                    additionalData: {
+                      // Not mandatory; can be used for reporting purpose
+                      'vendor': 'Khalti Bazaar',
+                    },
+                  );
+                  KhaltiScope.of(context).pay(
+                    config: config,
+                    preferences: [
+                      PaymentPreference.connectIPS,
+                      PaymentPreference.eBanking,
+                      PaymentPreference.sct,
+                    ],
+                    onSuccess: (successModel) {
+                      // Perform Server Verification
+                    },
+                    onFailure: (failureModel) {
+                      // What to do on failure?
+                    },
+                    onCancel: () {
+                      // User manually cancelled the transaction
+                    },
+                  );
                 }
               },
               child: InkWell(child: Text(packagesList[index].name)),

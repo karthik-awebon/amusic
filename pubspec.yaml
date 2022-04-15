@@ -51,6 +51,7 @@ dependencies:
   just_audio:
   audio_video_progress_bar:
   esewa_pnp:
+  khalti_flutter:
   
 
 dev_dependencies:

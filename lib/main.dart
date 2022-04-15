@@ -18,6 +18,7 @@ import 'package:amusic_app/screens/videos_home.dart';
 import 'package:amusic_app/widgets/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/auth.dart';
@@ -32,7 +33,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
@@ -40,60 +40,72 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: Consumer<Auth>(
-            builder: (ctx, auth, _) => MaterialApp(
-                  title: 'Jhankar Music',
-                  theme: ThemeData(
-                    // This is the theme of your application.
-                    //
-                    // Try running your application with "flutter run". You'll see the
-                    // application has a blue toolbar. Then, without quitting the app, try
-                    // changing the primarySwatch below to Colors.green and then invoke
-                    // "hot reload" (press "r" in the console where you ran "flutter run",
-                    // or simply save your changes to "hot reload" in a Flutter IDE).
-                    // Notice that the counter didn't reset back to zero; the application
-                    // is not restarted.
-                    brightness: Brightness.dark,
-                    primaryColor: Color.fromARGB(255, 52, 89, 131),
-                    textTheme: const TextTheme(
-                      headline1: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600),
+            builder: (ctx, auth, _) => KhaltiScope(
+                publicKey: 'test_public_key_dc74e0fd57cb46cd93832aee0a507256',
+                builder: (context, navigatorKey) {
+                  return MaterialApp(
+                    navigatorKey: navigatorKey,
+                    supportedLocales: const [
+                      Locale('en', 'US'),
+                      Locale('ne', 'NP'),
+                    ],
+                    localizationsDelegates: const [
+                      KhaltiLocalizations.delegate,
+                    ],
+                    title: 'Jhankar Music',
+                    theme: ThemeData(
+                      // This is the theme of your application.
+                      //
+                      // Try running your application with "flutter run". You'll see the
+                      // application has a blue toolbar. Then, without quitting the app, try
+                      // changing the primarySwatch below to Colors.green and then invoke
+                      // "hot reload" (press "r" in the console where you ran "flutter run",
+                      // or simply save your changes to "hot reload" in a Flutter IDE).
+                      // Notice that the counter didn't reset back to zero; the application
+                      // is not restarted.
+                      brightness: Brightness.dark,
+                      primaryColor: Color.fromARGB(255, 52, 89, 131),
+                      textTheme: const TextTheme(
+                        headline1: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600),
+                      ),
                     ),
-                  ),
-                  //home: AudioPlayerActivity(token: "",),
-                  home: auth.isAuth
-                      ? Home()
-                      : FutureBuilder(
-                          future: auth.tryAutoLogin(),
-                          builder: (ctx, authResultSnapshot) =>
-                              authResultSnapshot.connectionState ==
-                                      ConnectionState.waiting
-                                  ? SplashScreen()
-                                  : MyHomePage(title: 'Jhankar'),
-                        ),
-                  routes: {
-                    Home.routeName: (context) => Home(),
-                    CategoriesHome.routeName: (context) => CategoriesHome(),
-                    CategoryHome.routeName: (context) => CategoryHome(),
-                    PlaylistHome.routeName: (context) => PlaylistHome(),
-                    PlaylistsHome.routeName: (context) => PlaylistsHome(),
-                    VideoCategoriesHome.routeName: (context) =>
-                        VideoCategoriesHome(),
-                    VideoCategoryHome.routeName: (context) =>
-                        VideoCategoryHome(),
-                    VideosHome.routeName: (context) => VideosHome(),
-                    DownloadsHome.routeName: (context) => DownloadsHome(),
-                    AccountHome.routeName: (context) => AccountHome(),
-                    VideoPlayerScreen.routeName: (context) =>
-                        VideoPlayerScreen(),
-                    AudioPlayerScreen.routeName: (context) =>
-                        AudioPlayerScreen(),
-                    SearchScreen.routeName: (context) => SearchScreen(),
-                    SelectPackageScreen.routeName: (context) =>
-                        SelectPackageScreen()
-                  },
-                )));
+                    //home: AudioPlayerActivity(token: "",),
+                    home: auth.isAuth
+                        ? Home()
+                        : FutureBuilder(
+                            future: auth.tryAutoLogin(),
+                            builder: (ctx, authResultSnapshot) =>
+                                authResultSnapshot.connectionState ==
+                                        ConnectionState.waiting
+                                    ? SplashScreen()
+                                    : MyHomePage(title: 'Jhankar'),
+                          ),
+                    routes: {
+                      Home.routeName: (context) => Home(),
+                      CategoriesHome.routeName: (context) => CategoriesHome(),
+                      CategoryHome.routeName: (context) => CategoryHome(),
+                      PlaylistHome.routeName: (context) => PlaylistHome(),
+                      PlaylistsHome.routeName: (context) => PlaylistsHome(),
+                      VideoCategoriesHome.routeName: (context) =>
+                          VideoCategoriesHome(),
+                      VideoCategoryHome.routeName: (context) =>
+                          VideoCategoryHome(),
+                      VideosHome.routeName: (context) => VideosHome(),
+                      DownloadsHome.routeName: (context) => DownloadsHome(),
+                      AccountHome.routeName: (context) => AccountHome(),
+                      VideoPlayerScreen.routeName: (context) =>
+                          VideoPlayerScreen(),
+                      AudioPlayerScreen.routeName: (context) =>
+                          AudioPlayerScreen(),
+                      SearchScreen.routeName: (context) => SearchScreen(),
+                      SelectPackageScreen.routeName: (context) =>
+                          SelectPackageScreen()
+                    },
+                  );
+                })));
   }
 }
 
@@ -195,7 +207,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
