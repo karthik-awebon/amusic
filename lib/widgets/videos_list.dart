@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../api/videos_api.dart';
+import '../api/constants.dart';
 import '../models/video.dart';
 import '../screens/select_package_screen.dart';
 import '../screens/video_player_screen.dart';
@@ -92,7 +92,7 @@ class VideosList extends StatelessWidget {
                                               image: DecorationImage(
                                                   fit: BoxFit.cover,
                                                   image: NetworkImage(
-                                                      '${VideosApi.API_BASE_URL}/file/index?f=esewa_logo.png&d=subscribe'))),
+                                                      '${API_BASE_URL}/file/index?f=esewa_logo.png&d=subscribe'))),
                                         ),
                                       ),
                                       InkWell(
@@ -109,7 +109,7 @@ class VideosList extends StatelessWidget {
                                               image: DecorationImage(
                                                   fit: BoxFit.cover,
                                                   image: NetworkImage(
-                                                      '${VideosApi.API_BASE_URL}/file/index?f=Khalti_Digital_Wallet_Logo.png&d=subscribe'))),
+                                                      '${API_BASE_URL}/file/index?f=Khalti_Digital_Wallet_Logo.png&d=subscribe'))),
                                         ),
                                       ),
                                     ],

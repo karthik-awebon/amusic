@@ -7,11 +7,10 @@ import '../models/banner.dart';
 import '../models/category.dart';
 import '../models/song.dart';
 import '../models/video.dart';
+import 'constants.dart';
 
 class HomeApi {
-  static String API_BASE_URL =
-      "http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api";
-
+  
   static Future getBannerList() async {
     http.Response response = await http
         .get(Uri.parse("$API_BASE_URL/banner/list?page=1&number_per_page=10"));

@@ -3,10 +3,9 @@ import 'package:amusic_app/models/video.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/video_category.dart';
+import 'constants.dart';
 
 class VideosApi {
-  static String API_BASE_URL =
-      "http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api";
 
   static Future getVideosCategoryList() async {
     http.Response response = await http.get(Uri.parse(
