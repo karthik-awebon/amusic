@@ -8,6 +8,7 @@ import '../models/video_category.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 import '../widgets/videos_list.dart';
+import '../widgets/videos_vertical_list.dart';
 import 'video_categories_home.dart';
 import 'video_category_home.dart';
 
@@ -242,97 +243,9 @@ class VideosHome extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  physics: BouncingScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount:
-                                      snapshot.data['videos'].length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 10, 10, 0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).pushNamed(
-                                              VideoPlayerScreen.routeName,
-                                              arguments:
-                                                  VideoPlayerScreenArguments(
-                                                      snapshot
-                                                          .data['videos']
-                                                              [index]
-                                                          .video,
-                                                      snapshot
-                                                          .data['videos']
-                                                              [index]
-                                                          .id
-                                                          .toString()));
-                                        },
-                                        child: Container(
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: NetworkImage(
-                                                            snapshot
-                                                                .data[
-                                                                    'videos']
-                                                                    [index]
-                                                                .image))),
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Flexible(
-                                                flex: 7,
-                                                fit: FlexFit.tight,
-                                                child: Column(
-                                                  // mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        "${snapshot.data['videos'][index].name}",
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 18)),
-                                                    Text(
-                                                        snapshot
-                                                            .data[
-                                                                'videos']
-                                                                [index]
-                                                            .description,
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 15)),
-                                                  ],
-                                                ),
-                                              ),
-                                              Flexible(
-                                                child: SizedBox(),
-                                                fit: FlexFit.tight,
-                                              ),
-                                              Icon(
-                                                Icons.more_vert,
-                                                size: 30,
-                                                color: Colors.white,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
+                              VideosVerticalList(
+                                videosList: snapshot.data['videos'],
+                              ),
                               SizedBox(
                                 height: 50,
                               ),
