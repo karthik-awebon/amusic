@@ -182,7 +182,7 @@ class _HomeState extends State<Home> {
                                     Text(
                                       'Category',
                                       style:
-                                          Theme.of(context).textTheme.headline6,
+                                          Theme.of(context).textTheme.headline1,
                                     ),
                                     InkWell(
                                         onTap: () {
@@ -273,7 +273,7 @@ class _HomeState extends State<Home> {
                                     Text(
                                       'New Albums',
                                       style:
-                                          Theme.of(context).textTheme.headline6,
+                                          Theme.of(context).textTheme.headline1,
                                     ),
                                     InkWell(
                                         onTap: () {
@@ -305,7 +305,7 @@ class _HomeState extends State<Home> {
                                     Text(
                                       'Hot Albums',
                                       style:
-                                          Theme.of(context).textTheme.headline6,
+                                          Theme.of(context).textTheme.headline1,
                                     ),
                                     InkWell(
                                         onTap: () {
@@ -337,7 +337,7 @@ class _HomeState extends State<Home> {
                                     Text(
                                       'Top Albums',
                                       style:
-                                          Theme.of(context).textTheme.headline6,
+                                          Theme.of(context).textTheme.headline1,
                                     ),
                                     InkWell(
                                         onTap: () {
@@ -369,7 +369,7 @@ class _HomeState extends State<Home> {
                                     Text(
                                       'Bindashi Albums',
                                       style:
-                                          Theme.of(context).textTheme.headline6,
+                                          Theme.of(context).textTheme.headline1,
                                     ),
                                     InkWell(
                                         onTap: () {

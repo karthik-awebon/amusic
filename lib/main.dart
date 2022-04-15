@@ -64,13 +64,27 @@ class MyApp extends StatelessWidget {
                       // Notice that the counter didn't reset back to zero; the application
                       // is not restarted.
                       brightness: Brightness.dark,
-                      primaryColor: Color.fromARGB(255, 52, 89, 131),
+                        primaryColor: Color.fromARGB(255, 255, 255, 255),
+                        colorScheme: const ColorScheme(
+                            brightness: Brightness.dark,
+                            primary: Color.fromARGB(255, 255, 255, 255),
+                            onPrimary: Color.fromARGB(255, 255, 255, 255),
+                            secondary: Color.fromARGB(0, 0, 0, 0),
+                            onSecondary: Color.fromARGB(0, 0, 0, 0),
+                            error: Color.fromARGB(255, 255, 255, 255),
+                            onError: Color.fromARGB(255, 255, 255, 255),
+                            background: Color.fromARGB(255, 52, 89, 131),
+                            onBackground: Color.fromARGB(255, 52, 89, 131),
+                            surface: Color.fromARGB(255, 255, 255, 255),
+                            onSurface: Color.fromARGB(255, 255, 255, 255)),
                       textTheme: const TextTheme(
                         headline1: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.w600),
                       ),
+                        bottomSheetTheme: BottomSheetThemeData(
+                            backgroundColor: Colors.white)
                     ),
                     //home: AudioPlayerActivity(token: "",),
                     home: auth.isAuth

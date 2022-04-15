@@ -14,7 +14,19 @@ class SelectPackageScreen extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Select A Package'),
+          title: Row(
+            children: const [
+              Icon(
+                Icons.check_circle_outline,
+                size: 35,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text("Select a Package")
+            ],
+          ),
           backgroundColor: Color.fromARGB(255, 52, 89, 131),
           centerTitle: true,
         ),
