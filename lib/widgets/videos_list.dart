@@ -20,7 +20,7 @@ class VideosList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: InkWell(
                   onTap: () {
-                    openPaymentModal(context, videosList[index]);
+                    showVideo(context, videosList[index]);
                   },
                   child: Container(
                       width: _width * 50,

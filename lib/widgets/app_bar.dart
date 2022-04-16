@@ -4,11 +4,13 @@ class JhankarAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget title;
   AppBar appBar;
   List<Widget> widgets;
+  TabBar? bottom;
   JhankarAppBar(
       {Key? key,
       required this.title,
       required this.appBar,
-      required this.widgets})
+      required this.widgets,
+      this.bottom})
       : super(key: key);
 
   @override
@@ -18,6 +20,7 @@ class JhankarAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Color.fromARGB(255, 52, 89, 131),
       centerTitle: true,
       actions: widgets,
+        bottom: bottom
     );
   }
 

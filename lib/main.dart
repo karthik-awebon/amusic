@@ -1,7 +1,9 @@
 // ignore_for_file: unused_import
 
 import 'package:amusic_app/screens/audio_player_screen.dart';
+import 'package:amusic_app/screens/favorites_screen.dart';
 import 'package:amusic_app/screens/home.dart';
+import 'package:amusic_app/screens/local_music_screen.dart';
 import 'package:amusic_app/screens/login.dart';
 import 'package:amusic_app/screens/register.dart';
 import 'package:amusic_app/screens/account_home.dart';
@@ -83,7 +85,7 @@ class MyApp extends StatelessWidget {
                             color: Colors.white,
                             fontWeight: FontWeight.w600),
                       ),
-                        bottomSheetTheme: BottomSheetThemeData(
+                        bottomSheetTheme: const BottomSheetThemeData(
                             backgroundColor: Colors.white)
                     ),
                     //home: AudioPlayerActivity(token: "",),
@@ -95,7 +97,7 @@ class MyApp extends StatelessWidget {
                                 authResultSnapshot.connectionState ==
                                         ConnectionState.waiting
                                     ? SplashScreen()
-                                    : MyHomePage(title: 'Jhankar'),
+                                    : const MyHomePage(title: 'Jhankar'),
                           ),
                     routes: {
                       Home.routeName: (context) => Home(),
@@ -111,12 +113,16 @@ class MyApp extends StatelessWidget {
                       DownloadsHome.routeName: (context) => DownloadsHome(),
                       AccountHome.routeName: (context) => AccountHome(),
                       VideoPlayerScreen.routeName: (context) =>
-                          VideoPlayerScreen(),
+                          const VideoPlayerScreen(),
                       AudioPlayerScreen.routeName: (context) =>
                           AudioPlayerScreen(),
                       SearchScreen.routeName: (context) => SearchScreen(),
                       SelectPackageScreen.routeName: (context) =>
-                          SelectPackageScreen()
+                          const SelectPackageScreen(),
+                      FavoritesScreen.routeName: (context) =>
+                          const FavoritesScreen(),
+                      LocalMusicScreen.routeName: (context) =>
+                          const LocalMusicScreen()
                     },
                   );
                 })));
