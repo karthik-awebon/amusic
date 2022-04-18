@@ -6,7 +6,6 @@ import '../models/video_category.dart';
 import 'constants.dart';
 
 class VideosApi {
-
   static Future getVideosCategoryList() async {
     http.Response response = await http.get(Uri.parse(
         "$API_BASE_URL/category/list?number_per_page=10&page=1&is_video=1"));
@@ -28,17 +27,33 @@ class VideosApi {
   static Future videosHomeData() async {
     http.Response response =
         await http.get(Uri.parse("$API_BASE_URL/home/video-statistics"));
+    var decodedData = jsonDecode(response.body);
     var videosHomeData = {
       "video_categories": constructVideoCatgoriesList(
-          jsonDecode(response.body)['data']['video_categories']),
-      "darshan_videos": constructVideosList(jsonDecode(response.body)['data']
-          ['video_playlist_title'][0]['list_videos']),
-      "dance_videos": constructVideosList(jsonDecode(response.body)['data']
-          ['video_playlist_title'][1]['list_videos']),
-      "videos": constructVideosList(jsonDecode(response.body)['data']['videos'])
+         decodedData['data']['video_categories']),
+      "darshan_videos": {
+        "id": decodedData['data']['video_playlist_title'][0]['id'],
+        "title": decodedData['data']['video_playlist_title'][0]['title'],
+        "list": constructVideosList(
+            decodedData['data']['video_playlist_title'][0]['list_videos'])
+      },
+      "dance_videos": {
+        "id": decodedData['data']['video_playlist_title'][1]['id'],
+        "title": decodedData['data']['video_playlist_title'][1]['title'],
+        "list": constructVideosList(
+            decodedData['data']['video_playlist_title'][1]['list_videos'])
+      },
+      "videos": constructVideosList(decodedData['data']['videos'])
     };
 
     return videosHomeData;
+  }
+
+  static Future getVideoPlaylist(playlistId) async {
+    http.Response response = await http.get(Uri.parse(
+        "$API_BASE_URL/video/title-view-more?video_title_id=$playlistId&page=1&number_per_page=10"));
+
+    return constructVideosList(jsonDecode(response.body)['data']);
   }
 
   static List<Video> constructVideosList(responseData) {

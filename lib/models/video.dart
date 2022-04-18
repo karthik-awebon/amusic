@@ -21,3 +21,10 @@ class VideoPlayerScreenArguments {
 
   VideoPlayerScreenArguments(this.videoUrl, this.playlistId);
 }
+
+class VideoPlaylistsArguments {
+  final String playlistsId;
+  final String name;
+
+  VideoPlaylistsArguments(this.playlistsId, this.name);
+}

@@ -15,6 +15,7 @@ import 'package:amusic_app/screens/playlists_home.dart';
 import 'package:amusic_app/screens/search_screen.dart';
 import 'package:amusic_app/screens/select_package_screen.dart';
 import 'package:amusic_app/screens/video_player_screen.dart';
+import 'package:amusic_app/screens/video_playlists_home.dart';
 import 'package:amusic_app/widgets/video_player_widget.dart';
 import 'package:amusic_app/screens/videos_home.dart';
 import 'package:amusic_app/widgets/logo.dart';
@@ -122,7 +123,9 @@ class MyApp extends StatelessWidget {
                       FavoritesScreen.routeName: (context) =>
                           const FavoritesScreen(),
                       LocalMusicScreen.routeName: (context) =>
-                          const LocalMusicScreen()
+                          const LocalMusicScreen(),
+                      VideoPlaylistHome.routeName: (context) =>
+                          VideoPlaylistHome()
                     },
                   );
                 })));

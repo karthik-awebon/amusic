@@ -1,5 +1,6 @@
 import 'package:amusic_app/api/videos_api.dart';
 import 'package:amusic_app/screens/video_player_screen.dart';
+import 'package:amusic_app/screens/video_playlists_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -181,9 +182,16 @@ class VideosHome extends StatelessWidget {
                                     InkWell(
                                         onTap: () {
                                           Navigator.of(context).pushNamed(
-                                              VideoCategoryHome.routeName,
-                                              arguments: VideoCategoryArguments(
-                                                  '17', 'Name'));
+                                              VideoPlaylistHome.routeName,
+                                              arguments:
+                                                  VideoPlaylistsArguments(
+                                                      snapshot.data[
+                                                              'darshan_videos']
+                                                              ['id']
+                                                          .toString(),
+                                                      snapshot.data[
+                                                              'darshan_videos']
+                                                          ['title']));
                                         },
                                         child: Text(
                                           'More',
@@ -199,7 +207,8 @@ class VideosHome extends StatelessWidget {
                                   height: _height * 15,
                                   child: VideosList(
                                       videosList:
-                                          snapshot.data['darshan_videos'])),
+                                          snapshot
+                                          .data['darshan_videos']['list'])),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -217,9 +226,16 @@ class VideosHome extends StatelessWidget {
                                     InkWell(
                                         onTap: () {
                                           Navigator.of(context).pushNamed(
-                                              VideoCategoryHome.routeName,
-                                              arguments: VideoCategoryArguments(
-                                                  '17', 'Name'));
+                                              VideoPlaylistHome.routeName,
+                                              arguments:
+                                                  VideoPlaylistsArguments(
+                                                      snapshot
+                                                          .data['dance_videos']
+                                                              ['id']
+                                                          .toString(),
+                                                      snapshot.data[
+                                                              'dance_videos']
+                                                          ['title']));
                                         },
                                         child: Text(
                                           'More',
@@ -235,7 +251,8 @@ class VideosHome extends StatelessWidget {
                                   height: _height * 15,
                                   child: VideosList(
                                       videosList:
-                                          snapshot.data['dance_videos'])),
+                                          snapshot.data['dance_videos']
+                                          ['list'])),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
