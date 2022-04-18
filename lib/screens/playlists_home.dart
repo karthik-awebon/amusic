@@ -14,9 +14,11 @@ class PlaylistsHome extends StatelessWidget {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width * 0.01;
     double _height = MediaQuery.of(context).size.height * 0.01;
+    final playlistsData =
+        ModalRoute.of(context)!.settings.arguments as PlaylistsArguments;
     return Scaffold(
         appBar: JhankarAppBar(
-          title: Text('Playlists'),
+          title: Text(playlistsData.name),
           appBar: AppBar(),
           widgets: <Widget>[],
         ),
@@ -28,12 +30,12 @@ class PlaylistsHome extends StatelessWidget {
                   image: AssetImage("lib/img/back4img.jpg"), fit: BoxFit.fill)),
           child: Container(
             child: FutureBuilder(
-                future: HomeApi.getPlayListMusic(),
+                future: HomeApi.getPlaylists(playlistsData.playlistsId),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return GridView.builder(
                       padding: const EdgeInsets.all(10.0),
-                      itemCount: snapshot.data['data'].length,
+                      itemCount: snapshot.data.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -42,19 +44,17 @@ class PlaylistsHome extends StatelessWidget {
                                 Navigator.of(context).pushNamed(
                                     PlaylistHome.routeName,
                                     arguments: PlaylistArguments(
-                                        snapshot.data['data'][index]['id']
+                                        snapshot.data[index].id
                                             .toString(),
-                                        snapshot.data['data'][index]
-                                                ['img_thumb']
-                                            .toString()));
+                                        snapshot.data[index].imgThumb));
                               },
                               child: Container(
                                   width: _width * 30,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image: NetworkImage(snapshot.data['data']
-                                          [index]['img_thumb']),
+                                      image: NetworkImage(
+                                          snapshot.data[index].imgThumb),
                                       scale: 3.5,
                                       fit: BoxFit.cover,
                                     ),
@@ -65,7 +65,7 @@ class PlaylistsHome extends StatelessWidget {
                                       decoration: BoxDecoration(
                                           color: Colors.black.withOpacity(0.5)),
                                       child: Text(
-                                        "  ${snapshot.data['data'][index]['songs_count']} items",
+                                        "  ${snapshot.data[index].songsCount} items",
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 18),
                                       ),

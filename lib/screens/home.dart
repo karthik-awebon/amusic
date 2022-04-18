@@ -261,7 +261,13 @@ class _HomeState extends State<Home> {
                                     InkWell(
                                         onTap: () {
                                           Navigator.of(context).pushNamed(
-                                              PlaylistsHome.routeName);
+                                              PlaylistsHome.routeName,
+                                              arguments: PlaylistsArguments(
+                                                  snapshot.data['new_albums']
+                                                          ['id']
+                                                      .toString(),
+                                                  snapshot.data['new_albums']
+                                                      ['title']));
                                         },
                                         child: Text(
                                           'More',
@@ -277,7 +283,8 @@ class _HomeState extends State<Home> {
                                   height: _height * 15,
                                   child: PlaylistsList(
                                       playlistsList:
-                                          snapshot.data['new_albums'])),
+                                          snapshot.data['new_albums']
+                                          ['list'])),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -293,7 +300,13 @@ class _HomeState extends State<Home> {
                                     InkWell(
                                         onTap: () {
                                           Navigator.of(context).pushNamed(
-                                              PlaylistsHome.routeName);
+                                              PlaylistsHome.routeName,
+                                              arguments: PlaylistsArguments(
+                                                  snapshot.data['hot_albums']
+                                                          ['id']
+                                                      .toString(),
+                                                  snapshot.data['hot_albums']
+                                                      ['title']));
                                         },
                                         child: Text(
                                           'More',
@@ -309,7 +322,8 @@ class _HomeState extends State<Home> {
                                   height: _height * 15,
                                   child: PlaylistsList(
                                       playlistsList:
-                                          snapshot.data['hot_albums'])),
+                                          snapshot.data['hot_albums']
+                                          ['list'])),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -325,7 +339,13 @@ class _HomeState extends State<Home> {
                                     InkWell(
                                         onTap: () {
                                           Navigator.of(context).pushNamed(
-                                              PlaylistsHome.routeName);
+                                              PlaylistsHome.routeName,
+                                              arguments: PlaylistsArguments(
+                                                  snapshot.data['top_albums']
+                                                          ['id']
+                                                      .toString(),
+                                                  snapshot.data['top_albums']
+                                                      ['title']));
                                         },
                                         child: Text(
                                           'More',
@@ -341,7 +361,8 @@ class _HomeState extends State<Home> {
                                   height: _height * 15,
                                   child: PlaylistsList(
                                       playlistsList:
-                                          snapshot.data['top_albums'])),
+                                          snapshot.data['top_albums']
+                                          ['list'])),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -357,7 +378,15 @@ class _HomeState extends State<Home> {
                                     InkWell(
                                         onTap: () {
                                           Navigator.of(context).pushNamed(
-                                              PlaylistsHome.routeName);
+                                              PlaylistsHome.routeName,
+                                              arguments: PlaylistsArguments(
+                                                  snapshot
+                                                      .data['bindashi_albums']
+                                                          ['id']
+                                                      .toString(),
+                                                  snapshot.data[
+                                                          'bindashi_albums']
+                                                      ['title']));
                                         },
                                         child: Text(
                                           'More',
@@ -373,7 +402,8 @@ class _HomeState extends State<Home> {
                                   height: _height * 15,
                                   child: PlaylistsList(
                                       playlistsList:
-                                          snapshot.data['bindashi_albums'])),
+                                          snapshot
+                                          .data['bindashi_albums']['list'])),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),

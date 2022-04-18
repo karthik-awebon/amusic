@@ -17,3 +17,10 @@ class PlaylistArguments {
 
   PlaylistArguments(this.playlistId, this.imageUrl);
 }
+
+class PlaylistsArguments {
+  final String playlistsId;
+  final String name;
+
+  PlaylistsArguments(this.playlistsId, this.name);
+}

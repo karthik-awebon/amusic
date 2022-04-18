@@ -10,7 +10,6 @@ import '../models/video.dart';
 import 'constants.dart';
 
 class HomeApi {
-  
   static Future getBannerList() async {
     http.Response response = await http
         .get(Uri.parse("$API_BASE_URL/banner/list?page=1&number_per_page=10"));
@@ -33,8 +32,14 @@ class HomeApi {
   static Future getPlayListMusic() async {
     http.Response response = await http.get(Uri.parse(
         "$API_BASE_URL/playlist/list?number_per_page=10&page=1&is_new=1&is_hot=1&is_top=1"));
-    print("Play List ${response.statusCode} ${response.body}");
     return jsonDecode(response.body);
+  }
+
+  static Future getPlaylists(playlistsId) async {
+    http.Response response = await http.get(Uri.parse(
+        "$API_BASE_URL/playlist/view-more?playlist_title_id=$playlistsId"));
+    var decodedData = jsonDecode(response.body);
+    return constructPlaylistsList(decodedData['data']);
   }
 
   static Future<List<Song>> getListCategotyForNewSongs() async {
@@ -69,22 +74,35 @@ class HomeApi {
   static Future homeData() async {
     http.Response response =
         await http.get(Uri.parse("$API_BASE_URL/home/statistics"));
+    var decodedData = jsonDecode(response.body);
     var homeData = {
-      "banners":
-          constructBannersList(jsonDecode(response.body)['data']['banner']),
-      "categories": constructCatgoriesList(
-          jsonDecode(response.body)['data']['categories']),
-      "new_albums": constructPlaylistsList(jsonDecode(response.body)['data']
-          ['playlist_title'][0]['list_playlist']),
-      "hot_albums": constructPlaylistsList(jsonDecode(response.body)['data']
-          ['playlist_title'][1]['list_playlist']),
-      "top_albums": constructPlaylistsList(jsonDecode(response.body)['data']
-          ['playlist_title'][2]['list_playlist']),
-      "bindashi_albums": constructPlaylistsList(
-          jsonDecode(response.body)['data']['playlist_title'][3]
-              ['list_playlist']),
-      "new_songs":
-          constructSongsList(jsonDecode(response.body)['data']['songs'])
+      "banners": constructBannersList(decodedData['data']['banner']),
+      "categories": constructCatgoriesList(decodedData['data']['categories']),
+      "new_albums": {
+        "id": decodedData['data']['playlist_title'][0]['id'],
+        "title": decodedData['data']['playlist_title'][0]['title'],
+        "list": constructPlaylistsList(
+            decodedData['data']['playlist_title'][0]['list_playlist'])
+      },
+      "hot_albums": {
+        "id": decodedData['data']['playlist_title'][1]['id'],
+        "title": decodedData['data']['playlist_title'][1]['title'],
+        "list": constructPlaylistsList(
+            decodedData['data']['playlist_title'][1]['list_playlist'])
+      },
+      "top_albums": {
+        "id": decodedData['data']['playlist_title'][2]['id'],
+        "title": decodedData['data']['playlist_title'][2]['title'],
+        "list": constructPlaylistsList(
+            decodedData['data']['playlist_title'][2]['list_playlist'])
+      },
+      "bindashi_albums": {
+        "id": decodedData['data']['playlist_title'][3]['id'],
+        "title": decodedData['data']['playlist_title'][3]['title'],
+        "list": constructPlaylistsList(
+            decodedData['data']['playlist_title'][3]['list_playlist'])
+      },
+      "new_songs": constructSongsList(decodedData['data']['songs'])
     };
 
     return homeData;
@@ -93,11 +111,11 @@ class HomeApi {
   static Future searchAll(String keyword) async {
     http.Response response =
         await http.get(Uri.parse("$API_BASE_URL/search/index?query=$keyword"));
+    var decodedData = jsonDecode(response.body);
     var searchResult = {
-      "songs": constructSongsList(jsonDecode(response.body)['data']['songs']),
-      "playlists": constructPlaylistsList(
-          jsonDecode(response.body)['data']['playlists']),
-      "videos": constructVideosList(jsonDecode(response.body)['data']['videos'])
+      "songs": constructSongsList(decodedData['data']['songs']),
+      "playlists": constructPlaylistsList(decodedData['data']['playlists']),
+      "videos": constructVideosList(decodedData['data']['videos'])
     };
 
     return searchResult;
