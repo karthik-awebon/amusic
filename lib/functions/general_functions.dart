@@ -1,4 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:glob/glob.dart';
+import 'package:glob/list_local_fs.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../api/constants.dart';
 import '../models/video.dart';
@@ -94,4 +100,46 @@ openPaymentModal(context) {
           ));
     },
   );
+}
+
+Directory findRoot(FileSystemEntity entity) {
+  final Directory parent = entity.parent;
+  if (parent.path == entity.path) return parent;
+  return findRoot(parent);
+}
+
+// Future<Stream<File>> searchAudioFiles() async {
+//   final Directory root = findRoot(await getApplicationDocumentsDirectory());
+
+//   return Glob("**.mp3")
+//       .list(root: root.path)
+//       .where((entity) => entity is File)
+//       .cast<File>();
+// }
+
+Future<Stream<File>> searchAudioFiles() async {
+  final Directory root = findRoot(await getApplicationDocumentsDirectory());
+
+  final dartFile = Glob("**.mp3");
+  //if (await getStoragePermission()) {
+  for (var entity in dartFile.listSync()) {
+    print(entity.path);
+  }
+  //}
+
+  return dartFile
+      .list(root: root.path)
+      .where((entity) => entity is File)
+      .cast<File>();
+}
+
+Future<bool> getStoragePermission() async {
+  if (await Permission.storage.request().isGranted) {
+    return true;
+  } else if (await Permission.storage.request().isPermanentlyDenied) {
+    await openAppSettings();
+  } else if (await Permission.storage.request().isDenied) {
+    return false;
+  }
+  return false;
 }

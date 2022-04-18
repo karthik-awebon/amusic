@@ -52,7 +52,8 @@ dependencies:
   audio_video_progress_bar:
   esewa_pnp:
   khalti_flutter:
-  
+  glob:
+  permission_handler:
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../api/home_api.dart';
+import '../functions/general_functions.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
@@ -58,7 +59,7 @@ class LocalMusicScreen extends StatelessWidget {
                     physics: BouncingScrollPhysics(),
                     child: Column(children: [
                       FutureBuilder(
-                          future: HomeApi.getListCategotyForNewSongs(),
+                          future: searchAudioFiles(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             if (snapshot.hasData) {
