@@ -87,7 +87,10 @@ class MyApp extends StatelessWidget {
                             fontWeight: FontWeight.w600),
                       ),
                         bottomSheetTheme: const BottomSheetThemeData(
-                            backgroundColor: Colors.white)
+                            backgroundColor: Colors.white),
+                        popupMenuTheme: const PopupMenuThemeData(
+                            color: Colors.white,
+                            textStyle: TextStyle(color: Colors.black))
                     ),
                     //home: AudioPlayerActivity(token: "",),
                     home: auth.isAuth

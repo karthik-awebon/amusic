@@ -15,6 +15,13 @@ class Song {
       required this.musicArtists});
 }
 
+enum SongOptions {
+  Favorites,
+  AddToQueue,
+  Downloads,
+  Share,
+}
+
 class MusicArtist {
   final int id;
   final String name;

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../api/home_api.dart';
 import '../models/playlist.dart';
+import '../widgets/app_bar.dart';
 import '../widgets/songs_list.dart';
 import 'audio_player_screen.dart';
 import 'home.dart';
@@ -15,13 +16,20 @@ class PlaylistHome extends StatelessWidget {
     final playlistData =
         ModalRoute.of(context)!.settings.arguments as PlaylistArguments;
     return Scaffold(
-        appBar: null,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          title: null,
+          backgroundColor: Color(0x00000000),
+          elevation: 0,
+          centerTitle: true,
+        ),
         body: Container(
           height: double.maxFinite,
           width: double.maxFinite,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("lib/img/back4img.jpg"), fit: BoxFit.fill)),
+                  image: const AssetImage("lib/img/back4img.jpg"),
+                  fit: BoxFit.fill)),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -40,14 +48,15 @@ class PlaylistHome extends StatelessWidget {
                         if (snapshot.hasData) {
                           return SongsList(songsList: snapshot.data);
                         } else if (snapshot.hasError) {
-                          return Center(
+                          return const Center(
                             child: Text(
                               "No Songs on this List",
                               textAlign: TextAlign.center,
                             ),
                           );
                         } else {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: const CircularProgressIndicator());
                         }
                       }),
                 ),

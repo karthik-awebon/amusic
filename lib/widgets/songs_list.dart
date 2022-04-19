@@ -12,7 +12,7 @@ class SongsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         scrollDirection: Axis.vertical,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         itemCount: songsList.length,
         itemBuilder: (BuildContext context, int index) {
@@ -37,7 +37,7 @@ class SongsList extends StatelessWidget {
                               fit: BoxFit.cover,
                               image: NetworkImage(songsList[index].imgBanner))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Flexible(
@@ -50,24 +50,54 @@ class SongsList extends StatelessWidget {
                           Text("${songsList[index].name}",
                               overflow: TextOverflow.ellipsis,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 18)),
+                                  const TextStyle(
+                                  color: Colors.white, fontSize: 18)),
                           (songsList[index].musicArtists.length > 0)
                               ? Text(songsList[index].musicArtists[0].name,
                               style:
-                                  TextStyle(
+                                  const TextStyle(
                                       color: Colors.white, fontSize: 15))
-                              : Text(''),
+                              : const Text(''),
                         ],
                       ),
                     ),
-                    Flexible(
-                      child: SizedBox(),
+                    const Flexible(
+                      child: const SizedBox(),
                       fit: FlexFit.tight,
                     ),
-                    Icon(
-                      Icons.more_vert,
-                      size: 30,
-                      color: Colors.white,
+                    PopupMenuButton(
+                      onSelected: (SongOptions selectedValue) {
+                        // setState(() {
+                        //   if (selectedValue == FilterOptions.Favorites) {
+                        //     _showOnlyFavorites = true;
+                        //   } else {
+                        //     _showOnlyFavorites = false;
+                        //   }
+                        // });
+                      },
+                      icon: const Icon(Icons.more_vert, size: 30),
+                      itemBuilder: (_) => [
+                        const PopupMenuItem(
+                          child: Text(
+                            'Favorites',
+                          ),
+                          value: SongOptions.Favorites,
+                        ),
+                        const PopupMenuItem(
+                          child: Text(
+                            'Add to Queue',
+                          ),
+                          value: SongOptions.AddToQueue,
+                        ),
+                        const PopupMenuItem(
+                          child: Text('Downloads'),
+                          value: SongOptions.Downloads,
+                        ),
+                        const PopupMenuItem(
+                          child: Text('Share'),
+                          value: SongOptions.Share,
+                        ),
+                      ],
                     )
                   ],
                 ),
