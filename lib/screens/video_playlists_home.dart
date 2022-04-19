@@ -1,15 +1,9 @@
 import 'package:amusic_app/api/videos_api.dart';
-import 'package:amusic_app/screens/home.dart';
-import 'package:amusic_app/screens/videos_home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import '../api/home_api.dart';
 import '../models/video.dart';
-import '../models/video_category.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/videos_vertical_list.dart';
-import 'video_player_screen.dart';
 
 class VideoPlaylistHome extends StatelessWidget {
   static const routeName = './video-playlist-home';

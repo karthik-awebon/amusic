@@ -203,12 +203,11 @@ class VideosHome extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Container(
-                                  height: _height * 15,
-                                  child: VideosList(
+                              VideosList(
                                       videosList:
                                           snapshot
-                                          .data['darshan_videos']['list'])),
+                                          .data['darshan_videos']
+                                      ['list']),
                               Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 10, 20, 10),
@@ -247,12 +246,10 @@ class VideosHome extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Container(
-                                  height: _height * 15,
-                                  child: VideosList(
+                              VideosList(
                                       videosList:
                                           snapshot.data['dance_videos']
-                                          ['list'])),
+                                      ['list']),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),

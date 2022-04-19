@@ -25,8 +25,8 @@ class VideosVerticalList extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                      height: 50,
-                      width: 50,
+                      height: 80,
+                      width: 130,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           image: DecorationImage(

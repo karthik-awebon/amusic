@@ -143,12 +143,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Container(
-                                                    height: _height * 15,
-                                                    child: VideosList(
+                                                  VideosList(
                                                         videosList: snapshot
                                                             .data['videos']),
-                                                  )
+                                                  
                                                 ])
                                           : null,
                                     ),
