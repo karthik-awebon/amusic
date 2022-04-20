@@ -46,7 +46,9 @@ class PlaylistsHome extends StatelessWidget {
                                     arguments: PlaylistArguments(
                                         snapshot.data[index].id
                                             .toString(),
-                                        snapshot.data[index].imgThumb));
+                                        snapshot.data[index].imgThumb,
+                                        snapshot.data[index].name,
+                                        snapshot.data[index].songsCount));
                               },
                               child: Container(
                                   width: _width * 30,

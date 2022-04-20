@@ -23,7 +23,10 @@ class PlaylistsList extends StatelessWidget {
                     Navigator.of(context).pushNamed(PlaylistHome.routeName,
                         arguments: PlaylistArguments(
                             playlistsList[index].id.toString(),
-                            playlistsList[index].imgThumb.toString()));
+                          playlistsList[index].imgThumb,
+                          playlistsList[index].name,
+                          playlistsList[index].songsCount,
+                        ));
                   },
                   child: Container(
                       width: _width * 30,

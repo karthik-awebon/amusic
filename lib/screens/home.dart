@@ -111,15 +111,16 @@ class _HomeState extends State<Home> {
                                               Navigator.of(context).pushNamed(
                                                   PlaylistHome.routeName,
                                                   arguments: PlaylistArguments(
-                                                      item.playlistId
+                                                      item.id
                                                           .toString(),
-                                                      item.image
-                                                          .toString()));
+                                                      item.imgThumb,
+                                                      item.name,
+                                                      item.songsCount));
                                             },
                                             child: Container(
                                               child: Center(
                                                   child: Image.network(
-                                                item.image,
+                                                item.imgThumb,
                                                 width: 1000,
                                                 fit: BoxFit.fill,
                                               )),

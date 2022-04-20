@@ -15,7 +15,8 @@ class VideosApi {
   static Future getCategoryVideos(categoryId) async {
     http.Response response = await http.get(Uri.parse(
         "$API_BASE_URL/video/category?category_id=$categoryId&page=1&number_per_page=10"));
-    return jsonDecode(response.body);
+    var decodedData = jsonDecode(response.body);
+    return constructVideosList(jsonDecode(response.body)['data']);
   }
 
   static Future getVideos() async {

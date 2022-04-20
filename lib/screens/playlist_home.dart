@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../api/home_api.dart';
 import '../models/playlist.dart';
-import '../widgets/app_bar.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/songs_list.dart';
-import 'audio_player_screen.dart';
-import 'home.dart';
 
 class PlaylistHome extends StatelessWidget {
   static const routeName = './playlist-home';
@@ -20,7 +16,7 @@ class PlaylistHome extends StatelessWidget {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: null,
-          backgroundColor: Color(0x00000000),
+          backgroundColor: const Color(0x00000000),
           elevation: 0,
           centerTitle: true,
         ),
@@ -44,43 +40,29 @@ class PlaylistHome extends StatelessWidget {
                     height: 345,
                     width: double.infinity,
                     child: Align(
-                        child: SizedBox(
-                      height: 150,
-                      width: 150,
-                      child: Image.network(
-                        playlistData.imageUrl,
-                        fit: BoxFit.cover,
-                      ),
-                    )),
-                  ),
-                  Container(
-                    height: 345,
-                    width: double.infinity,
-                    child: Align(
-                        alignment: Alignment(0.4, 1.6),
-                        child: SizedBox(
+                        child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 100,
+                        ),
+                        SizedBox(
                           height: 150,
                           width: 150,
-                          child: Text(
-                            'Gitika',
-                            style: TextStyle(
+                          child: Image.network(
+                            playlistData.imageUrl,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Text(
+                          playlistData.title,
+                          style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        )),
-                  ),
-                  Container(
-                    height: 345,
-                    width: double.infinity,
-                    child: Align(
-                        alignment: Alignment(0.4, 1.8),
-                        child: SizedBox(
-                          height: 150,
-                          width: 150,
-                          child: Text(
-                            '5 Songs',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold),
-                          ),
+                        ),
+                        Text(
+                          '${playlistData.songsCount} Songs',
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
                         )),
                   ),
                 ]),
@@ -88,7 +70,7 @@ class PlaylistHome extends StatelessWidget {
                   height: 380,
                   decoration: const BoxDecoration(
                       image: DecorationImage(
-                          image: const AssetImage("lib/img/back4img.jpg"),
+                          image: AssetImage("lib/img/back4img.jpg"),
                           fit: BoxFit.fill)),
                   child: Container(
                     child: FutureBuilder(
@@ -107,7 +89,7 @@ class PlaylistHome extends StatelessWidget {
                             );
                           } else {
                             return const Center(
-                                child: const CircularProgressIndicator());
+                                child: CircularProgressIndicator());
                           }
                         }),
                   ),
@@ -116,7 +98,7 @@ class PlaylistHome extends StatelessWidget {
             ),
             Positioned(
                 child: FloatingActionButton(
-                  child: Icon(Icons.play_arrow),
+                  child: const Icon(Icons.play_arrow),
                   onPressed: () {},
                 ),
                 right: 10,

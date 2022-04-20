@@ -52,15 +52,6 @@ class VideosVerticalList extends StatelessWidget {
                                   color: Colors.white, fontSize: 15)),
                         ],
                       ),
-                    ),
-                    const Flexible(
-                      child: SizedBox(),
-                      fit: FlexFit.tight,
-                    ),
-                    const Icon(
-                      Icons.more_vert,
-                      size: 30,
-                      color: Colors.white,
                     )
                   ],
                 ),

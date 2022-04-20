@@ -14,8 +14,11 @@ class Playlist {
 class PlaylistArguments {
   final String playlistId;
   final String imageUrl;
+  final String title;
+  final int songsCount;
 
-  PlaylistArguments(this.playlistId, this.imageUrl);
+  PlaylistArguments(
+      this.playlistId, this.imageUrl, this.title, this.songsCount);
 }
 
 class PlaylistsArguments {

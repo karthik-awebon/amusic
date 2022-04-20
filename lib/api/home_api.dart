@@ -76,7 +76,7 @@ class HomeApi {
         await http.get(Uri.parse("$API_BASE_URL/home/statistics"));
     var decodedData = jsonDecode(response.body);
     var homeData = {
-      "banners": constructBannersList(decodedData['data']['banner']),
+      "banners": constructPlaylistsList(decodedData['data']['playlist_banner']),
       "categories": constructCatgoriesList(decodedData['data']['categories']),
       "new_albums": {
         "id": decodedData['data']['playlist_title'][0]['id'],
