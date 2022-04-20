@@ -30,16 +30,62 @@ class PlaylistHome extends StatelessWidget {
           child: Stack(children: [
             Column(
               children: [
-                Container(
-                  height: 350,
-                  width: double.infinity,
-                  child: Image.network(
-                    playlistData.imageUrl,
-                    fit: BoxFit.cover,
+                Stack(children: [
+                  Container(
+                    height: 345,
+                    width: double.infinity,
+                    child: Image.network(
+                      playlistData.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
+                  Container(
+                    color: Colors.black.withOpacity(0.5),
+                    height: 345,
+                    width: double.infinity,
+                    child: Align(
+                        child: SizedBox(
+                      height: 150,
+                      width: 150,
+                      child: Image.network(
+                        playlistData.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+                  ),
+                  Container(
+                    height: 345,
+                    width: double.infinity,
+                    child: Align(
+                        alignment: Alignment(0.4, 1.6),
+                        child: SizedBox(
+                          height: 150,
+                          width: 150,
+                          child: Text(
+                            'Gitika',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                  ),
+                  Container(
+                    height: 345,
+                    width: double.infinity,
+                    child: Align(
+                        alignment: Alignment(0.4, 1.8),
+                        child: SizedBox(
+                          height: 150,
+                          width: 150,
+                          child: Text(
+                            '5 Songs',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                  ),
+                ]),
                 Container(
-                  height: 375,
+                  height: 380,
                   decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: const AssetImage("lib/img/back4img.jpg"),
@@ -74,7 +120,7 @@ class PlaylistHome extends StatelessWidget {
                   onPressed: () {},
                 ),
                 right: 10,
-                top: 320)
+                top: 315)
           ]),
         ),
         bottomNavigationBar: JhankarBottomBar());
