@@ -90,7 +90,12 @@ class MyApp extends StatelessWidget {
                             backgroundColor: Colors.white),
                         popupMenuTheme: const PopupMenuThemeData(
                             color: Colors.white,
-                            textStyle: TextStyle(color: Colors.black))
+                            textStyle: TextStyle(color: Colors.black)),
+                        floatingActionButtonTheme:
+                            const FloatingActionButtonThemeData(
+                                foregroundColor: Colors.white,
+                                backgroundColor:
+                                    Color.fromARGB(255, 52, 89, 131))
                     ),
                     //home: AudioPlayerActivity(token: "",),
                     home: auth.isAuth
