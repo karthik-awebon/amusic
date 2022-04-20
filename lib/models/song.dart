@@ -33,3 +33,10 @@ class MusicArtist {
     required this.imgBanner,
   });
 }
+
+class AudioPlayerScreenArguments {
+  final String audioUrl;
+  final String audioName;
+
+  AudioPlayerScreenArguments(this.audioUrl, this.audioName);
+}

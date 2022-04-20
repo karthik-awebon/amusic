@@ -2,6 +2,7 @@ import 'package:amusic_app/widgets/audio_player_widget.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../models/song.dart';
 import 'home.dart';
 
 class AudioPlayerScreen extends StatefulWidget {

@@ -523,9 +523,4 @@ class _HomeState extends State<Home> {
   }
 }
 
-class AudioPlayerScreenArguments {
-  final String audioUrl;
-  final String audioName;
 
-  AudioPlayerScreenArguments(this.audioUrl, this.audioName);
-}

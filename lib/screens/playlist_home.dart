@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 
 import '../api/home_api.dart';
 import '../models/playlist.dart';
+import '../models/song.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/songs_list.dart';
+import 'audio_player_screen.dart';
 
 class PlaylistHome extends StatelessWidget {
   static const routeName = './playlist-home';
 
   @override
   Widget build(BuildContext context) {
+    Song? firstPlaylistSong;
     final playlistData =
         ModalRoute.of(context)!.settings.arguments as PlaylistArguments;
     return Scaffold(
@@ -56,14 +59,14 @@ class PlaylistHome extends StatelessWidget {
                         Text(
                           playlistData.title,
                           style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           '${playlistData.songsCount} Songs',
                           style: const TextStyle(fontSize: 14),
                         ),
                       ],
-                        )),
+                    )),
                   ),
                 ]),
                 Container(
@@ -79,6 +82,12 @@ class PlaylistHome extends StatelessWidget {
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
+                            firstPlaylistSong = Song(
+                                id: snapshot.data[0].id,
+                                name: snapshot.data[0].name,
+                                imgBanner: snapshot.data[0].imgBanner,
+                                songFile: snapshot.data[0].songFile,
+                                musicArtists: snapshot.data[0].musicArtists);
                             return SongsList(songsList: snapshot.data);
                           } else if (snapshot.hasError) {
                             return const Center(
@@ -99,7 +108,12 @@ class PlaylistHome extends StatelessWidget {
             Positioned(
                 child: FloatingActionButton(
                   child: const Icon(Icons.play_arrow),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(AudioPlayerScreen.routeName,
+                        arguments: AudioPlayerScreenArguments(
+                            firstPlaylistSong!.songFile,
+                            firstPlaylistSong!.name));
+                  },
                 ),
                 right: 10,
                 top: 315)
