@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../functions/general_functions.dart';
 import '../models/song.dart';
 import '../screens/audio_player_screen.dart';
 import '../screens/home.dart';
@@ -50,13 +51,11 @@ class SongsList extends StatelessWidget {
                         children: [
                           Text("${songsList[index].name}",
                               overflow: TextOverflow.ellipsis,
-                              style:
-                                  const TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white, fontSize: 18)),
                           (songsList[index].musicArtists.length > 0)
                               ? Text(songsList[index].musicArtists[0].name,
-                              style:
-                                  const TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.white, fontSize: 15))
                               : const Text(''),
                         ],
@@ -75,6 +74,9 @@ class SongsList extends StatelessWidget {
                         //     _showOnlyFavorites = false;
                         //   }
                         // });
+                        if (selectedValue == SongOptions.Favorites) {
+                          addToFavorites(songsList[index], context);
+                        }
                       },
                       icon: const Icon(Icons.more_vert, size: 30),
                       itemBuilder: (_) => [

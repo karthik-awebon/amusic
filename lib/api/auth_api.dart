@@ -26,7 +26,7 @@ class AuthApi {
     var responseData = jsonDecode(response.body);
     if (responseData['status'] == 'SUCCESS') {
       final prefs = await SharedPreferences.getInstance();
-      prefs.clear();
+      prefs.remove('jhankar_token');
     }
   }
 }

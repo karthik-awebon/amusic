@@ -13,6 +13,17 @@ class Song {
       required this.imgBanner,
       required this.songFile,
       required this.musicArtists});
+
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": this.id,
+      "name": this.name,
+      "imgBanner": this.imgBanner,
+      "songFile": this.songFile,
+      "musicArtists": this.musicArtists
+    };
+  }
 }
 
 enum SongOptions {
@@ -32,6 +43,14 @@ class MusicArtist {
     required this.name,
     required this.imgBanner,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": this.id,
+      "name": this.name,
+      "imgBanner": this.imgBanner,
+    };
+  }
 }
 
 class AudioPlayerScreenArguments {

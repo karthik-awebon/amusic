@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,8 +6,10 @@ import 'package:glob/glob.dart';
 import 'package:glob/list_local_fs.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/constants.dart';
+import '../models/song.dart';
 import '../models/video.dart';
 import '../screens/select_package_screen.dart';
 import '../screens/video_player_screen.dart';
@@ -100,6 +103,26 @@ openPaymentModal(context) {
           ));
     },
   );
+}
+
+addToFavorites(Song song, context) async {
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.containsKey('favorite_songs')) {
+    final favoriteSongsList =
+        json.decode(prefs.getString('favorite_songs').toString());
+    var existingSong = favoriteSongsList
+        .firstWhere((element) => element['id'] == song.id, orElse: () => null);
+    //var existSongId = favoriteSongsList.indexOf(song);
+    if (existingSong == null) {
+      favoriteSongsList.add(song);
+      prefs.setString('favorite_songs', json.encode(favoriteSongsList));
+    }
+  } else {
+    prefs.setString('favorite_songs', json.encode([song]));
+  }
+
+  ScaffoldMessenger.of(context)
+      .showSnackBar(const SnackBar(content: Text('Added to Favorites')));
 }
 
 Directory findRoot(FileSystemEntity entity) {

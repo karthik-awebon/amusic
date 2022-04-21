@@ -1,3 +1,4 @@
+import 'package:amusic_app/api/general_api.dart';
 import 'package:flutter/material.dart';
 
 import '../api/home_api.dart';
@@ -25,7 +26,7 @@ class FavoritesScreen extends StatelessWidget {
               SizedBox(
                 width: 10,
               ),
-              Text("Favourties")
+              Text("Favorties")
             ],
           ),
           appBar: AppBar(),
@@ -41,7 +42,7 @@ class FavoritesScreen extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               child: Column(children: [
                 FutureBuilder(
-                    future: HomeApi.getListCategotyForNewSongs(),
+                    future: GeneralApi.getFavoriteSongs(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
                         return SongsList(songsList: snapshot.data);
