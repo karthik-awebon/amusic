@@ -67,13 +67,6 @@ class SongsList extends StatelessWidget {
                     ),
                     PopupMenuButton(
                       onSelected: (SongOptions selectedValue) {
-                        // setState(() {
-                        //   if (selectedValue == FilterOptions.Favorites) {
-                        //     _showOnlyFavorites = true;
-                        //   } else {
-                        //     _showOnlyFavorites = false;
-                        //   }
-                        // });
                         if (selectedValue == SongOptions.Favorites) {
                           addToFavorites(songsList[index], context);
                         }
