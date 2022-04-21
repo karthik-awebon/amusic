@@ -125,6 +125,13 @@ addToFavorites(Song song, context) async {
       .showSnackBar(const SnackBar(content: Text('Added to Favorites')));
 }
 
+clearFavorites(context) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.remove('favorite_songs');
+  ScaffoldMessenger.of(context)
+      .showSnackBar(const SnackBar(content: Text('Favorites Cleared')));
+}
+
 Directory findRoot(FileSystemEntity entity) {
   final Directory parent = entity.parent;
   if (parent.path == entity.path) return parent;

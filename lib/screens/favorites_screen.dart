@@ -2,6 +2,8 @@ import 'package:amusic_app/api/general_api.dart';
 import 'package:flutter/material.dart';
 
 import '../api/home_api.dart';
+import '../functions/general_functions.dart';
+import '../models/song.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
@@ -30,7 +32,25 @@ class FavoritesScreen extends StatelessWidget {
             ],
           ),
           appBar: AppBar(),
-          widgets: <Widget>[],
+          widgets: <Widget>[
+            PopupMenuButton(
+              onSelected: (SongOptions selectedValue) {
+                if (selectedValue == SongOptions.ClearAll) {
+                  clearFavorites(context);
+                  Navigator.of(context).pushNamed(FavoritesScreen.routeName);
+                }
+              },
+              icon: const Icon(Icons.more_vert, size: 30),
+              itemBuilder: (_) => [
+                const PopupMenuItem(
+                  child: Text(
+                    'Clear All',
+                  ),
+                  value: SongOptions.ClearAll,
+                )
+              ],
+            )
+          ],
         ),
         body: Container(
           height: double.maxFinite,

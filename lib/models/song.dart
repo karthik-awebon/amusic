@@ -26,12 +26,6 @@ class Song {
   }
 }
 
-enum SongOptions {
-  Favorites,
-  AddToQueue,
-  Downloads,
-  Share,
-}
 
 class MusicArtist {
   final int id;
@@ -58,4 +52,11 @@ class AudioPlayerScreenArguments {
   final String audioName;
 
   AudioPlayerScreenArguments(this.audioUrl, this.audioName);
+}
+enum SongOptions {
+  Favorites,
+  AddToQueue,
+  Downloads,
+  Share,
+  ClearAll,
 }
