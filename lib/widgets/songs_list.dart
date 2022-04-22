@@ -89,6 +89,8 @@ class SongsList extends StatelessWidget {
                             unFavoriteSong(songsList[index].id, context);
                             Navigator.of(context)
                                 .pushNamed(FavoritesScreen.routeName);
+                          } else if (selectedValue == SongOptions.Share) {
+                            share(songsList[index].name);
                           }
                         },
                         icon: const Icon(Icons.more_vert, size: 30),

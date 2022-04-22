@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:glob/glob.dart';
 import 'package:glob/list_local_fs.dart';
 import 'package:path_provider/path_provider.dart';
@@ -190,4 +191,13 @@ Future<bool> getStoragePermission() async {
     return false;
   }
   return false;
+}
+
+Future<void> share(String title) async {
+  await FlutterShare.share(
+    title: title,
+    // text: 'Example share text',
+    // linkUrl: 'https://flutter.dev/',
+    // chooserTitle: 'Example Chooser Title'
+  );
 }
