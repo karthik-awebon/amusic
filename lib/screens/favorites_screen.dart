@@ -65,7 +65,12 @@ class FavoritesScreen extends StatelessWidget {
                     future: GeneralApi.getFavoriteSongs(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
-                        return SongsList(songsList: snapshot.data);
+                        return SongsList(
+                          songsList: snapshot.data,
+                          popupMenus: const {
+                            'Unfavorite': SongOptions.UnFavorite
+                          },
+                        );
                       } else if (snapshot.hasError) {
                         return Text("errir");
                       } else {

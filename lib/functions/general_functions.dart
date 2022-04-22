@@ -132,6 +132,24 @@ clearFavorites(context) async {
       .showSnackBar(const SnackBar(content: Text('Favorites Cleared')));
 }
 
+unFavoriteSong(songId, context) async {
+  final prefs = await SharedPreferences.getInstance();
+  if (prefs.containsKey('favorite_songs')) {
+    final favoriteSongsList =
+        json.decode(prefs.getString('favorite_songs').toString());
+    var existingSong = favoriteSongsList
+        .firstWhere((element) => element['id'] == songId, orElse: () => null);
+    //var existSongId = favoriteSongsList.indexOf(song);
+    if (existingSong != null) {
+      favoriteSongsList.remove(existingSong);
+      prefs.setString('favorite_songs', json.encode(favoriteSongsList));
+    }
+  }
+
+  ScaffoldMessenger.of(context)
+      .showSnackBar(const SnackBar(content: Text('UnFavorite the Song')));
+}
+
 Directory findRoot(FileSystemEntity entity) {
   final Directory parent = entity.parent;
   if (parent.path == entity.path) return parent;

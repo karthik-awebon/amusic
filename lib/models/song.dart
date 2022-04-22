@@ -59,4 +59,5 @@ enum SongOptions {
   Downloads,
   Share,
   ClearAll,
+  UnFavorite,
 }

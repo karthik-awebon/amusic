@@ -3,14 +3,30 @@ import 'package:flutter/material.dart';
 import '../functions/general_functions.dart';
 import '../models/song.dart';
 import '../screens/audio_player_screen.dart';
+import '../screens/favorites_screen.dart';
 import '../screens/home.dart';
 
 class SongsList extends StatelessWidget {
   List<Song> songsList = [];
-  SongsList({Key? key, required this.songsList}) : super(key: key);
+  Map<String, SongOptions>? popupMenus;
+  SongsList({Key? key, required this.songsList, this.popupMenus})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<PopupMenuItem> popupMenuItems = [];
+    popupMenus ??= {
+      'Favorites': SongOptions.Favorites,
+      'Add to Queue': SongOptions.AddToQueue,
+      'Downloads': SongOptions.Downloads,
+      'Share': SongOptions.Share,
+    };
+    popupMenus?.forEach((k, v) => popupMenuItems.add(PopupMenuItem(
+          child: Text(
+            k,
+          ),
+          value: v,
+        )));
     return ListView.builder(
         padding: const EdgeInsets.symmetric(vertical: 20),
         scrollDirection: Axis.vertical,
@@ -66,35 +82,17 @@ class SongsList extends StatelessWidget {
                       fit: FlexFit.tight,
                     ),
                     PopupMenuButton(
-                      onSelected: (SongOptions selectedValue) {
-                        if (selectedValue == SongOptions.Favorites) {
-                          addToFavorites(songsList[index], context);
-                        }
-                      },
-                      icon: const Icon(Icons.more_vert, size: 30),
-                      itemBuilder: (_) => [
-                        const PopupMenuItem(
-                          child: Text(
-                            'Favorites',
-                          ),
-                          value: SongOptions.Favorites,
-                        ),
-                        const PopupMenuItem(
-                          child: Text(
-                            'Add to Queue',
-                          ),
-                          value: SongOptions.AddToQueue,
-                        ),
-                        const PopupMenuItem(
-                          child: Text('Downloads'),
-                          value: SongOptions.Downloads,
-                        ),
-                        const PopupMenuItem(
-                          child: Text('Share'),
-                          value: SongOptions.Share,
-                        ),
-                      ],
-                    )
+                        onSelected: (selectedValue) {
+                          if (selectedValue == SongOptions.Favorites) {
+                            addToFavorites(songsList[index], context);
+                          } else if (selectedValue == SongOptions.UnFavorite) {
+                            unFavoriteSong(songsList[index].id, context);
+                            Navigator.of(context)
+                                .pushNamed(FavoritesScreen.routeName);
+                          }
+                        },
+                        icon: const Icon(Icons.more_vert, size: 30),
+                        itemBuilder: (_) => popupMenuItems)
                   ],
                 ),
               ),
