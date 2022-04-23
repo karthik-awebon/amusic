@@ -85,10 +85,13 @@ class PlaylistHome extends StatelessWidget {
                             firstPlaylistSong = Song(
                                 id: snapshot.data[0].id,
                                 name: snapshot.data[0].name,
-                                imgBanner: snapshot.data[0].imgBanner,
+                                imgThumb: snapshot.data[0].imgThumb,
                                 songFile: snapshot.data[0].songFile,
                                 musicArtists: snapshot.data[0].musicArtists);
-                            return SongsList(songsList: snapshot.data);
+                            return SongsList(
+                              songsList: snapshot.data,
+                              isPlaylist: true,
+                            );
                           } else if (snapshot.hasError) {
                             return const Center(
                               child: Text(

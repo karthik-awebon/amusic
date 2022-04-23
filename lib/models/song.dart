@@ -3,14 +3,14 @@ import 'package:flutter/widgets.dart';
 class Song {
   final int id;
   final String name;
-  final String imgBanner;
+  final String imgThumb;
   final String songFile;
   final List<MusicArtist> musicArtists;
 
   Song(
       {required this.id,
       required this.name,
-      required this.imgBanner,
+      required this.imgThumb,
       required this.songFile,
       required this.musicArtists});
 
@@ -19,7 +19,7 @@ class Song {
     return {
       "id": this.id,
       "name": this.name,
-      "imgBanner": this.imgBanner,
+      "imgThumb": this.imgThumb,
       "songFile": this.songFile,
       "musicArtists": this.musicArtists
     };

@@ -9,7 +9,12 @@ import '../screens/home.dart';
 class SongsList extends StatelessWidget {
   List<Song> songsList = [];
   Map<String, SongOptions>? popupMenus;
-  SongsList({Key? key, required this.songsList, this.popupMenus})
+  bool isPlaylist;
+  SongsList(
+      {Key? key,
+      required this.songsList,
+      this.popupMenus,
+      this.isPlaylist = false})
       : super(key: key);
 
   @override
@@ -46,15 +51,18 @@ class SongsList extends StatelessWidget {
               child: Container(
                 child: Row(
                   children: [
-                    Container(
+                    (isPlaylist)
+                        ? Text((index + 1).toString())
+                        : Container(
                       height: 50,
                       width: 50,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(songsList[index].imgBanner))),
-                    ),
+                                    image: NetworkImage(
+                                        songsList[index].imgThumb))),
+                          ),
                     const SizedBox(
                       width: 10,
                     ),

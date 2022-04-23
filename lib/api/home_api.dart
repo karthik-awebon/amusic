@@ -137,7 +137,7 @@ class HomeApi {
       Song song = Song(
           id: responseData[i]['id'],
           name: responseData[i]['name'],
-          imgBanner: responseData[i]['img_banner'],
+          imgThumb: responseData[i]['img_thumb'],
           songFile: responseData[i]['song_file'],
           musicArtists: musicArtistList);
       songsList.add(song);
