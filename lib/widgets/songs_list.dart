@@ -91,6 +91,8 @@ class SongsList extends StatelessWidget {
                                 .pushNamed(FavoritesScreen.routeName);
                           } else if (selectedValue == SongOptions.Share) {
                             share(songsList[index].name);
+                          } else if (selectedValue == SongOptions.Downloads) {
+                            downloadMusic(songsList[index].songFile);
                           }
                         },
                         icon: const Icon(Icons.more_vert, size: 30),

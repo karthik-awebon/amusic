@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -8,6 +10,7 @@ import 'package:glob/list_local_fs.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 
 import '../api/constants.dart';
 import '../models/song.dart';
@@ -201,3 +204,114 @@ Future<void> share(String title) async {
     // chooserTitle: 'Example Chooser Title'
   );
 }
+Future<bool> _requestPermission(Permission permission) async {
+  if (await permission.isGranted) {
+    return true;
+  } else {
+    var result = await permission.request();
+    if (result == PermissionStatus.granted) {
+      return true;
+    }
+  }
+  return false;
+}
+
+ReceivePort _port = ReceivePort();
+void downloadCallback(String id, DownloadTaskStatus status, int progress) {
+  final SendPort send =
+      IsolateNameServer.lookupPortByName('downloader_send_port')!;
+  send.send([id, status, progress]);
+}
+
+Future<bool> downloadMusic(String url) async {
+  Directory directory;
+  try {
+    if (Platform.isAndroid) {
+      if (await _requestPermission(Permission.storage) &&
+          // access media location needed for android 10/Q
+          await _requestPermission(Permission.accessMediaLocation) &&
+          // manage external storage needed for android 11/R
+          await _requestPermission(Permission.manageExternalStorage)) {
+        directory = (await getExternalStorageDirectory())!;
+        String newPath = "";
+        print(directory);
+        List<String> paths = directory.path.split("/");
+        for (int x = 1; x < paths.length; x++) {
+          String folder = paths[x];
+          if (folder != "Android") {
+            newPath += "/" + folder;
+          } else {
+            break;
+          }
+        }
+        newPath = newPath + "/awebon";
+        directory = Directory(newPath);
+      } else {
+        return false;
+      }
+    } else {
+      if (await _requestPermission(Permission.photos)) {
+        directory = await getTemporaryDirectory();
+      } else {
+        return false;
+      }
+    }
+
+    if (!await directory.exists()) {
+      await directory.create(recursive: true);
+    }
+    if (await directory.exists()) {
+      File saveFile = File(directory.path + "/test.mp3");
+      WidgetsFlutterBinding.ensureInitialized();
+      await FlutterDownloader.initialize(
+          debug: true // optional: set false to disable printing logs to console
+          );
+      FlutterDownloader.registerCallback(downloadCallback);
+      final taskId = await FlutterDownloader.enqueue(
+        url: url,
+        savedDir: directory.path,
+        showNotification:
+            true, // show download progress in status bar (for Android)
+        openFileFromNotification:
+            true, // click on notification to open downloaded file (for Android)
+      );
+      // await dio.download(url, saveFile.path,
+      //     onReceiveProgress: (value1, value2) {
+      //   setState(() {
+      //     progress = value1 / value2;
+      //   });
+      // });
+      // if (Platform.isIOS) {
+      //   await ImageGallerySaver.saveFile(saveFile.path,
+      //       isReturnPathOfIOS: true);
+      // }
+      return true;
+    }
+  } catch (e) {
+    print(e);
+  }
+  return false;
+}
+// Future<void> downloadMusic(String url) async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await FlutterDownloader.initialize(
+//       debug: true // optional: set false to disable printing logs to console
+//       );
+//   final Directory? root = await getExternalStorageDirectory();
+//   String newPath = ((root != null) ? root?.path : '')!;
+//   // String newPath =
+//   //     ((root == null) ? root?.path : '')! + "Music/awebon/downloads";
+//   // Directory newDirectory = Directory(newPath);
+//   // if (!await newDirectory.exists()) {
+//   //   await newDirectory.create(recursive: true);
+//   // }
+//   final taskId = await FlutterDownloader.enqueue(
+//     url: url,
+//     savedDir: newPath,
+//     showNotification:
+//         true, // show download progress in status bar (for Android)
+//     openFileFromNotification:
+//         true, // click on notification to open downloaded file (for Android)
+//   );
+// }
+

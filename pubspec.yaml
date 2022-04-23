@@ -55,6 +55,7 @@ dependencies:
   glob:
   permission_handler:
   flutter_share:
+  flutter_downloader:
 
 dev_dependencies:
   flutter_test:
