@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:amusic_app/widgets/songs_list.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/song.dart';
+import '../provider/auth.dart';
 import 'audio_player_screen.dart';
 
 class AudioPlayerSliderScreen extends StatefulWidget {
@@ -20,8 +22,7 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
   int _bannercurrentIndex = 1;
   @override
   Widget build(BuildContext context) {
-    final audioPlayerData = ModalRoute.of(context)!.settings.arguments
-        as AudioPlayerScreenArguments;
+    Song? playingSong = Provider.of<Auth>(context, listen: false).song;
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -52,7 +53,7 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
         body: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage(audioPlayerData.song.imgThumb),
+                    image: NetworkImage(playingSong!.imgThumb),
                     fit: BoxFit.cover)),
             child: BackdropFilter(
               filter: new ImageFilter.blur(sigmaX: 30.0, sigmaY: 30.0),
@@ -64,12 +65,12 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
                       child: Column(children: [
                         Center(
                             child: Text(
-                          audioPlayerData.song.name,
+                          playingSong.name,
                           style: Theme.of(context).textTheme.headline1,
                         )),
                         Center(
                             child: Text(
-                                audioPlayerData.song.musicArtists[0].name,
+                                playingSong.musicArtists[0].name,
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 15))),
                         Stack(
@@ -92,11 +93,14 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
                                     },
                                   ),
                                   items: [
-                                    AudioPlayerScreen(
-                                      song: audioPlayerData.song,
-                                    ),
-                                    SongsList(
-                                        songsList: audioPlayerData.songsList)
+                                    Consumer<Auth>(
+                                        builder: (ctx, auth, _) =>
+                                            AudioPlayerScreen(
+                                              song: auth.song!,
+                                            )),
+                                    Consumer<Auth>(
+                                        builder: (ctx, auth, _) => SongsList(
+                                            songsList: auth.songsList!))
                                   ],
                                 )),
                             Row(

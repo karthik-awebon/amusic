@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:amusic_app/api/home_api.dart';
+import 'package:amusic_app/provider/auth.dart';
 import 'package:amusic_app/screens/categories_home.dart';
 import 'package:amusic_app/screens/category_home.dart';
 import 'package:amusic_app/screens/playlist_home.dart';
@@ -9,9 +10,11 @@ import 'package:amusic_app/screens/search_screen.dart';
 import 'package:amusic_app/widgets/playlists_list.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:provider/provider.dart';
 
 import '../models/category.dart';
 import '../models/playlist.dart';
+import '../models/song.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
@@ -27,17 +30,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool isplay = false;
-  bool flag = false;
   int index = 1;
   int _bannercurrentIndex = 1;
-  String playingSong = "Baru Dukha";
-  String playingSongArtist = "Deep Shresstha";
-  String songImage =
-      "http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/upload/web/logo_min.png";
+  
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width * 0.01;
     double _height = MediaQuery.of(context).size.height * 0.01;
+    //Song? playerSong = Provider.of<Auth>(context).song;
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 194, 103, 233),
         appBar: JhankarAppBar(
@@ -431,8 +431,9 @@ class _HomeState extends State<Home> {
                         }
                       })),
             ),
-            flag
-                ? Row(
+            Consumer<Auth>(
+                builder: (ctx, auth, _) => (auth.song != null)
+                    ? Row(
                     children: [
                       Expanded(
                         child: Container(
@@ -448,7 +449,8 @@ class _HomeState extends State<Home> {
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: NetworkImage(songImage))),
+                                            image: NetworkImage(
+                                                auth.song!.imgThumb))),
                               ),
                               SizedBox(
                                 width: 15,
@@ -460,14 +462,14 @@ class _HomeState extends State<Home> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(playingSong,
+                                        Text(auth.song!.name,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 16)),
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text(playingSongArtist,
+                                        Text(auth.song!.musicArtists[0].name,
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 13)),
                                   ],
@@ -480,7 +482,7 @@ class _HomeState extends State<Home> {
                               InkWell(
                                 onTap: (() {}),
                                 child: Icon(
-                                  Icons.skip_next_sharp,
+                                      Icons.skip_previous_sharp,
                                   size: 35,
                                   color: Colors.white,
                                 ),
@@ -504,7 +506,7 @@ class _HomeState extends State<Home> {
                               InkWell(
                                 onTap: () {},
                                 child: Icon(
-                                  Icons.skip_previous_sharp,
+                                      Icons.skip_next_sharp,
                                   size: 35,
                                   color: Colors.white,
                                 ),
@@ -514,8 +516,8 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ],
-                  )
-                : Center()
+                      )
+                    : Center())                
           ],
         ),
         drawer: JhankarDrawer(),

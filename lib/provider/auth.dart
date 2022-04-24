@@ -7,13 +7,21 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/http_exception.dart';
+import '../models/song.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
   int? _userId;
+  Song? _song;
+  List<Song>? _songsList;
+  bool? _isPlaying;
 
   bool get isAuth {
     return token != null;
+  }
+
+  bool get isPlaying {
+    return _isPlaying != null;
   }
 
   String? get token {
@@ -26,6 +34,32 @@ class Auth with ChangeNotifier {
   int? get userId {
     if (_userId != null) {
       return _userId;
+    }
+    return null;
+  }
+
+  Song? get song {
+    if (_song != null) {
+      return _song;
+    }
+    return null;
+  }
+
+  void setSong(Song song) {
+    _song = song;
+  }
+
+  void setSongsList(List<Song> songsList) {
+    _songsList = songsList;
+  }
+
+  void setIsPlaying(bool isPlaying) {
+    _isPlaying = isPlaying;
+  }
+
+  List<Song>? get songsList {
+    if (_songsList != null) {
+      return _songsList;
     }
     return null;
   }

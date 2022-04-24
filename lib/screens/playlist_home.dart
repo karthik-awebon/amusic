@@ -1,9 +1,11 @@
 import 'package:amusic_app/screens/audio_player_slider_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../api/home_api.dart';
 import '../models/playlist.dart';
 import '../models/song.dart';
+import '../provider/auth.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/songs_list.dart';
 import 'audio_player_screen.dart';
@@ -116,10 +118,12 @@ class PlaylistHome extends StatelessWidget {
                 child: FloatingActionButton(
                   child: const Icon(Icons.play_arrow),
                   onPressed: () {
+                    Provider.of<Auth>(context, listen: false)
+                        .setSong(firstPlaylistSong!);
+                    Provider.of<Auth>(context, listen: false)
+                        .setSongsList(songsList!);
                     Navigator.of(context).pushNamed(
-                        AudioPlayerSliderScreen.routeName,
-                        arguments: AudioPlayerScreenArguments(
-                            firstPlaylistSong!, songsList!));
+                        AudioPlayerSliderScreen.routeName);
                   },
                 ),
                 right: 10,

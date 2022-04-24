@@ -47,14 +47,6 @@ class MusicArtist {
   }
 }
 
-class AudioPlayerScreenArguments {
-  final Song song;
-
-  final List<Song> songsList;
-
-  AudioPlayerScreenArguments(this.song, this.songsList);
-}
-
 class SongInfoArguments {
   final Song song;
 
