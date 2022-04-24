@@ -20,9 +20,17 @@ class AudioPlayerSliderScreen extends StatefulWidget {
 
 class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
   int _bannercurrentIndex = 1;
+  Song? playingSong;
+
+  setSong(Song song) {
+    setState(() {
+      playingSong = song;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
-    Song? playingSong = Provider.of<Auth>(context, listen: false).song;
+    playingSong = Provider.of<Auth>(context, listen: false).song;
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -65,12 +73,12 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
                       child: Column(children: [
                         Center(
                             child: Text(
-                          playingSong.name,
+                          playingSong!.name,
                           style: Theme.of(context).textTheme.headline1,
                         )),
                         Center(
                             child: Text(
-                                playingSong.musicArtists[0].name,
+                                playingSong!.musicArtists[0].name,
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 15))),
                         Stack(
@@ -97,6 +105,8 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
                                         builder: (ctx, auth, _) =>
                                             AudioPlayerScreen(
                                               song: auth.song!,
+                                                songsList: auth.songsList!,
+                                                updateSong: setSong
                                             )),
                                     Consumer<Auth>(
                                         builder: (ctx, auth, _) => SongsList(
