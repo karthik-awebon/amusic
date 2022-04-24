@@ -9,6 +9,7 @@ import '../provider/auth.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/songs_list.dart';
 import 'audio_player_screen.dart';
+import 'mini_audio_player.dart';
 
 class PlaylistHome extends StatelessWidget {
   static const routeName = './playlist-home';
@@ -128,6 +129,14 @@ class PlaylistHome extends StatelessWidget {
                 ),
                 right: 10,
                 top: 315)
+              ,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Consumer<Auth>(
+                  builder: (ctx, auth, _) => (auth.song != null)
+                      ? MiniAudioPlayer(song: auth.song!)
+                      : Center()),
+            ) 
           ]),
         ),
         bottomNavigationBar: JhankarBottomBar());

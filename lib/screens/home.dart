@@ -4,6 +4,7 @@ import 'package:amusic_app/api/home_api.dart';
 import 'package:amusic_app/provider/auth.dart';
 import 'package:amusic_app/screens/categories_home.dart';
 import 'package:amusic_app/screens/category_home.dart';
+import 'package:amusic_app/screens/mini_audio_player.dart';
 import 'package:amusic_app/screens/playlist_home.dart';
 import 'package:amusic_app/screens/playlists_home.dart';
 import 'package:amusic_app/screens/search_screen.dart';
@@ -433,90 +434,7 @@ class _HomeState extends State<Home> {
             ),
             Consumer<Auth>(
                 builder: (ctx, auth, _) => (auth.song != null)
-                    ? Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          color: Color.fromARGB(255, 200, 130, 214),
-                          height: _height * 10,
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                                auth.song!.imgThumb))),
-                              ),
-                              SizedBox(
-                                width: 15,
-                              ),
-                              Flexible(
-                                flex: 4,
-                                fit: FlexFit.tight,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                        Text(auth.song!.name,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 16)),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                        Text(auth.song!.musicArtists[0].name,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 13)),
-                                  ],
-                                ),
-                              ),
-                              Flexible(
-                                child: SizedBox(),
-                                fit: FlexFit.tight,
-                              ),
-                              InkWell(
-                                onTap: (() {}),
-                                child: Icon(
-                                      Icons.skip_previous_sharp,
-                                  size: 35,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    if (isplay) {
-                                      isplay = false;
-                                    } else {
-                                      isplay = true;
-                                    }
-                                  });
-                                },
-                                child: Icon(
-                                  isplay ? Icons.pause : Icons.play_arrow,
-                                  size: 35,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: Icon(
-                                      Icons.skip_next_sharp,
-                                  size: 35,
-                                  color: Colors.white,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                      )
+                    ? MiniAudioPlayer(song: auth.song!)
                     : Center())                
           ],
         ),

@@ -1,12 +1,15 @@
 import 'package:amusic_app/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 import '../api/home_api.dart';
 import '../models/category.dart';
+import '../provider/auth.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/songs_list.dart';
 import 'audio_player_screen.dart';
+import 'mini_audio_player.dart';
 
 class CategoryHome extends StatelessWidget {
   static const routeName = './category-home';
@@ -31,24 +34,34 @@ class CategoryHome extends StatelessWidget {
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("lib/img/back4img.jpg"), fit: BoxFit.fill)),
-          child: Container(
-            height: _height * 12,
-            child: FutureBuilder(
-                future: HomeApi.getCategorySongs(categoryData.categoryId),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return SongsList(songsList: snapshot.data);
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text(
-                        "No Songs on this List",
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                }),
+          child: Stack(children: [
+            Container(
+              height: _height * 100,
+              child: FutureBuilder(
+                  future: HomeApi.getCategorySongs(categoryData.categoryId),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return SongsList(songsList: snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          "No Songs on this List",
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Consumer<Auth>(
+                  builder: (ctx, auth, _) => (auth.song != null)
+                      ? MiniAudioPlayer(song: auth.song!)
+                      : Center()),
+            )
+          ]
           ),
         ));
   }
