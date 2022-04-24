@@ -153,31 +153,38 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                         );
                       },
                     ),
-                    ValueListenableBuilder<ButtonState>(
-                      valueListenable: _audioPlayerWidget.buttonNotifier,
-                      builder: (_, value, __) {
-                        switch (value) {
-                          case ButtonState.loading:
-                            return Container(
-                              margin: const EdgeInsets.all(8.0),
-                              width: 32.0,
-                              height: 32.0,
-                              child: const CircularProgressIndicator(),
-                            );
-                          case ButtonState.paused:
-                            return IconButton(
-                              icon: const Icon(Icons.play_arrow),
-                              iconSize: 32.0,
-                              onPressed: _audioPlayerWidget.play,
-                            );
-                          case ButtonState.playing:
-                            return IconButton(
-                              icon: const Icon(Icons.pause),
-                              iconSize: 32.0,
-                              onPressed: _audioPlayerWidget.pause,
-                            );
-                        }
-                      },
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(Icons.shuffle),
+                          Icon(Icons.skip_previous),
+                          ValueListenableBuilder<ButtonState>(
+                            valueListenable: _audioPlayerWidget.buttonNotifier,
+                            builder: (_, value, __) {
+                              switch (value) {
+                                case ButtonState.loading:
+                                  return Container(
+                                    margin: const EdgeInsets.all(8.0),
+                                    width: 32.0,
+                                    height: 32.0,
+                                    child: const CircularProgressIndicator(),
+                                  );
+                                case ButtonState.paused:
+                                  return FloatingActionButton(
+                                    child: const Icon(Icons.play_arrow),
+                                    onPressed: _audioPlayerWidget.play,
+                                  );
+                                case ButtonState.playing:
+                                  return FloatingActionButton(
+                                    child: const Icon(Icons.pause),
+                                    onPressed: _audioPlayerWidget.pause,
+                                  );
+                              }
+                            },
+                          ),
+                          Icon(Icons.skip_next),
+                          Icon(Icons.repeat)
+                        ]
                     ),
                   ],
                 ),
