@@ -56,6 +56,7 @@ class GeneralApi {
           name: responseData[i]['name'],
           imgThumb: responseData[i]['imgThumb'],
           songFile: responseData[i]['songFile'],
+          releaseDate: responseData[i]['releaseDate'],
           musicArtists: musicArtistList);
       songsList.add(song);
     }

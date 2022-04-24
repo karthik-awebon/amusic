@@ -5,6 +5,7 @@ class Song {
   final String name;
   final String imgThumb;
   final String songFile;
+  final String releaseDate;
   final List<MusicArtist> musicArtists;
 
   Song(
@@ -12,8 +13,8 @@ class Song {
       required this.name,
       required this.imgThumb,
       required this.songFile,
+      required this.releaseDate,
       required this.musicArtists});
-
 
   Map<String, dynamic> toJson() {
     return {
@@ -25,7 +26,6 @@ class Song {
     };
   }
 }
-
 
 class MusicArtist {
   final int id;
@@ -48,11 +48,17 @@ class MusicArtist {
 }
 
 class AudioPlayerScreenArguments {
-  final String audioUrl;
-  final String audioName;
+  final Song song;
 
-  AudioPlayerScreenArguments(this.audioUrl, this.audioName);
+  AudioPlayerScreenArguments(this.song);
 }
+
+class SongInfoArguments {
+  final Song song;
+
+  SongInfoArguments(this.song);
+}
+
 enum SongOptions {
   Favorites,
   AddToQueue,
@@ -60,4 +66,5 @@ enum SongOptions {
   Share,
   ClearAll,
   UnFavorite,
+  Volume,
 }

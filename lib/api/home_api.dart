@@ -139,6 +139,7 @@ class HomeApi {
           name: responseData[i]['name'],
           imgThumb: responseData[i]['img_thumb'],
           songFile: responseData[i]['song_file'],
+          releaseDate: responseData[i]['release_date'],
           musicArtists: musicArtistList);
       songsList.add(song);
     }

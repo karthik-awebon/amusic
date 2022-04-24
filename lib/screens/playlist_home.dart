@@ -87,6 +87,7 @@ class PlaylistHome extends StatelessWidget {
                                 name: snapshot.data[0].name,
                                 imgThumb: snapshot.data[0].imgThumb,
                                 songFile: snapshot.data[0].songFile,
+                                releaseDate: snapshot.data[0].releaseDate,
                                 musicArtists: snapshot.data[0].musicArtists);
                             return SongsList(
                               songsList: snapshot.data,
@@ -114,8 +115,7 @@ class PlaylistHome extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pushNamed(AudioPlayerScreen.routeName,
                         arguments: AudioPlayerScreenArguments(
-                            firstPlaylistSong!.songFile,
-                            firstPlaylistSong!.name));
+                            firstPlaylistSong!));
                   },
                 ),
                 right: 10,

@@ -45,8 +45,7 @@ class SongsList extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).pushNamed(AudioPlayerScreen.routeName,
                     arguments: AudioPlayerScreenArguments(
-                        songsList[index].songFile.toString(),
-                        songsList[index].name.toString()));
+                        songsList[index]));
               },
               child: Container(
                 child: Row(
