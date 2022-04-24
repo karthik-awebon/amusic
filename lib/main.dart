@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:amusic_app/screens/audio_player_screen.dart';
+import 'package:amusic_app/screens/audio_player_slider_screen.dart';
 import 'package:amusic_app/screens/favorites_screen.dart';
 import 'package:amusic_app/screens/home.dart';
 import 'package:amusic_app/screens/local_music_screen.dart';
@@ -124,8 +125,6 @@ class MyApp extends StatelessWidget {
                       AccountHome.routeName: (context) => AccountHome(),
                       VideoPlayerScreen.routeName: (context) =>
                           const VideoPlayerScreen(),
-                      AudioPlayerScreen.routeName: (context) =>
-                          AudioPlayerScreen(),
                       SearchScreen.routeName: (context) => SearchScreen(),
                       SelectPackageScreen.routeName: (context) =>
                           const SelectPackageScreen(),
@@ -136,6 +135,8 @@ class MyApp extends StatelessWidget {
                       VideoPlaylistHome.routeName: (context) =>
                           VideoPlaylistHome(),
                       SongInfoScreen.routeName: (context) => SongInfoScreen(),
+                      AudioPlayerSliderScreen.routeName: (context) =>
+                          AudioPlayerSliderScreen()
                     },
                   );
                 })));

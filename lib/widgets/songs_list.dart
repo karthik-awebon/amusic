@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../functions/general_functions.dart';
 import '../models/song.dart';
 import '../screens/audio_player_screen.dart';
+import '../screens/audio_player_slider_screen.dart';
 import '../screens/favorites_screen.dart';
 import '../screens/home.dart';
 
@@ -43,9 +44,10 @@ class SongsList extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed(AudioPlayerScreen.routeName,
+                Navigator.of(context).pushNamed(
+                    AudioPlayerSliderScreen.routeName,
                     arguments: AudioPlayerScreenArguments(
-                        songsList[index]));
+                        songsList[index], songsList));
               },
               child: Container(
                 child: Row(

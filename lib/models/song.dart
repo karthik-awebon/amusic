@@ -50,7 +50,9 @@ class MusicArtist {
 class AudioPlayerScreenArguments {
   final Song song;
 
-  AudioPlayerScreenArguments(this.song);
+  final List<Song> songsList;
+
+  AudioPlayerScreenArguments(this.song, this.songsList);
 }
 
 class SongInfoArguments {

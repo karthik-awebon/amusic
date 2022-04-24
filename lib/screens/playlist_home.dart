@@ -1,3 +1,4 @@
+import 'package:amusic_app/screens/audio_player_slider_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../api/home_api.dart';
@@ -13,6 +14,7 @@ class PlaylistHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Song? firstPlaylistSong;
+    List<Song>? songsList;
     final playlistData =
         ModalRoute.of(context)!.settings.arguments as PlaylistArguments;
     return Scaffold(
@@ -89,6 +91,7 @@ class PlaylistHome extends StatelessWidget {
                                 songFile: snapshot.data[0].songFile,
                                 releaseDate: snapshot.data[0].releaseDate,
                                 musicArtists: snapshot.data[0].musicArtists);
+                            songsList = snapshot.data;
                             return SongsList(
                               songsList: snapshot.data,
                               isPlaylist: true,
@@ -113,9 +116,10 @@ class PlaylistHome extends StatelessWidget {
                 child: FloatingActionButton(
                   child: const Icon(Icons.play_arrow),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(AudioPlayerScreen.routeName,
+                    Navigator.of(context).pushNamed(
+                        AudioPlayerSliderScreen.routeName,
                         arguments: AudioPlayerScreenArguments(
-                            firstPlaylistSong!));
+                            firstPlaylistSong!, songsList!));
                   },
                 ),
                 right: 10,
