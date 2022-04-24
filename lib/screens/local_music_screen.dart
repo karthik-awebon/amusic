@@ -65,14 +65,14 @@ class LocalMusicScreen extends StatelessWidget {
                             if (snapshot.hasData) {
                               return SongsList(songsList: snapshot.data);
                             } else if (snapshot.hasError) {
-                              return Text("errir");
+                              return Text("Storage Error");
                             } else {
                               return Center(child: CircularProgressIndicator());
                             }
                           }),
                     ])),
               ),
-              Text('tab2')
+              Text('Storage Error')
             ],
           ),
           drawer: JhankarDrawer(),

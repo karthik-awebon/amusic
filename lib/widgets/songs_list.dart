@@ -105,7 +105,7 @@ class SongsList extends StatelessWidget {
                           } else if (selectedValue == SongOptions.Share) {
                             share(songsList[index].name);
                           } else if (selectedValue == SongOptions.Downloads) {
-                            downloadMusic(songsList[index].songFile);
+                            downloadMusic(songsList[index].songFile, context);
                           }
                         },
                         icon: const Icon(Icons.more_vert, size: 30),

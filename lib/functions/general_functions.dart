@@ -204,6 +204,7 @@ Future<void> share(String title) async {
     // chooserTitle: 'Example Chooser Title'
   );
 }
+
 Future<bool> _requestPermission(Permission permission) async {
   if (await permission.isGranted) {
     return true;
@@ -223,74 +224,96 @@ void downloadCallback(String id, DownloadTaskStatus status, int progress) {
   send.send([id, status, progress]);
 }
 
-Future<bool> downloadMusic(String url) async {
-  Directory directory;
-  try {
-    if (Platform.isAndroid) {
-      if (await _requestPermission(Permission.storage) &&
-          // access media location needed for android 10/Q
-          await _requestPermission(Permission.accessMediaLocation) &&
-          // manage external storage needed for android 11/R
-          await _requestPermission(Permission.manageExternalStorage)) {
-        directory = (await getExternalStorageDirectory())!;
-        String newPath = "";
-        print(directory);
-        List<String> paths = directory.path.split("/");
-        for (int x = 1; x < paths.length; x++) {
-          String folder = paths[x];
-          if (folder != "Android") {
-            newPath += "/" + folder;
-          } else {
-            break;
-          }
-        }
-        newPath = newPath + "/awebon";
-        directory = Directory(newPath);
-      } else {
-        return false;
-      }
-    } else {
-      if (await _requestPermission(Permission.photos)) {
-        directory = await getTemporaryDirectory();
-      } else {
-        return false;
-      }
-    }
+Future<void> downloadMusic(String url, context) async {
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text('Alert'),
+      content: const Text('Do you want to download this file?'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'Cancel'),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text('Storage Error')));
+            return Navigator.pop(context, 'Storage');
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
 
-    if (!await directory.exists()) {
-      await directory.create(recursive: true);
-    }
-    if (await directory.exists()) {
-      File saveFile = File(directory.path + "/test.mp3");
-      WidgetsFlutterBinding.ensureInitialized();
-      await FlutterDownloader.initialize(
-          debug: true // optional: set false to disable printing logs to console
-          );
-      FlutterDownloader.registerCallback(downloadCallback);
-      final taskId = await FlutterDownloader.enqueue(
-        url: url,
-        savedDir: directory.path,
-        showNotification:
-            true, // show download progress in status bar (for Android)
-        openFileFromNotification:
-            true, // click on notification to open downloaded file (for Android)
-      );
-      // await dio.download(url, saveFile.path,
-      //     onReceiveProgress: (value1, value2) {
-      //   setState(() {
-      //     progress = value1 / value2;
-      //   });
-      // });
-      // if (Platform.isIOS) {
-      //   await ImageGallerySaver.saveFile(saveFile.path,
-      //       isReturnPathOfIOS: true);
-      // }
-      return true;
-    }
-  } catch (e) {
-    print(e);
-  }
-  return false;
+  // Directory directory;
+  // try {
+  //   if (Platform.isAndroid) {
+  //     if (await _requestPermission(Permission.storage) &&
+  //         // access media location needed for android 10/Q
+  //         await _requestPermission(Permission.accessMediaLocation) &&
+  //         // manage external storage needed for android 11/R
+  //         await _requestPermission(Permission.manageExternalStorage)) {
+  //       directory = (await getExternalStorageDirectory())!;
+  //       String newPath = "";
+  //       print(directory);
+  //       List<String> paths = directory.path.split("/");
+  //       for (int x = 1; x < paths.length; x++) {
+  //         String folder = paths[x];
+  //         if (folder != "Android") {
+  //           newPath += "/" + folder;
+  //         } else {
+  //           break;
+  //         }
+  //       }
+  //       newPath = newPath + "/awebon";
+  //       directory = Directory(newPath);
+  //     } else {
+  //       return false;
+  //     }
+  //   } else {
+  //     if (await _requestPermission(Permission.photos)) {
+  //       directory = await getTemporaryDirectory();
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+
+  //   if (!await directory.exists()) {
+  //     await directory.create(recursive: true);
+  //   }
+  //   if (await directory.exists()) {
+  //     File saveFile = File(directory.path + "/test.mp3");
+  //     WidgetsFlutterBinding.ensureInitialized();
+  //     await FlutterDownloader.initialize(
+  //         debug: true // optional: set false to disable printing logs to console
+  //         );
+  //     FlutterDownloader.registerCallback(downloadCallback);
+  //     final taskId = await FlutterDownloader.enqueue(
+  //       url: url,
+  //       savedDir: directory.path,
+  //       showNotification:
+  //           true, // show download progress in status bar (for Android)
+  //       openFileFromNotification:
+  //           true, // click on notification to open downloaded file (for Android)
+  //     );
+  //     // await dio.download(url, saveFile.path,
+  //     //     onReceiveProgress: (value1, value2) {
+  //     //   setState(() {
+  //     //     progress = value1 / value2;
+  //     //   });
+  //     // });
+  //     // if (Platform.isIOS) {
+  //     //   await ImageGallerySaver.saveFile(saveFile.path,
+  //     //       isReturnPathOfIOS: true);
+  //     // }
+  //     return true;
+  //   }
+  // } catch (e) {
+  //   print(e);
+  // }
+  // return false;
 }
 // Future<void> downloadMusic(String url) async {
 //   WidgetsFlutterBinding.ensureInitialized();
