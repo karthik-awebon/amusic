@@ -154,6 +154,11 @@ unFavoriteSong(songId, context) async {
       .showSnackBar(const SnackBar(content: Text('UnFavorite the Song')));
 }
 
+setSharedPreferencePushNotificationButton(bool isPushNotificationOn) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setBool('jhankar_push_notification_button', isPushNotificationOn);
+}
+
 Directory findRoot(FileSystemEntity entity) {
   final Directory parent = entity.parent;
   if (parent.path == entity.path) return parent;

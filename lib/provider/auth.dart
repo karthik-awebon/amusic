@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:amusic_app/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -14,14 +13,19 @@ class Auth with ChangeNotifier {
   int? _userId;
   Song? _song;
   List<Song>? _songsList;
-  bool? _isPlaying;
+  bool _isPlaying = false;
+  bool _isPushNotificationOn = false;
 
   bool get isAuth {
     return token != null;
   }
 
   bool get isPlaying {
-    return _isPlaying != null;
+    return _isPlaying;
+  }
+
+  bool get isPushNotificationOn {
+    return _isPushNotificationOn;
   }
 
   String? get token {
@@ -55,6 +59,11 @@ class Auth with ChangeNotifier {
 
   void setIsPlaying(bool isPlaying) {
     _isPlaying = isPlaying;
+  }
+
+  void setIsPushNotificationOn(bool isPushNotificationOn) {
+    _isPushNotificationOn = isPushNotificationOn;
+    notifyListeners();
   }
 
   List<Song>? get songsList {
@@ -125,6 +134,13 @@ class Auth with ChangeNotifier {
             }));
         _token = responseData['data']['token'];
         _userId = responseData['data']['id'];
+        if (prefs.containsKey('jhankar_push_notification_button')) {
+          _isPushNotificationOn =
+              (prefs.getBool('jhankar_push_notification_button') == true)
+                  ? true
+                  : false;
+        }
+
         notifyListeners();
       } else {
         throw HttpException(responseData['message']);
@@ -170,6 +186,14 @@ class Auth with ChangeNotifier {
     _token = userData['token'];
     _userId = userData['user_id'];
     notifyListeners();
+
+    if (prefs.containsKey('jhankar_push_notification_button')) {
+      _isPushNotificationOn =
+          (prefs.getBool('jhankar_push_notification_button') == true)
+              ? true
+              : false;
+    }
+
     return true;
   }
 }

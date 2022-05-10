@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../functions/general_functions.dart';
 import '../provider/auth.dart';
-import '../widgets/app_bar.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 import 'favorites_screen.dart';
@@ -15,7 +14,6 @@ class AccountHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
         appBar: null,
         body: Container(
@@ -112,13 +110,12 @@ class AccountHome extends StatelessWidget {
                             Text('Push Notifications')
                           ]),
                           Switch(
-                            //value: isSwitched,
-                            value: false,
+                            value: Provider.of<Auth>(context, listen: true)
+                                .isPushNotificationOn,
                             onChanged: (value) {
-                              // setState(() {
-                              //   isSwitched = value;
-                              //   print(isSwitched);
-                              // });
+                              Provider.of<Auth>(context, listen: false)
+                                  .setIsPushNotificationOn(value);
+                              setSharedPreferencePushNotificationButton(value);
                             },
                             activeTrackColor: Color.fromARGB(255, 52, 89, 131),
                             activeColor: Color.fromARGB(255, 52, 89, 131),
