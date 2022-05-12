@@ -20,17 +20,14 @@ class AudioPlayerSliderScreen extends StatefulWidget {
 
 class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
   int _bannercurrentIndex = 1;
-  Song? playingSong;
 
   setSong(Song song) {
-    setState(() {
-      playingSong = song;
-    });
+    Provider.of<Auth>(context, listen: false).setSong(song);
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    playingSong = Provider.of<Auth>(context, listen: false).song;
+    Song? playingSong = Provider.of<Auth>(context, listen: true).song;
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -73,12 +70,11 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
                       child: Column(children: [
                         Center(
                             child: Text(
-                          playingSong!.name,
+                          playingSong.name,
                           style: Theme.of(context).textTheme.headline1,
                         )),
                         Center(
-                            child: Text(
-                                playingSong!.musicArtists[0].name,
+                            child: Text(playingSong.musicArtists[0].name,
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 15))),
                         Stack(
@@ -101,16 +97,11 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
                                     },
                                   ),
                                   items: [
-                                    Consumer<Auth>(
-                                        builder: (ctx, auth, _) =>
-                                            AudioPlayerScreen(
-                                              song: auth.song!,
-                                                songsList: auth.songsList!,
-                                                updateSong: setSong
-                                            )),
+                                    AudioPlayerScreen(
+                                                updateSong: setSong),
                                     Consumer<Auth>(
                                         builder: (ctx, auth, _) => SongsList(
-                                            songsList: auth.songsList!))
+                                            songsList: auth.songsList))
                                   ],
                                 )),
                             Row(

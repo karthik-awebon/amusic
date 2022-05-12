@@ -12,7 +12,7 @@ class Auth with ChangeNotifier {
   String? _token;
   int? _userId;
   Song? _song;
-  List<Song>? _songsList;
+  List<Song> _songsList = [];
   bool _isPlaying = false;
   bool _isPushNotificationOn = false;
 
@@ -51,14 +51,17 @@ class Auth with ChangeNotifier {
 
   void setSong(Song song) {
     _song = song;
+    notifyListeners();
   }
 
   void setSongsList(List<Song> songsList) {
     _songsList = songsList;
+    notifyListeners();
   }
 
   void setIsPlaying(bool isPlaying) {
     _isPlaying = isPlaying;
+    notifyListeners();
   }
 
   void setIsPushNotificationOn(bool isPushNotificationOn) {
@@ -66,11 +69,8 @@ class Auth with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Song>? get songsList {
-    if (_songsList != null) {
-      return _songsList;
-    }
-    return null;
+  List<Song> get songsList {
+    return _songsList;
   }
 
   Future<void> socialLogin(String email, String name) async {
