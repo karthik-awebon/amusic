@@ -44,13 +44,13 @@ class _MiniAudioPlayerState extends State<MiniAudioPlayer> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(widget.song!.name,
+                      Text(widget.song.name,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(color: Colors.white, fontSize: 16)),
                       SizedBox(
                         height: 5,
                       ),
-                      Text(widget.song!.musicArtists[0].name,
+                      Text(widget.song.musicArtists[0].name,
                           style: TextStyle(color: Colors.white, fontSize: 13)),
                     ],
                   ),

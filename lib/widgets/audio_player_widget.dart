@@ -29,7 +29,8 @@ class AudioPlayerWidget {
           processingState == ProcessingState.buffering) {
         buttonNotifier.value = ButtonState.loading;
       } else if (!isPlaying) {
-        buttonNotifier.value = ButtonState.paused;
+        buttonNotifier.value = ButtonState.playing;
+        _audioPlayer.play();
       } else if (processingState != ProcessingState.completed) {
         buttonNotifier.value = ButtonState.playing;
       } else {

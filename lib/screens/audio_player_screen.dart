@@ -1,9 +1,6 @@
 import 'dart:math';
-import 'dart:ui';
 
-import 'package:amusic_app/api/general_api.dart';
 import 'package:amusic_app/widgets/audio_player_widget.dart';
-import 'package:amusic_app/widgets/songs_list.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +8,6 @@ import 'package:provider/provider.dart';
 import '../functions/general_functions.dart';
 import '../models/song.dart';
 import '../provider/auth.dart';
-import 'home.dart';
 import 'song_info_screen.dart';
 
 class AudioPlayerScreen extends StatefulWidget {
