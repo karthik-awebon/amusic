@@ -4,10 +4,8 @@ import 'package:provider/provider.dart';
 import '../functions/general_functions.dart';
 import '../models/song.dart';
 import '../provider/auth.dart';
-import '../screens/audio_player_screen.dart';
 import '../screens/audio_player_slider_screen.dart';
 import '../screens/favorites_screen.dart';
-import '../screens/home.dart';
 
 class SongsList extends StatelessWidget {
   List<Song> songsList = [];
@@ -47,9 +45,9 @@ class SongsList extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Provider.of<Auth>(context, listen: false)
-                    .setSong(songsList[index]!);
+                    .setSong(songsList[index]);
                 Provider.of<Auth>(context, listen: false)
-                    .setSongsList(songsList!);
+                    .setSongsList(songsList);
                 Navigator.of(context).pushNamed(
                     AudioPlayerSliderScreen.routeName);
               },

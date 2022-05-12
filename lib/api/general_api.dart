@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:amusic_app/models/package.dart';
@@ -61,5 +62,11 @@ class GeneralApi {
       songsList.add(song);
     }
     return songsList;
+  }
+
+  static Future<LinkedHashMap<String, dynamic>> getSettingsPageUrl() async {
+    http.Response response =
+        await http.get(Uri.parse("$API_BASE_URL/utility/setting"));
+    return jsonDecode(response.body)['data'];
   }
 }
