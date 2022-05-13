@@ -34,6 +34,13 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     Song? playingSong = Provider.of<Auth>(context, listen: true).song;
     List<Song> authSongsList =
         Provider.of<Auth>(context, listen: true).songsList;
+    List<Song> favoriteSongsList =
+        Provider.of<Auth>(context, listen: true).favoriteSongsList;
+    bool isFavoriteSong = (favoriteSongsList.indexWhere(
+                (Song songElement) => songElement.id == playingSong!.id)) ==
+            -1
+        ? false
+        : true;
     final currentSongIndex = authSongsList
         .indexWhere((Song songElement) => songElement.id == playingSong!.id);
     _audioPlayerWidget!.setUrl(playingSong!.songFile);
@@ -56,16 +63,36 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                InkWell(
-                  onTap: () {
-                    addToFavorites(playingSong, context);
-                  },
-                  child: const Icon(
-                    Icons.favorite,
-                    size: 25,
-                    color: Colors.white,
-                  ),
-                ),
+                isFavoriteSong
+                    ? InkWell(
+                        onTap: () {
+                          unFavoriteSong(playingSong.id, context);
+                          int songIndex = favoriteSongsList.indexWhere(
+                              (Song songElement) =>
+                                  songElement.id == playingSong.id);
+                          favoriteSongsList.removeAt(songIndex);
+                          Provider.of<Auth>(context, listen: false)
+                              .setFavoriteSongsList(favoriteSongsList);
+                        },
+                        child: const Icon(
+                          Icons.favorite,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          addToFavorites(playingSong, context);
+                          favoriteSongsList.add(playingSong);
+                          Provider.of<Auth>(context, listen: false)
+                              .setFavoriteSongsList(favoriteSongsList);
+                        },
+                        child: const Icon(
+                          Icons.favorite_outline,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                      ),
                 InkWell(
                   onTap: () {
                     share(playingSong.name);

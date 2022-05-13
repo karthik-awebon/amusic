@@ -116,7 +116,6 @@ addToFavorites(Song song, context) async {
         json.decode(prefs.getString('favorite_songs').toString());
     var existingSong = favoriteSongsList
         .firstWhere((element) => element['id'] == song.id, orElse: () => null);
-    //var existSongId = favoriteSongsList.indexOf(song);
     if (existingSong == null) {
       favoriteSongsList.add(song);
       prefs.setString('favorite_songs', json.encode(favoriteSongsList));

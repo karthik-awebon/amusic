@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:amusic_app/api/general_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,7 @@ class Auth with ChangeNotifier {
   List<Song> _songsList = [];
   bool _isPlaying = false;
   bool _isPushNotificationOn = false;
+  List<Song> _favoriteSongsList = [];
 
   bool get isAuth {
     return token != null;
@@ -49,6 +51,14 @@ class Auth with ChangeNotifier {
     return null;
   }
 
+  List<Song> get favoriteSongsList {
+    return _favoriteSongsList;
+  }
+
+  List<Song> get songsList {
+    return _songsList;
+  }
+
   void setSong(Song song) {
     _song = song;
     notifyListeners();
@@ -56,6 +66,11 @@ class Auth with ChangeNotifier {
 
   void setSongsList(List<Song> songsList) {
     _songsList = songsList;
+    notifyListeners();
+  }
+
+  void setFavoriteSongsList(List<Song> favoriteSongsList) {
+    _favoriteSongsList = favoriteSongsList;
     notifyListeners();
   }
 
@@ -67,10 +82,6 @@ class Auth with ChangeNotifier {
   void setIsPushNotificationOn(bool isPushNotificationOn) {
     _isPushNotificationOn = isPushNotificationOn;
     notifyListeners();
-  }
-
-  List<Song> get songsList {
-    return _songsList;
   }
 
   Future<void> socialLogin(String email, String name) async {
@@ -140,6 +151,9 @@ class Auth with ChangeNotifier {
                   ? true
                   : false;
         }
+        if (prefs.containsKey('favorite_songs')) {
+          _favoriteSongsList = await GeneralApi.getFavoriteSongs();
+        }
 
         notifyListeners();
       } else {
@@ -192,6 +206,9 @@ class Auth with ChangeNotifier {
           (prefs.getBool('jhankar_push_notification_button') == true)
               ? true
               : false;
+    }
+    if (prefs.containsKey('favorite_songs')) {
+      _favoriteSongsList = await GeneralApi.getFavoriteSongs();
     }
 
     return true;

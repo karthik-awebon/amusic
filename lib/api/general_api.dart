@@ -55,9 +55,13 @@ class GeneralApi {
       Song song = Song(
           id: responseData[i]['id'],
           name: responseData[i]['name'],
-          imgThumb: responseData[i]['imgThumb'],
+          imgThumb: (responseData[i]['imgThumb'] != null)
+              ? responseData[i]['imgThumb']
+              : responseData[i]['imgBanner'],
           songFile: responseData[i]['songFile'],
-          releaseDate: responseData[i]['releaseDate'],
+          releaseDate: (responseData[i]['releaseDate'] != null)
+              ? responseData[i]['releaseDate']
+              : '',
           musicArtists: musicArtistList);
       songsList.add(song);
     }
