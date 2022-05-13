@@ -8,6 +8,7 @@ import '../provider/auth.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 import 'favorites_screen.dart';
+import 'login.dart';
 
 class AccountHome extends StatelessWidget {
   static const routeName = './account-home';
@@ -32,6 +33,18 @@ class AccountHome extends StatelessWidget {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   var userData = snapshot.data;
+                  if (userData == "")
+                    AuthApi.LogOut(Provider.of<Auth>(context, listen: false)
+                            .token
+                            .toString())
+                        .then((value) {
+                      //if (value == 200 || value == 201) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => Loginpage()),
+                          (route) => false);
+                      //}
+                    });
                   return Column(children: <Widget>[
                     Row(
                       children: <Widget>[
