@@ -26,6 +26,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   @override
   void initState() {
     super.initState();
+    _audioPlayerWidget = AudioPlayerWidget();
   }
 
   @override
@@ -35,7 +36,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
         Provider.of<Auth>(context, listen: true).songsList;
     final currentSongIndex = authSongsList
         .indexWhere((Song songElement) => songElement.id == playingSong!.id);
-    _audioPlayerWidget = AudioPlayerWidget(url: playingSong!.songFile);
+    _audioPlayerWidget!.setUrl(playingSong!.songFile);
     _audioPlayerWidget!.play();
     return Column(
       children: [
@@ -130,7 +131,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
               Icons.skip_previous,
             ),
             onTap: () {
-              _audioPlayerWidget!.dispose();
+              _audioPlayerWidget!.stop();
               if (!isRepeatEnabled) {
                 int updatedIndex = currentSongIndex;
                 if (currentSongIndex == 0) {
@@ -175,7 +176,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
           InkWell(
             child: Icon(Icons.skip_next),
             onTap: () {
-              _audioPlayerWidget!.dispose();
+              _audioPlayerWidget!.stop();
               if (!isRepeatEnabled) {
                 int updatedIndex = currentSongIndex;
                 if (currentSongIndex == (authSongsList.length - 1)) {

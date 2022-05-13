@@ -74,14 +74,17 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
                           style: Theme.of(context).textTheme.headline1,
                         )),
                         Center(
-                            child: Text(playingSong.musicArtists[0].name,
+                            child: Text(
+                                playingSong.musicArtists.isNotEmpty
+                                    ? playingSong.musicArtists[0].name
+                                    : '',
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 15))),
                         Stack(
                           alignment: Alignment.topCenter,
                           children: [
                             Container(
-                                height: 700,
+                                height: 677,
                                 child: CarouselSlider(
                                   options: CarouselOptions(
                                     viewportFraction: 1.0,

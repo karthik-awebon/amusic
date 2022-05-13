@@ -50,7 +50,10 @@ class _MiniAudioPlayerState extends State<MiniAudioPlayer> {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(widget.song.musicArtists[0].name,
+                      Text(
+                          widget.song.musicArtists.isNotEmpty
+                              ? widget.song.musicArtists[0].name
+                              : '',
                           style: TextStyle(color: Colors.white, fontSize: 13)),
                     ],
                   ),

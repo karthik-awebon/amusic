@@ -14,13 +14,12 @@ class AudioPlayerWidget {
   String url = '';
 
   late AudioPlayer _audioPlayer;
-  AudioPlayerWidget({required this.url}) {
+  AudioPlayerWidget() {
     _init();
   }
 
   void _init() async {
     _audioPlayer = AudioPlayer();
-    await _audioPlayer.setUrl(url);
 
     _audioPlayer.playerStateStream.listen((playerState) {
       final isPlaying = playerState.playing;
@@ -34,7 +33,7 @@ class AudioPlayerWidget {
         buttonNotifier.value = ButtonState.playing;
       } else {
         _audioPlayer.seek(Duration.zero);
-        _audioPlayer.pause();
+        _audioPlayer.pause();        
       }
     });
 
@@ -73,6 +72,9 @@ class AudioPlayerWidget {
   void pause() {
     _audioPlayer.pause();
   }
+  void stop() {
+    _audioPlayer.stop();
+  }
 
   void seek(Duration position) {
     _audioPlayer.seek(position);
@@ -80,6 +82,10 @@ class AudioPlayerWidget {
 
   void dispose() {
     _audioPlayer.dispose();
+  }
+
+  void setUrl(String url) async {
+    await _audioPlayer.setUrl(url);
   }
 }
 
