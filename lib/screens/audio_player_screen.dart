@@ -11,11 +11,8 @@ import '../provider/auth.dart';
 import 'song_info_screen.dart';
 
 class AudioPlayerScreen extends StatefulWidget {
-
   final updateSong;
-  AudioPlayerScreen(
-      {Key? key, this.updateSong})
-      : super(key: key);
+  AudioPlayerScreen({Key? key, this.updateSong}) : super(key: key);
 
   @override
   State<AudioPlayerScreen> createState() => _AudioPlayerScreenState();
@@ -23,7 +20,6 @@ class AudioPlayerScreen extends StatefulWidget {
 
 class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   AudioPlayerWidget? _audioPlayerWidget;
-  Song? song;
   bool isRepeatEnabled = false;
   bool isShuffleEnabled = false;
 
@@ -40,7 +36,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
     final currentSongIndex = authSongsList
         .indexWhere((Song songElement) => songElement.id == playingSong!.id);
     _audioPlayerWidget = AudioPlayerWidget(url: playingSong!.songFile);
-
+    _audioPlayerWidget!.play();
     return Column(
       children: [
         const Spacer(),
@@ -134,31 +130,21 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
               Icons.skip_previous,
             ),
             onTap: () {
+              _audioPlayerWidget!.dispose();
               if (!isRepeatEnabled) {
                 int updatedIndex = currentSongIndex;
                 if (currentSongIndex == 0) {
                   updatedIndex = authSongsList.length;
                 }
                 Song previousSong = authSongsList[updatedIndex - 1];
-                Provider.of<Auth>(context, listen: false).setSong(previousSong);
-                setState(() {
-                  song = previousSong;
-                });
                 widget.updateSong(previousSong);
               } else if (isShuffleEnabled) {
                 Random random = new Random();
                 int updatedIndex = random.nextInt(authSongsList.length) - 1;
                 Song previousSong = authSongsList[updatedIndex];
-                Provider.of<Auth>(context, listen: false).setSong(previousSong);
-                setState(() {
-                  song = previousSong;
-                });
                 widget.updateSong(previousSong);
               } else {
-                setState(() {
-                  song = song;
-                });
-                widget.updateSong(song);
+                widget.updateSong(playingSong);
               }
             },
           ),
@@ -189,31 +175,21 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
           InkWell(
             child: Icon(Icons.skip_next),
             onTap: () {
+              _audioPlayerWidget!.dispose();
               if (!isRepeatEnabled) {
                 int updatedIndex = currentSongIndex;
                 if (currentSongIndex == (authSongsList.length - 1)) {
                   updatedIndex = -1;
                 }
                 Song nextsSong = authSongsList[updatedIndex + 1];
-                Provider.of<Auth>(context, listen: false).setSong(nextsSong);
-                setState(() {
-                  song = nextsSong;
-                });
                 widget.updateSong(nextsSong);
               } else if (isShuffleEnabled) {
                 Random random = new Random();
                 int updatedIndex = random.nextInt(authSongsList.length) - 1;
                 Song nextsSong = authSongsList[updatedIndex];
-                Provider.of<Auth>(context, listen: false).setSong(nextsSong);
-                setState(() {
-                  song = nextsSong;
-                });
                 widget.updateSong(nextsSong);
               } else {
-                setState(() {
-                  song = song;
-                });
-                widget.updateSong(song);
+                widget.updateSong(playingSong);
               }
             },
           ),
