@@ -318,20 +318,21 @@ class LoginpageState extends State<Loginpage> {
 
   void loginCheck() {
     if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
-      try {
+      // try {
         Provider.of<Auth>(context, listen: false).login(
           emailController.text,
           passController.text,
+          context
         );
-        Navigator.of(context).pushNamed(Home.routeName);
-      } on HttpException catch (error) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(error.toString())));
-      } catch (error) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content:
-                Text('Could not authenticate you. Please try again later.')));
-      }
+      //   Navigator.of(context).pushNamed(Home.routeName);
+      // } on HttpException catch (error) {
+      //   ScaffoldMessenger.of(context)
+      //       .showSnackBar(SnackBar(content: Text(error.toString())));
+      // } catch (error) {
+      //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //       content:
+      //           Text('Could not authenticate you. Please try again later.')));
+      // }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("username and password is must")));

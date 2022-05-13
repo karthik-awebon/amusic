@@ -296,7 +296,8 @@ class RegisterpageState extends State<Registerpage> {
       if (passController.text == conpassController.text) {
         try {
           Provider.of<Auth>(context, listen: false).signup(
-              emailController.text, passController.text, nameController.text);
+              emailController.text,
+              passController.text, nameController.text, context);
           Navigator.of(context).pushNamed(Home.routeName);
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('Registered Successfully')));

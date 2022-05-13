@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/http_exception.dart';
 import '../models/song.dart';
+import '../screens/home.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
@@ -119,7 +120,7 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(String email, String password, context) async {
     var endpointUrl =
         'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
 
@@ -156,15 +157,19 @@ class Auth with ChangeNotifier {
         }
 
         notifyListeners();
+        Navigator.of(context).pushNamed(Home.routeName);
       } else {
-        throw HttpException(responseData['message']);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(responseData['message'])));
       }
     } catch (error) {
-      throw error;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.toString())));
     }
   }
 
-  Future<void> signup(String email, String password, String name) async {
+  Future<void> signup(
+      String email, String password, String name, context) async {
     var endpointUrl =
         'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/register';
 
@@ -181,7 +186,7 @@ class Auth with ChangeNotifier {
       var responseData = json.decode(response.body.toString());
 
       if (responseData['status'] == "SUCCESS") {
-        this.login(email, password);
+        this.login(email, password, context);
       } else {
         throw HttpException(responseData['message']);
       }
