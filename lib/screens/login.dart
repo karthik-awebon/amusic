@@ -7,7 +7,6 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
-
 import '../models/http_exception.dart';
 import '../provider/auth.dart';
 import '../widgets/logo.dart';
@@ -19,7 +18,13 @@ class Loginpage extends StatefulWidget {
   }
 }
 
-final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+GoogleSignIn _googleSignIn = GoogleSignIn(
+  // Optional clientId
+  // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
+  scopes: <String>[
+    'email',
+  ],
+);
 
 class LoginpageState extends State<Loginpage> {
   var emailController = TextEditingController();
@@ -30,13 +35,22 @@ class LoginpageState extends State<Loginpage> {
 
   @override
   void initState() {
-    _googleSignIn.onCurrentUserChanged.listen((account) {
+    super.initState();
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
       setState(() {
         _currentUser1 = account;
       });
+      if (_currentUser1 != null) {
+        Provider.of<Auth>(context, listen: false).socialLogin(
+          _currentUser1!.email.toString(),
+          _currentUser1!.displayName.toString(),
+        );
+        _googleSignIn.disconnect();
+        Navigator.of(context).pushNamed(Home.routeName);
+      }
     });
     _googleSignIn.signInSilently();
-    super.initState();
+    ;
   }
 
   AccessToken? _accessToken;
@@ -282,48 +296,16 @@ class LoginpageState extends State<Loginpage> {
   Future<void> signIn1() async {
     try {
       await _googleSignIn.signIn();
-      Provider.of<Auth>(context, listen: false).socialLogin(
-        _currentUser1!.email.toString(),
-        _currentUser1!.id.toString(),
-      );
-      Navigator.of(context).pushNamed(Home.routeName);
-      //   var endpointUrl =
-      //       'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
-      //   Map<String, String> queryParams = {
-      //     'username': _currentUser1!.email.toString(),
-      //     'login_type': 'S',
-      //     'password': _currentUser1!.id.toString()
-      //   };
-      //   String queryString = Uri(queryParameters: queryParams).query;
-
-      //   var requestUrl = endpointUrl +
-      //       '?' +
-      //       queryString; // result - https://www.myurl.com/api/v1/user?param1=1&param2=2
-      //   var response = await http.get(Uri.parse(requestUrl));
-      //   var x = json.decode(response.body.toString());
-
-      //   if (x['status'] == "SUCCESS") {
-      //     print(response.body);
-      //     print(x);
-      //   }
-    } on HttpException catch (error) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.toString())));
-    } catch (e) {
-      //print('Error signing in $e');
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+    } catch (error) {
+      print(error);
     }
   }
 
   void loginCheck() {
     if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
       // try {
-        Provider.of<Auth>(context, listen: false).login(
-          emailController.text,
-          passController.text,
-          context
-        );
+      Provider.of<Auth>(context, listen: false)
+          .login(emailController.text, passController.text, context);
       //   Navigator.of(context).pushNamed(Home.routeName);
       // } on HttpException catch (error) {
       //   ScaffoldMessenger.of(context)
@@ -338,7 +320,6 @@ class LoginpageState extends State<Loginpage> {
           SnackBar(content: Text("username and password is must")));
     }
   }
-
 }
 
 class UserModel {
