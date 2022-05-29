@@ -27,7 +27,7 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Song? playingSong = Provider.of<Auth>(context, listen: true).song;
+    Song? playingSong = Provider.of<Auth>(context, listen: false).song;
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(

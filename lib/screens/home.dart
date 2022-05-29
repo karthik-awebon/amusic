@@ -15,12 +15,10 @@ import 'package:provider/provider.dart';
 
 import '../models/category.dart';
 import '../models/playlist.dart';
-import '../models/song.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 import '../widgets/songs_list.dart';
-import 'audio_player_screen.dart';
 
 class Home extends StatefulWidget {
   static const routeName = './home';

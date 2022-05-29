@@ -8,7 +8,6 @@ import '../models/song.dart';
 import '../provider/auth.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/songs_list.dart';
-import 'audio_player_screen.dart';
 import 'mini_audio_player.dart';
 
 class PlaylistHome extends StatelessWidget {

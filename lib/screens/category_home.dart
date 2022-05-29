@@ -1,4 +1,3 @@
-import 'package:amusic_app/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +7,6 @@ import '../models/category.dart';
 import '../provider/auth.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/songs_list.dart';
-import 'audio_player_screen.dart';
 import 'mini_audio_player.dart';
 
 class CategoryHome extends StatelessWidget {

@@ -2,30 +2,32 @@ import 'dart:convert';
 
 import 'package:amusic_app/api/general_api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/http_exception.dart';
 import '../models/song.dart';
 import '../screens/home.dart';
+import '../widgets/audio_player_widget.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
   int? _userId;
   Song? _song;
   List<Song> _songsList = [];
-  bool _isPlaying = false;
   bool _isPushNotificationOn = false;
   List<Song> _favoriteSongsList = [];
+  AudioPlayerWidget _audioPlayerWidget = AudioPlayerWidget();
+
+  AudioPlayerWidget get audioPlayerWidget {
+    return _audioPlayerWidget;
+  }
 
   bool get isAuth {
     return token != null;
   }
 
-  bool get isPlaying {
-    return _isPlaying;
-  }
+
 
   bool get isPushNotificationOn {
     return _isPushNotificationOn;
@@ -75,14 +77,15 @@ class Auth with ChangeNotifier {
     notifyListeners();
   }
 
-  void setIsPlaying(bool isPlaying) {
-    _isPlaying = isPlaying;
-    notifyListeners();
-  }
+
 
   void setIsPushNotificationOn(bool isPushNotificationOn) {
     _isPushNotificationOn = isPushNotificationOn;
     notifyListeners();
+  }
+
+  void disposeAudioPlayer() {
+    _audioPlayerWidget.dispose();
   }
 
   Future<void> socialLogin(String email, String name) async {

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../functions/general_functions.dart';
 import '../models/song.dart';
+import '../provider/audioplayer.dart';
 import '../provider/auth.dart';
 import 'song_info_screen.dart';
 
@@ -26,16 +27,17 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    _audioPlayerWidget = AudioPlayerWidget();
+    _audioPlayerWidget =
+        Provider.of<Auth>(context, listen: false).audioPlayerWidget;
   }
 
   @override
   Widget build(BuildContext context) {
-    Song? playingSong = Provider.of<Auth>(context, listen: true).song;
+    Song? playingSong = Provider.of<Auth>(context, listen: false).song;
     List<Song> authSongsList =
-        Provider.of<Auth>(context, listen: true).songsList;
+        Provider.of<Auth>(context, listen: false).songsList;
     List<Song> favoriteSongsList =
-        Provider.of<Auth>(context, listen: true).favoriteSongsList;
+        Provider.of<Auth>(context, listen: false).favoriteSongsList;
     bool isFavoriteSong = (favoriteSongsList.indexWhere(
                 (Song songElement) => songElement.id == playingSong!.id)) ==
             -1
@@ -45,6 +47,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
         .indexWhere((Song songElement) => songElement.id == playingSong!.id);
     _audioPlayerWidget!.setUrl(playingSong!.songFile);
     _audioPlayerWidget!.play();
+    Provider.of<AudioPlayer>(context, listen: false).setIsPlaying(true);
     return Column(
       children: [
         const Spacer(),
@@ -190,12 +193,20 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                 case ButtonState.paused:
                   return FloatingActionButton(
                     child: const Icon(Icons.play_arrow),
-                    onPressed: _audioPlayerWidget!.play,
+                    onPressed: () {
+                      Provider.of<AudioPlayer>(context, listen: false)
+                          .setIsPlaying(true);
+                      _audioPlayerWidget!.play();
+                    },
                   );
                 case ButtonState.playing:
                   return FloatingActionButton(
                     child: const Icon(Icons.pause),
-                    onPressed: _audioPlayerWidget!.pause,
+                    onPressed: () {
+                      Provider.of<AudioPlayer>(context, listen: false)
+                          .setIsPlaying(false);
+                      _audioPlayerWidget!.pause();
+                    },
                   );
               }
             },
@@ -240,7 +251,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
 
   @override
   void dispose() {
-    _audioPlayerWidget!.dispose();
+    // _audioPlayerWidget!.dispose();
     super.dispose();
   }
 }

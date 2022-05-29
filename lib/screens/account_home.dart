@@ -33,7 +33,7 @@ class AccountHome extends StatelessWidget {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   var userData = snapshot.data;
-                  if (userData == "")
+                  if (userData == "") {
                     AuthApi.LogOut(Provider.of<Auth>(context, listen: false)
                             .token
                             .toString())
@@ -45,6 +45,7 @@ class AccountHome extends StatelessWidget {
                           (route) => false);
                       //}
                     });
+                  }
                   return Column(children: <Widget>[
                     Row(
                       children: <Widget>[

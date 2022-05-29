@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import
 
+import 'package:amusic_app/provider/audioplayer.dart';
 import 'package:amusic_app/screens/audio_player_screen.dart';
 import 'package:amusic_app/screens/audio_player_slider_screen.dart';
 import 'package:amusic_app/screens/favorites_screen.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
             create: (_) => Auth(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => AudioPlayer(),
           ),
         ],
         child: Consumer<Auth>(
