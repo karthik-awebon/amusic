@@ -8,14 +8,15 @@ import 'audio_player_slider_screen.dart';
 
 class MiniAudioPlayer extends StatefulWidget {
   final Song song;
-  const MiniAudioPlayer({Key? key, required this.song}) : super(key: key);
+  final List<Song> songsList;
+  const MiniAudioPlayer({Key? key, required this.song, required this.songsList})
+      : super(key: key);
 
   @override
   State<MiniAudioPlayer> createState() => _MiniAudioPlayerState();
 }
 
 class _MiniAudioPlayerState extends State<MiniAudioPlayer> {
-
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height * 0.01;
@@ -72,7 +73,22 @@ class _MiniAudioPlayerState extends State<MiniAudioPlayer> {
                     fit: FlexFit.tight,
                   ),
                   InkWell(
-                    onTap: (() {}),
+                    onTap: () {
+                      Provider.of<Auth>(context, listen: false)
+                          .audioPlayerWidget
+                          .stop();
+                      int updatedIndex = widget.songsList.indexWhere(
+                          (Song songElement) =>
+                              songElement.id == widget.song.id);
+                      if (updatedIndex == 0) {
+                        updatedIndex = widget.songsList.length;
+                      }
+                      Song previousSong = widget.songsList[updatedIndex - 1];
+                      Provider.of<Auth>(context, listen: false)
+                          .setSong(previousSong);
+                      Navigator.of(context)
+                          .pushNamed(AudioPlayerSliderScreen.routeName);
+                    },
                     child: Icon(
                       Icons.skip_previous_sharp,
                       size: 35,
@@ -110,7 +126,22 @@ class _MiniAudioPlayerState extends State<MiniAudioPlayer> {
                               ),
                             )),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Provider.of<Auth>(context, listen: false)
+                          .audioPlayerWidget
+                          .stop();
+                      int updatedIndex = widget.songsList.indexWhere(
+                          (Song songElement) =>
+                              songElement.id == widget.song.id);
+                      if (updatedIndex == (widget.songsList.length - 1)) {
+                        updatedIndex = -1;
+                      }
+                      Song nextSong = widget.songsList[updatedIndex + 1];
+                      Provider.of<Auth>(context, listen: false)
+                          .setSong(nextSong);
+                      Navigator.of(context)
+                          .pushNamed(AudioPlayerSliderScreen.routeName);
+                    },
                     child: Icon(
                       Icons.skip_next_sharp,
                       size: 35,

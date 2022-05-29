@@ -133,7 +133,10 @@ class PlaylistHome extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Consumer<Auth>(
                   builder: (ctx, auth, _) => (auth.song != null)
-                      ? MiniAudioPlayer(song: auth.song!)
+                      ? MiniAudioPlayer(
+                          song: auth.song!,
+                          songsList: auth.songsList,
+                        )
                       : Center()),
             ) 
           ]),
