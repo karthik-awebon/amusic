@@ -22,7 +22,7 @@ showVideo(context, videoData) {
   if (videoData.isFree) {
     Navigator.of(context).pushNamed(VideoPlayerScreen.routeName,
         arguments: VideoPlayerScreenArguments(
-            videoData.video, videoData.id.toString()));
+            videoData.video, videoData.id.toString(), videoData.name));
   } else {
     openPaymentModal(context);
   }

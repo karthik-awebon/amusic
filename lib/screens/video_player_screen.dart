@@ -1,7 +1,5 @@
-import 'package:amusic_app/screens/videos_home.dart';
 import 'package:amusic_app/widgets/video_player_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../api/videos_api.dart';
 import '../models/video.dart';
@@ -16,8 +14,15 @@ class VideoPlayerScreen extends StatelessWidget {
     final videoPlayerData = ModalRoute.of(context)!.settings.arguments
         as VideoPlayerScreenArguments;
     return Scaffold(
-        appBar: null,
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          title: null,
+          backgroundColor: const Color(0x00000000),
+          elevation: 0,
+          centerTitle: true,
+        ),
         body: Container(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
             height: double.maxFinite,
             width: double.maxFinite,
             decoration: const BoxDecoration(
@@ -26,11 +31,19 @@ class VideoPlayerScreen extends StatelessWidget {
                     fit: BoxFit.fill)),
             child: Column(children: <Widget>[
               VideoPlayerWidget(videoUrl: videoPlayerData.videoUrl),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 4),
+                child: Text(
+                  videoPlayerData.name,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+              ),
               FutureBuilder(
                   future: VideosApi.getVideos(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       return ListView.builder(
+                          padding: const EdgeInsets.symmetric(vertical: 0),
                           scrollDirection: Axis.vertical,
                           physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
@@ -46,6 +59,8 @@ class VideoPlayerScreen extends StatelessWidget {
                                           snapshot.data['data'][index]['video']
                                               .toString(),
                                           snapshot.data['data'][index]['id']
+                                              .toString(),
+                                          snapshot.data['data'][index]['name']
                                               .toString()));
                                   ;
                                 },

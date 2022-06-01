@@ -18,8 +18,9 @@ class Video {
 class VideoPlayerScreenArguments {
   final String videoUrl;
   final String playlistId;
+  final String name;
 
-  VideoPlayerScreenArguments(this.videoUrl, this.playlistId);
+  VideoPlayerScreenArguments(this.videoUrl, this.playlistId, this.name);
 }
 
 class VideoPlaylistsArguments {
