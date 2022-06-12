@@ -32,6 +32,7 @@ class LoginpageState extends State<Loginpage> {
 
   bool loggedIn = false;
   GoogleSignInAccount? _currentUser1;
+  bool rememberme = true;
 
   @override
   void initState() {
@@ -244,6 +245,30 @@ class LoginpageState extends State<Loginpage> {
               ),
               _buildemail(),
               _buildpassword(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                            value: rememberme,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                rememberme = value!;
+                              });
+                            },
+                            checkColor: Colors.black,
+                            fillColor: MaterialStateProperty.all(Colors.white)),
+                        const Text('Remember me'),
+                      ],
+                    ),
+                    const Text('Forget Password'),
+                  ],
+                ),
+              ),
               buildloginBtn(),
               Text(
                 'or Login With',
@@ -304,8 +329,8 @@ class LoginpageState extends State<Loginpage> {
   void loginCheck() {
     if (emailController.text.isNotEmpty && passController.text.isNotEmpty) {
       // try {
-      Provider.of<Auth>(context, listen: false)
-          .login(emailController.text, passController.text, context);
+      Provider.of<Auth>(context, listen: false).login(
+          emailController.text, passController.text, rememberme, context);
       //   Navigator.of(context).pushNamed(Home.routeName);
       // } on HttpException catch (error) {
       //   ScaffoldMessenger.of(context)

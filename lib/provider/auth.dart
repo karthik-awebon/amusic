@@ -27,8 +27,6 @@ class Auth with ChangeNotifier {
     return token != null;
   }
 
-
-
   bool get isPushNotificationOn {
     return _isPushNotificationOn;
   }
@@ -77,8 +75,6 @@ class Auth with ChangeNotifier {
     notifyListeners();
   }
 
-
-
   void setIsPushNotificationOn(bool isPushNotificationOn) {
     _isPushNotificationOn = isPushNotificationOn;
     notifyListeners();
@@ -123,7 +119,8 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> login(String email, String password, context) async {
+  Future<void> login(
+      String email, String password, bool rememberme, context) async {
     var endpointUrl =
         'http://ec2-13-126-202-84.ap-south-1.compute.amazonaws.com/amusic/backend/web/index.php/api/user/login';
 
@@ -141,12 +138,16 @@ class Auth with ChangeNotifier {
 
       if (responseData['status'] == "SUCCESS") {
         final prefs = await SharedPreferences.getInstance();
-        prefs.setString(
-            'jhankar_token',
-            json.encode({
-              'user_id': responseData['data']['id'],
-              'token': responseData['data']['token']
-            }));
+        if (rememberme) {
+          prefs.setString(
+              'jhankar_token',
+              json.encode({
+                'user_id': responseData['data']['id'],
+                'token': responseData['data']['token']
+              }));
+        } else {
+          prefs.remove('jhankar_token');
+        }
         _token = responseData['data']['token'];
         _userId = responseData['data']['id'];
         if (prefs.containsKey('jhankar_push_notification_button')) {
@@ -189,7 +190,7 @@ class Auth with ChangeNotifier {
       var responseData = json.decode(response.body.toString());
 
       if (responseData['status'] == "SUCCESS") {
-        this.login(email, password, context);
+        this.login(email, password, true, context);
       } else {
         throw HttpException(responseData['message']);
       }
