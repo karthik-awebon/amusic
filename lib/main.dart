@@ -28,6 +28,7 @@ import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/auth.dart';
+import 'screens/forget_password_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/video_categories_home.dart';
 import 'screens/video_category_home.dart';
@@ -63,16 +64,16 @@ class MyApp extends StatelessWidget {
                     ],
                     title: 'Jhankar Music',
                     theme: ThemeData(
-                      // This is the theme of your application.
-                      //
-                      // Try running your application with "flutter run". You'll see the
-                      // application has a blue toolbar. Then, without quitting the app, try
-                      // changing the primarySwatch below to Colors.green and then invoke
-                      // "hot reload" (press "r" in the console where you ran "flutter run",
-                      // or simply save your changes to "hot reload" in a Flutter IDE).
-                      // Notice that the counter didn't reset back to zero; the application
-                      // is not restarted.
-                      brightness: Brightness.dark,
+                        // This is the theme of your application.
+                        //
+                        // Try running your application with "flutter run". You'll see the
+                        // application has a blue toolbar. Then, without quitting the app, try
+                        // changing the primarySwatch below to Colors.green and then invoke
+                        // "hot reload" (press "r" in the console where you ran "flutter run",
+                        // or simply save your changes to "hot reload" in a Flutter IDE).
+                        // Notice that the counter didn't reset back to zero; the application
+                        // is not restarted.
+                        brightness: Brightness.dark,
                         primaryColor: Color.fromARGB(255, 255, 255, 255),
                         colorScheme: const ColorScheme(
                             brightness: Brightness.dark,
@@ -86,12 +87,12 @@ class MyApp extends StatelessWidget {
                             onBackground: Color.fromARGB(255, 52, 89, 131),
                             surface: Color.fromARGB(255, 255, 255, 255),
                             onSurface: Color.fromARGB(255, 255, 255, 255)),
-                      textTheme: const TextTheme(
-                        headline1: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600),
-                      ),
+                        textTheme: const TextTheme(
+                          headline1: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600),
+                        ),
                         bottomSheetTheme: const BottomSheetThemeData(
                             backgroundColor: Colors.white),
                         popupMenuTheme: const PopupMenuThemeData(
@@ -101,8 +102,7 @@ class MyApp extends StatelessWidget {
                             const FloatingActionButtonThemeData(
                                 foregroundColor: Colors.white,
                                 backgroundColor:
-                                    Color.fromARGB(255, 52, 89, 131))
-                    ),
+                                    Color.fromARGB(255, 52, 89, 131))),
                     //home: AudioPlayerActivity(token: "",),
                     home: auth.isAuth
                         ? Home()
@@ -140,7 +140,9 @@ class MyApp extends StatelessWidget {
                           VideoPlaylistHome(),
                       SongInfoScreen.routeName: (context) => SongInfoScreen(),
                       AudioPlayerSliderScreen.routeName: (context) =>
-                          AudioPlayerSliderScreen()
+                          AudioPlayerSliderScreen(),
+                      ForgetPasswordScreen.routeName: (context) =>
+                          ForgetPasswordScreen()
                     },
                   );
                 })));

@@ -68,7 +68,7 @@ class JhankarDrawer extends StatelessWidget {
                   ),
                   title: const Text('Logout'),
                   onTap: () {
-                    AuthApi.LogOut(
+                    AuthApi.logOut(
                             Provider.of<Auth>(context, listen: false).token)
                         .then((value) {
                       //if (value == 200 || value == 201) {

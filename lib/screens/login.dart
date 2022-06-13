@@ -1,4 +1,5 @@
 //import 'package:amusic_app/audio/AudioPlayerActivity.dart';
+import 'package:amusic_app/screens/forget_password_screen.dart';
 import 'package:amusic_app/screens/home.dart';
 import 'package:amusic_app/screens/register.dart';
 import 'package:flutter/material.dart';
@@ -265,7 +266,10 @@ class LoginpageState extends State<Loginpage> {
                         const Text('Remember me'),
                       ],
                     ),
-                    const Text('Forget Password'),
+                    InkWell(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(ForgetPasswordScreen.routeName),
+                        child: const Text('Forget Password')),
                   ],
                 ),
               ),

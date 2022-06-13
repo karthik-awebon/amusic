@@ -34,7 +34,7 @@ class AccountHome extends StatelessWidget {
                 if (snapshot.hasData) {
                   var userData = snapshot.data;
                   if (userData == "") {
-                    AuthApi.LogOut(Provider.of<Auth>(context, listen: false)
+                    AuthApi.logOut(Provider.of<Auth>(context, listen: false)
                             .token
                             .toString())
                         .then((value) {
