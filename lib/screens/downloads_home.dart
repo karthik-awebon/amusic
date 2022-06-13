@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../api/home_api.dart';
+import '../models/song.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/drawer.dart';
 
@@ -43,7 +44,13 @@ class DownloadsHome extends StatelessWidget {
                     future: HomeApi.getListCategotyForNewSongs(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
-                        return SongsList(songsList: snapshot.data);
+                        return SongsList(
+                            songsList: snapshot.data,
+                            popupMenus: const {
+                              'Favorites': SongOptions.Favorites,
+                              'Add to Queue': SongOptions.AddToQueue,
+                              'Share': SongOptions.Share,
+                            });
                       } else if (snapshot.hasError) {
                         return Text("errir");
                       } else {

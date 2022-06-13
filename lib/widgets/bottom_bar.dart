@@ -35,7 +35,7 @@ class JhankarBottomBar extends StatelessWidget {
         CustomNavigationBarItem(
           icon: Icon(Icons.download_outlined),
           title: Text(
-            'Download',
+            'Downloads',
             style: TextStyle(color: Colors.white),
           ),
         ),
