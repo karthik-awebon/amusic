@@ -38,6 +38,9 @@ class AccountHome extends StatelessWidget {
                             .token
                             .toString())
                         .then((value) {
+                      Provider.of<Auth>(context, listen: false)
+                          .audioPlayerWidget
+                          .stop();
                       //if (value == 200 || value == 201) {
                       Navigator.pushAndRemoveUntil(
                           context,

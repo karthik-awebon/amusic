@@ -85,9 +85,13 @@ class _MiniAudioPlayerState extends State<MiniAudioPlayer> {
                       }
                       Song previousSong = widget.songsList[updatedIndex - 1];
                       Provider.of<Auth>(context, listen: false)
-                          .setSong(previousSong);
-                      Navigator.of(context)
-                          .pushNamed(AudioPlayerSliderScreen.routeName);
+                          .setSong(previousSong); 
+                      Provider.of<Auth>(context, listen: false)
+                          .audioPlayerWidget
+                          .setUrl(previousSong.songFile);
+                      Provider.of<Auth>(context, listen: false)
+                          .audioPlayerWidget
+                          .play();                     
                     },
                     child: Icon(
                       Icons.skip_previous_sharp,
@@ -100,7 +104,7 @@ class _MiniAudioPlayerState extends State<MiniAudioPlayer> {
                           ? InkWell(
                               onTap: () {
                                 Provider.of<AudioPlayer>(context, listen: false)
-                                    .setIsPlaying(false);
+                                    .setIsPlaying(false, true);
                                 Provider.of<Auth>(context, listen: false)
                                     .audioPlayerWidget
                                     .pause();
@@ -114,7 +118,7 @@ class _MiniAudioPlayerState extends State<MiniAudioPlayer> {
                           : InkWell(
                               onTap: () {
                                 Provider.of<AudioPlayer>(context, listen: false)
-                                    .setIsPlaying(true);
+                                    .setIsPlaying(true, true);
                                 Provider.of<Auth>(context, listen: false)
                                     .audioPlayerWidget
                                     .play();
@@ -139,8 +143,12 @@ class _MiniAudioPlayerState extends State<MiniAudioPlayer> {
                       Song nextSong = widget.songsList[updatedIndex + 1];
                       Provider.of<Auth>(context, listen: false)
                           .setSong(nextSong);
-                      Navigator.of(context)
-                          .pushNamed(AudioPlayerSliderScreen.routeName);
+                      Provider.of<Auth>(context, listen: false)
+                          .audioPlayerWidget
+                          .setUrl(nextSong.songFile);
+                      Provider.of<Auth>(context, listen: false)
+                          .audioPlayerWidget
+                          .play();
                     },
                     child: Icon(
                       Icons.skip_next_sharp,

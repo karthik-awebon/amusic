@@ -7,8 +7,10 @@ class AudioPlayer with ChangeNotifier {
     return _isPlaying;
   }
 
-  void setIsPlaying(bool isPlaying) {
+  void setIsPlaying(bool isPlaying, bool isNotifyListeners) {
     _isPlaying = isPlaying;
-    notifyListeners();
+    if (isNotifyListeners) {
+      notifyListeners();
+    }
   }
 }

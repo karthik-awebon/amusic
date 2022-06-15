@@ -47,7 +47,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
         .indexWhere((Song songElement) => songElement.id == playingSong!.id);
     _audioPlayerWidget!.setUrl(playingSong!.songFile);
     _audioPlayerWidget!.play();
-    Provider.of<AudioPlayer>(context, listen: false).setIsPlaying(true);
+    Provider.of<AudioPlayer>(context, listen: false).setIsPlaying(true, false);
     return Column(
       children: [
         const Spacer(),
@@ -195,7 +195,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                     child: const Icon(Icons.play_arrow),
                     onPressed: () {
                       Provider.of<AudioPlayer>(context, listen: false)
-                          .setIsPlaying(true);
+                          .setIsPlaying(true, true);
                       _audioPlayerWidget!.play();
                     },
                   );
@@ -204,7 +204,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                     child: const Icon(Icons.pause),
                     onPressed: () {
                       Provider.of<AudioPlayer>(context, listen: false)
-                          .setIsPlaying(false);
+                          .setIsPlaying(false, true);
                       _audioPlayerWidget!.pause();
                     },
                   );

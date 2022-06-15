@@ -25,7 +25,7 @@ class JhankarDrawer extends StatelessWidget {
                 const DrawerHeader(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                    image: AssetImage("lib/img/backimg.jpg"),
+                    image: AssetImage("lib/img/back5img.jpeg"),
                     fit: BoxFit.fill,
                   )),
                   child: Text(''),
@@ -79,6 +79,9 @@ class JhankarDrawer extends StatelessWidget {
                     AuthApi.logOut(
                             Provider.of<Auth>(context, listen: false).token)
                         .then((value) {
+                      Provider.of<Auth>(context, listen: false)
+                          .audioPlayerWidget
+                          .stop();
                       //if (value == 200 || value == 201) {
                       Navigator.pushAndRemoveUntil(
                           context,
