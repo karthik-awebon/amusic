@@ -178,9 +178,9 @@ Future<Stream<File>> searchAudioFiles() async {
 
   final dartFile = Glob("**.mp3");
   //if (await getStoragePermission()) {
-  for (var entity in dartFile.listSync()) {
-    print(entity.path);
-  }
+  // for (var entity in dartFile.listSync()) {
+  //   print(entity.path);
+  // }
   //}
 
   return dartFile

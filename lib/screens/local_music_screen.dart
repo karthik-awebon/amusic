@@ -14,69 +14,75 @@ class LocalMusicScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    return Scaffold(
           appBar: JhankarAppBar(
-            title: Row(
-              children: const [
-                Icon(
-                  Icons.music_note_outlined,
-                  size: 35,
-                  color: Colors.white,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Local Music")
-              ],
-            ),
-            appBar: AppBar(),
-            widgets: <Widget>[],
-            bottom: const TabBar(
-              tabs: [
-                Tab(
-                  text: 'SONGS',
-                ),
-                Tab(
-                  text: 'ARTIST',
-                ),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            physics: const BouncingScrollPhysics(),
-            dragStartBehavior: DragStartBehavior.down,
-            children: [
-              Container(
-                height: double.maxFinite,
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("lib/img/back4img.jpg"),
-                        fit: BoxFit.fill)),
-                child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    child: Column(children: [
-                      FutureBuilder(
-                          future: searchAudioFiles(),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasData) {
-                              return SongsList(songsList: snapshot.data);
-                            } else if (snapshot.hasError) {
-                              return Text("Storage Error");
-                            } else {
-                              return Center(child: CircularProgressIndicator());
-                            }
-                          }),
-                    ])),
-              ),
-              Text('Storage Error')
-            ],
-          ),
-          drawer: JhankarDrawer(),
-          bottomNavigationBar: JhankarBottomBar()),
-    );
+          title: Text("Local Music"),
+          appBar: AppBar(),
+          widgets: <Widget>[],
+        ),
+        body: Container(
+          height: double.maxFinite,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("lib/img/back4img.jpg"), fit: BoxFit.fill)),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                DefaultTabController(
+                    length: 2, // length of tabs
+                    initialIndex: 0,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Container(
+                            color: Color.fromARGB(255, 194, 103, 233),
+                            child: TabBar(
+                              labelColor: Color.fromARGB(255, 52, 89, 131),
+                              unselectedLabelColor: Colors.white,
+                              indicatorColor: Color.fromARGB(255, 52, 89, 131),
+                              tabs: [
+                                Tab(text: 'SONGS'),
+                                Tab(text: 'ARTIST'),
+                              ],
+                            ),
+                          ),
+                          Container(
+                              height: 597, //height of TabBarView
+                              child: TabBarView(children: <Widget>[
+                                Container(
+                                  height: double.maxFinite,
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "lib/img/back4img.jpg"),
+                                          fit: BoxFit.fill)),
+                                  child: SingleChildScrollView(
+                                      physics: BouncingScrollPhysics(),
+                                      child: Column(children: [
+                                        FutureBuilder(
+                                            future: searchAudioFiles(),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snapshot) {
+                                              if (snapshot.hasData) {
+                                                return Text("Storage Error");
+                                              } else if (snapshot.hasError) {
+                                                return Text("Storage Error");
+                                              } else {
+                                                return Center(
+                                                    child:
+                                                        CircularProgressIndicator());
+                                              }
+                                            }),
+                                      ])),
+                                ),
+                                Text('Storage Error'),
+                              ]))
+                        ])),
+              ]),
+        ),
+        bottomNavigationBar: JhankarBottomBar());
+
   }
 }
