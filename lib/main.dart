@@ -64,45 +64,47 @@ class MyApp extends StatelessWidget {
                     ],
                     title: 'Jhankar Music',
                     theme: ThemeData(
-                        // This is the theme of your application.
-                        //
-                        // Try running your application with "flutter run". You'll see the
-                        // application has a blue toolbar. Then, without quitting the app, try
-                        // changing the primarySwatch below to Colors.green and then invoke
-                        // "hot reload" (press "r" in the console where you ran "flutter run",
-                        // or simply save your changes to "hot reload" in a Flutter IDE).
-                        // Notice that the counter didn't reset back to zero; the application
-                        // is not restarted.
-                        brightness: Brightness.dark,
-                        primaryColor: Color.fromARGB(255, 255, 255, 255),
-                        colorScheme: const ColorScheme(
-                            brightness: Brightness.dark,
-                            primary: Color.fromARGB(255, 255, 255, 255),
-                            onPrimary: Color.fromARGB(255, 255, 255, 255),
-                            secondary: Color.fromARGB(0, 0, 0, 0),
-                            onSecondary: Color.fromARGB(0, 0, 0, 0),
-                            error: Color.fromARGB(255, 255, 255, 255),
-                            onError: Color.fromARGB(255, 255, 255, 255),
-                            background: Color.fromARGB(255, 52, 89, 131),
-                            onBackground: Color.fromARGB(255, 52, 89, 131),
-                            surface: Color.fromARGB(255, 255, 255, 255),
-                            onSurface: Color.fromARGB(255, 255, 255, 255)),
-                        textTheme: const TextTheme(
-                          headline1: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        bottomSheetTheme: const BottomSheetThemeData(
-                            backgroundColor: Colors.white),
-                        popupMenuTheme: const PopupMenuThemeData(
+                      // This is the theme of your application.
+                      //
+                      // Try running your application with "flutter run". You'll see the
+                      // application has a blue toolbar. Then, without quitting the app, try
+                      // changing the primarySwatch below to Colors.green and then invoke
+                      // "hot reload" (press "r" in the console where you ran "flutter run",
+                      // or simply save your changes to "hot reload" in a Flutter IDE).
+                      // Notice that the counter didn't reset back to zero; the application
+                      // is not restarted.
+                      brightness: Brightness.dark,
+                      primaryColor: Color.fromARGB(255, 255, 255, 255),
+                      colorScheme: const ColorScheme(
+                          brightness: Brightness.dark,
+                          primary: Color.fromARGB(255, 255, 255, 255),
+                          onPrimary: Color.fromARGB(255, 255, 255, 255),
+                          secondary: Color.fromARGB(0, 0, 0, 0),
+                          onSecondary: Color.fromARGB(0, 0, 0, 0),
+                          error: Color.fromARGB(255, 255, 255, 255),
+                          onError: Color.fromARGB(255, 255, 255, 255),
+                          background: Color.fromARGB(255, 52, 89, 131),
+                          onBackground: Color.fromARGB(255, 52, 89, 131),
+                          surface: Color.fromARGB(255, 255, 255, 255),
+                          onSurface: Color.fromARGB(255, 255, 255, 255)),
+                      textTheme: const TextTheme(
+                        headline1: TextStyle(
+                            fontSize: 20,
                             color: Colors.white,
-                            textStyle: TextStyle(color: Colors.black)),
-                        floatingActionButtonTheme:
-                            const FloatingActionButtonThemeData(
-                                foregroundColor: Colors.white,
-                                backgroundColor:
-                                    Color.fromARGB(255, 52, 89, 131))),
+                            fontWeight: FontWeight.w600),
+                      ),
+                      bottomSheetTheme: const BottomSheetThemeData(
+                          backgroundColor: Colors.white),
+                      popupMenuTheme: const PopupMenuThemeData(
+                          color: Colors.white,
+                          textStyle: TextStyle(color: Colors.black)),
+                      floatingActionButtonTheme:
+                          const FloatingActionButtonThemeData(
+                              foregroundColor: Colors.white,
+                              backgroundColor:
+                                  Color.fromARGB(255, 52, 89, 131)),
+                      canvasColor: Colors.white,
+                    ),
                     //home: AudioPlayerActivity(token: "",),
                     home: auth.isAuth
                         ? Home()

@@ -100,8 +100,7 @@ class _AudioPlayerSliderScreenState extends State<AudioPlayerSliderScreen> {
                                     },
                                   ),
                                   items: [
-                                    AudioPlayerScreen(
-                                                updateSong: setSong),
+                                    AudioPlayerScreen(updateSong: setSong),
                                     Consumer<Auth>(
                                         builder: (ctx, auth, _) => SongsList(
                                             songsList: auth.songsList))

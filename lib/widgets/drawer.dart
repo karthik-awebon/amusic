@@ -8,6 +8,8 @@ import '../provider/auth.dart';
 import '../screens/login.dart';
 
 class JhankarDrawer extends StatelessWidget {
+  const JhankarDrawer({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -29,11 +31,14 @@ class JhankarDrawer extends StatelessWidget {
                   child: Text(''),
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.message,
                     color: Colors.black,
                   ),
-                  title: const Text('About us'),
+                  title: const Text(
+                    'About us',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
                   onTap: () async {
                     await _launchURL(urlsData['about']);
                     Navigator.pop(context);
@@ -44,29 +49,32 @@ class JhankarDrawer extends StatelessWidget {
                     Icons.star_border_outlined,
                     color: Colors.black,
                   ),
-                  title: const Text('Privacy Policy'),
+                  title: const Text('Privacy Policy',
+                      style: TextStyle(fontSize: 15, color: Colors.black)),
                   onTap: () async {
                     await _launchURL(urlsData['policy']);
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.info,
                     color: Colors.black,
                   ),
-                  title: const Text('Term & Conditions'),
+                  title: const Text('Term & Conditions',
+                      style: TextStyle(fontSize: 15, color: Colors.black)),
                   onTap: () async {
                     await _launchURL(urlsData['term']);
                     Navigator.pop(context);
                   },
                 ),
                 ListTile(
-                  leading: Icon(
+                  leading: const Icon(
                     Icons.logout,
                     color: Colors.black,
                   ),
-                  title: const Text('Logout'),
+                  title: const Text('Logout',
+                      style: TextStyle(fontSize: 15, color: Colors.black)),
                   onTap: () {
                     AuthApi.logOut(
                             Provider.of<Auth>(context, listen: false).token)
@@ -83,9 +91,9 @@ class JhankarDrawer extends StatelessWidget {
               ],
             );
           } else if (snapshot.hasError) {
-            return Text("error");
+            return const Text("error");
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),
