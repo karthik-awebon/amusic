@@ -7,6 +7,7 @@ import 'package:amusic_app/screens/favorites_screen.dart';
 import 'package:amusic_app/screens/home.dart';
 import 'package:amusic_app/screens/local_music_screen.dart';
 import 'package:amusic_app/screens/login.dart';
+import 'package:amusic_app/screens/path_provider_test.dart';
 import 'package:amusic_app/screens/register.dart';
 import 'package:amusic_app/screens/account_home.dart';
 import 'package:amusic_app/screens/categories_home.dart';
@@ -144,7 +145,9 @@ class MyApp extends StatelessWidget {
                       AudioPlayerSliderScreen.routeName: (context) =>
                           AudioPlayerSliderScreen(),
                       ForgetPasswordScreen.routeName: (context) =>
-                          ForgetPasswordScreen()
+                          ForgetPasswordScreen(),
+                      PathProviderTest.routeName: ((context) =>
+                          PathProviderTest())
                     },
                   );
                 })));

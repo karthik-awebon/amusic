@@ -4,6 +4,7 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+//import 'package:flutter_file_manager/flutter_file_manager.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:glob/glob.dart';
 import 'package:glob/list_local_fs.dart';
@@ -164,30 +165,65 @@ Directory findRoot(FileSystemEntity entity) {
   return findRoot(parent);
 }
 
+Future<Stream<File>> searchAudioFiles() async {
+  await getStoragePermission();
+  final Directory root = findRoot(await getApplicationDocumentsDirectory());
+
+  final Directory _appDocDir = await getApplicationDocumentsDirectory();
+  //App Document Directory + folder name
+  final Directory _appDocDirFolder = Directory('${_appDocDir.path}/');
+
+  if (await _appDocDirFolder.exists()) {
+    //if folder already exists return path
+    print(_appDocDirFolder.path);
+  } else {
+    //if folder not exists create folder and then return its path
+    final Directory _appDocDirNewFolder =
+        await _appDocDirFolder.create(recursive: true);
+    print(_appDocDirNewFolder.path);
+  }
+
+  // final dartFile = Glob("**.mp3");
+
+  // // Recursively list all Dart files in the current directory.
+  // for (var entity in dartFile.listSync()) {
+  //   print(entity.path);
+  // }
+
+  return Glob("**.mp3")
+      .list(root: root.path)
+      .where((entity) => entity is File)
+      .cast<File>();
+}
+
 // Future<Stream<File>> searchAudioFiles() async {
+//   await getStoragePermission();
 //   final Directory root = findRoot(await getApplicationDocumentsDirectory());
 
-//   return Glob("**.mp3")
+//   final dartFile = Glob("**.mp3");
+//   //if (await getStoragePermission()) {
+//   // for (var entity in dartFile.listSync()) {
+//   //   print(entity.path);
+//   // }
+//   //}
+
+//   return dartFile
 //       .list(root: root.path)
 //       .where((entity) => entity is File)
 //       .cast<File>();
 // }
 
-Future<Stream<File>> searchAudioFiles() async {
-  final Directory root = findRoot(await getApplicationDocumentsDirectory());
-
-  final dartFile = Glob("**.mp3");
-  //if (await getStoragePermission()) {
-  // for (var entity in dartFile.listSync()) {
-  //   print(entity.path);
-  // }
-  //}
-
-  return dartFile
-      .list(root: root.path)
-      .where((entity) => entity is File)
-      .cast<File>();
-}
+// void getAudioFiles() async {
+//   //asyn function to get list of files
+//   List<StorageInfo> storageInfo = await PathProviderEx.getStorageInfo();
+//   var root = storageInfo[0]
+//       .rootDir; //storageInfo[1] for SD card, geting the root directory
+//   var fm = FileManager(root: Directory(root)); //
+//   var files = await fm.filesTree(
+//       excludedPaths: ["/storage/emulated/0/Android"],
+//       extensions: ["mp3"] //optional, to filter files, list only mp3 files
+//       );
+// }
 
 Future<bool> getStoragePermission() async {
   if (await Permission.storage.request().isGranted) {

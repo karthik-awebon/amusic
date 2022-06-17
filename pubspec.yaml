@@ -88,6 +88,7 @@ flutter:
     - lib/img/back3img.jpg
     - lib/img/backimg.jpg
     - lib/img/back4img.jpg
+    - lib/img/back5img.jpeg
     - lib/img/back.jpeg
     - lib/img/logo.png
    #assets:
