@@ -1,13 +1,11 @@
-// ignore_for_file: unused_import
+// @dart=2.9
 
 import 'package:amusic_app/provider/audioplayer.dart';
-import 'package:amusic_app/screens/audio_player_screen.dart';
 import 'package:amusic_app/screens/audio_player_slider_screen.dart';
 import 'package:amusic_app/screens/favorites_screen.dart';
 import 'package:amusic_app/screens/home.dart';
 import 'package:amusic_app/screens/local_music_screen.dart';
 import 'package:amusic_app/screens/login.dart';
-import 'package:amusic_app/screens/path_provider_test.dart';
 import 'package:amusic_app/screens/register.dart';
 import 'package:amusic_app/screens/account_home.dart';
 import 'package:amusic_app/screens/categories_home.dart';
@@ -20,7 +18,6 @@ import 'package:amusic_app/screens/select_package_screen.dart';
 import 'package:amusic_app/screens/song_info_screen.dart';
 import 'package:amusic_app/screens/video_player_screen.dart';
 import 'package:amusic_app/screens/video_playlists_home.dart';
-import 'package:amusic_app/widgets/video_player_widget.dart';
 import 'package:amusic_app/screens/videos_home.dart';
 import 'package:amusic_app/widgets/logo.dart';
 import 'package:flutter/material.dart';
@@ -145,9 +142,7 @@ class MyApp extends StatelessWidget {
                       AudioPlayerSliderScreen.routeName: (context) =>
                           AudioPlayerSliderScreen(),
                       ForgetPasswordScreen.routeName: (context) =>
-                          ForgetPasswordScreen(),
-                      PathProviderTest.routeName: ((context) =>
-                          PathProviderTest())
+                          ForgetPasswordScreen()
                     },
                   );
                 })));
@@ -155,7 +150,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect

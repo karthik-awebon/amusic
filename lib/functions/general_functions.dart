@@ -4,6 +4,7 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_query/flutter_audio_query.dart';
 //import 'package:flutter_file_manager/flutter_file_manager.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:glob/glob.dart';
@@ -165,23 +166,64 @@ Directory findRoot(FileSystemEntity entity) {
   return findRoot(parent);
 }
 
-Future<Stream<File>> searchAudioFiles() async {
-  await getStoragePermission();
+Future<List<Song>> searchAudioFiles() async {
+  //await getStoragePermission();
+  List<Song> songsList = [];
+  final FlutterAudioQuery audioQuery = FlutterAudioQuery();
+  List<SongInfo> mobileSongList = await audioQuery.getSongs();
+  mobileSongList.forEach((mobileSong) {
+    List<MusicArtist> musicArtistList = [];
+
+    MusicArtist musicArtist = MusicArtist(
+        id: int.parse(mobileSong.artistId),
+        name: mobileSong.artist,
+        imgBanner: '');
+
+    musicArtistList.add(musicArtist);
+
+    Song song = Song(
+        id: 0,
+        name: mobileSong.title,
+        imgThumb: "$API_BASE_URL/file?d=music_song%2Fimg_thumb",
+        songFile: mobileSong.filePath,
+        releaseDate: '',
+        musicArtists: musicArtistList);
+    songsList.add(song); //print all album property values
+  });
+  return songsList;
+}
+
+Future<List<MusicArtist>> searchAudioArtist() async {
+  List<MusicArtist> artistList = [];
+  final FlutterAudioQuery audioQuery = FlutterAudioQuery();
+  List<ArtistInfo> mobileArtistList = await audioQuery.getArtists();
+  mobileArtistList.forEach((artist) {
+    MusicArtist musicArtist = MusicArtist(
+        id: int.parse(artist.id),
+        name: artist.name,
+        imgBanner: "$API_BASE_URL/file?d=music_song%2Fimg_thumb",
+        noOfSongs: int.parse(artist.numberOfTracks));
+    artistList.add(musicArtist);
+  });
+  return artistList;
+}
+
+Future<List> searchAudioFiles1() async {
   final Directory root = findRoot(await getApplicationDocumentsDirectory());
 
-  final Directory _appDocDir = await getApplicationDocumentsDirectory();
-  //App Document Directory + folder name
-  final Directory _appDocDirFolder = Directory('${_appDocDir.path}/');
+  // final Directory _appDocDir = await getApplicationDocumentsDirectory();
+  // //App Document Directory + folder name
+  // final Directory _appDocDirFolder = Directory('${_appDocDir.path}/');
 
-  if (await _appDocDirFolder.exists()) {
-    //if folder already exists return path
-    print(_appDocDirFolder.path);
-  } else {
-    //if folder not exists create folder and then return its path
-    final Directory _appDocDirNewFolder =
-        await _appDocDirFolder.create(recursive: true);
-    print(_appDocDirNewFolder.path);
-  }
+  // if (await _appDocDirFolder.exists()) {
+  //   //if folder already exists return path
+  //   print(_appDocDirFolder.path);
+  // } else {
+  //   //if folder not exists create folder and then return its path
+  //   final Directory _appDocDirNewFolder =
+  //       await _appDocDirFolder.create(recursive: true);
+  //   print(_appDocDirNewFolder.path);
+  // }
 
   // final dartFile = Glob("**.mp3");
 
@@ -190,10 +232,22 @@ Future<Stream<File>> searchAudioFiles() async {
   //   print(entity.path);
   // }
 
-  return Glob("**.mp3")
-      .list(root: root.path)
-      .where((entity) => entity is File)
-      .cast<File>();
+  final Directory? root1 = await getExternalStorageDirectory();
+  // String newPath = ((root != null) ? root.path : '');
+  String newPath =
+      ((root1 != null) ? root1.path : '') + "/Music/awebon/downloads";
+  Directory newDirectory = Directory(newPath);
+  if (await newDirectory.exists()) {
+    for (var entity in newDirectory.listSync()) {
+      print(entity.path);
+    }
+  }
+  return newDirectory.listSync();
+
+  // return Glob("**.mp3")
+  //     .list(root: root.path)
+  //     .where((entity) => entity is File)
+  //     .cast<File>();
 }
 
 // Future<Stream<File>> searchAudioFiles() async {
@@ -257,7 +311,7 @@ Future<bool> _requestPermission(Permission permission) async {
   return false;
 }
 
-ReceivePort _port = ReceivePort();
+//ReceivePort _port = ReceivePort();
 void downloadCallback(String id, DownloadTaskStatus status, int progress) {
   final SendPort send =
       IsolateNameServer.lookupPortByName('downloader_send_port')!;
@@ -355,19 +409,21 @@ Future<void> downloadMusic(String url, context) async {
   // }
   // return false;
 }
-// Future<void> downloadMusic(String url) async {
+// Future<void> downloadMusic(String url, context) async {
+//   await getStoragePermission();
 //   WidgetsFlutterBinding.ensureInitialized();
 //   await FlutterDownloader.initialize(
 //       debug: true // optional: set false to disable printing logs to console
 //       );
+//   FlutterDownloader.registerCallback(downloadCallback);
 //   final Directory? root = await getExternalStorageDirectory();
-//   String newPath = ((root != null) ? root?.path : '')!;
-//   // String newPath =
-//   //     ((root == null) ? root?.path : '')! + "Music/awebon/downloads";
-//   // Directory newDirectory = Directory(newPath);
-//   // if (!await newDirectory.exists()) {
-//   //   await newDirectory.create(recursive: true);
-//   // }
+//   // String newPath = ((root != null) ? root.path : '');
+//   String newPath =
+//       ((root != null) ? root.path : '') + "/Music/awebon/downloads";
+//   Directory newDirectory = Directory(newPath);
+//   if (!await newDirectory.exists()) {
+//     await newDirectory.create(recursive: true);
+//   }
 //   final taskId = await FlutterDownloader.enqueue(
 //     url: url,
 //     savedDir: newPath,
@@ -378,3 +434,26 @@ Future<void> downloadMusic(String url, context) async {
 //   );
 // }
 
+Future<void> deleteMusicFile(context) async {
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text('Alert'),
+      content: const Text('Do you want to delete this file?'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'Cancel'),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Permission Denied')));
+            return Navigator.pop(context, 'Storage');
+          },
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
+}

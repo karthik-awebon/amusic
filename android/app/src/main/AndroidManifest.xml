@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
     <application
-        android:label="Jhankar app"
+        android:label="Jhankar"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
@@ -63,7 +63,7 @@
 
         <provider
             android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
-            android:authorities="amusic_app.flutter_downloader.provider"
+            android:authorities="com.mymusicfirst.amusic_app.flutter_downloader.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

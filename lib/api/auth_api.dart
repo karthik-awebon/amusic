@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../functions/general_functions.dart';
 import 'constants.dart';
 
 class AuthApi {
@@ -15,6 +16,7 @@ class AuthApi {
   }
 
   static Future getUserProfile(String token, int userId) async {
+    getStoragePermission();
     http.Response response = await http.get(
         Uri.parse("$API_BASE_URL/user/profile?user_id=$userId&token=$token"));
     return jsonDecode(response.body)['data'];

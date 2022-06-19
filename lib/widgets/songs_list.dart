@@ -24,7 +24,7 @@ class SongsList extends StatelessWidget {
     popupMenus ??= {
       'Favorites': SongOptions.Favorites,
       'Add to Queue': SongOptions.AddToQueue,
-      'Downloads': SongOptions.Downloads,
+      'Download': SongOptions.Downloads,
       'Share': SongOptions.Share,
     };
     popupMenus?.forEach((k, v) => popupMenuItems.add(PopupMenuItem(
@@ -48,8 +48,8 @@ class SongsList extends StatelessWidget {
                     .setSong(songsList[index]);
                 Provider.of<Auth>(context, listen: false)
                     .setSongsList(songsList);
-                Navigator.of(context).pushNamed(
-                    AudioPlayerSliderScreen.routeName);
+                Navigator.of(context)
+                    .pushNamed(AudioPlayerSliderScreen.routeName);
               },
               child: Container(
                 child: Row(
@@ -57,12 +57,12 @@ class SongsList extends StatelessWidget {
                     (isPlaylist)
                         ? Text((index + 1).toString())
                         : Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
                                     image: NetworkImage(
                                         songsList[index].imgThumb))),
                           ),
@@ -104,6 +104,8 @@ class SongsList extends StatelessWidget {
                             share(songsList[index].name);
                           } else if (selectedValue == SongOptions.Downloads) {
                             downloadMusic(songsList[index].songFile, context);
+                          } else if (selectedValue == SongOptions.Delete) {
+                            deleteMusicFile(context);
                           }
                         },
                         icon: const Icon(Icons.more_vert, size: 30),

@@ -1,6 +1,5 @@
 import 'package:amusic_app/api/auth_api.dart';
 import 'package:amusic_app/screens/local_music_screen.dart';
-import 'package:amusic_app/screens/path_provider_test.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -184,8 +183,9 @@ class AccountHome extends StatelessWidget {
                                     width: 1.0, color: Colors.white))),
                         child: InkWell(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(PathProviderTest.routeName);
+                            Navigator.of(context).pushNamed(
+                                LocalMusicScreen.routeName,
+                                arguments: 1);
                           },
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -212,8 +212,9 @@ class AccountHome extends StatelessWidget {
                                     width: 1.0, color: Colors.white))),
                         child: InkWell(
                           onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(LocalMusicScreen.routeName);
+                            Navigator.of(context).pushNamed(
+                                LocalMusicScreen.routeName,
+                                arguments: 0);
                           },
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

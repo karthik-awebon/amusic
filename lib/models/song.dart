@@ -31,18 +31,20 @@ class MusicArtist {
   final int id;
   final String name;
   final String imgBanner;
+  int noOfSongs;
 
-  MusicArtist({
-    required this.id,
-    required this.name,
-    required this.imgBanner,
-  });
+  MusicArtist(
+      {required this.id,
+      required this.name,
+      required this.imgBanner,
+      this.noOfSongs = 0});
 
   Map<String, dynamic> toJson() {
     return {
       "id": this.id,
       "name": this.name,
       "imgBanner": this.imgBanner,
+      "noOfSongs": this.noOfSongs,
     };
   }
 }
@@ -61,4 +63,5 @@ enum SongOptions {
   ClearAll,
   UnFavorite,
   Volume,
+  Delete,
 }
