@@ -71,7 +71,7 @@ class HomeApi {
     return constructSongsList(jsonDecode(response.body)['data']);
   }
 
-  static Future homeData() async {
+  static Future<Map<String, Object>> homeData() async {
     http.Response response =
         await http.get(Uri.parse("$API_BASE_URL/home/statistics"));
     var decodedData = jsonDecode(response.body);
