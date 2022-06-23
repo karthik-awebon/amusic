@@ -105,14 +105,11 @@ class MyApp extends StatelessWidget {
                     ),
                     //home: AudioPlayerActivity(token: "",),
                     home: auth.isAuth
-                        ? Home()
+                        ? SplashScreen()
                         : FutureBuilder(
                             future: auth.tryAutoLogin(),
                             builder: (ctx, authResultSnapshot) =>
-                                authResultSnapshot.connectionState ==
-                                        ConnectionState.waiting
-                                    ? SplashScreen()
-                                    : const MyHomePage(title: 'Jhankar'),
+                                SplashScreen(),
                           ),
                     routes: {
                       Home.routeName: (context) => Home(),

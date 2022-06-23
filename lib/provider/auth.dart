@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:amusic_app/api/general_api.dart';
@@ -219,7 +220,7 @@ class Auth with ChangeNotifier {
     if (prefs.containsKey('favorite_songs')) {
       _favoriteSongsList = await GeneralApi.getFavoriteSongs();
     }
-
+   
     return true;
   }
 }

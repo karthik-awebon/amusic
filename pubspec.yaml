@@ -92,6 +92,7 @@ flutter:
     - lib/img/back5img.jpeg
     - lib/img/back.jpeg
     - lib/img/logo.png
+    - lib/img/music_logo.png
    #assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

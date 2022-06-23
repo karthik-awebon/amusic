@@ -26,10 +26,10 @@ class AuthApi {
     http.Response response =
         await http.get(Uri.parse("$API_BASE_URL/user/logout?token=$token"));
     var responseData = jsonDecode(response.body);
-    if (responseData['status'] == 'SUCCESS') {
+    //if (responseData['status'] == 'SUCCESS') {
       final prefs = await SharedPreferences.getInstance();
       prefs.remove('jhankar_token');
-    }
+    // }
   }
 
   static Future forgetPassword(email, context) async {
