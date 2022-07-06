@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
                 publicKey: 'test_public_key_dc74e0fd57cb46cd93832aee0a507256',
                 builder: (context, navigatorKey) {
                   return MaterialApp(
+                    debugShowCheckedModeBanner: false,
                     navigatorKey: navigatorKey,
                     supportedLocales: const [
                       Locale('en', 'US'),
