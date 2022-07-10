@@ -103,7 +103,7 @@ class SongsList extends StatelessWidget {
                           } else if (selectedValue == SongOptions.Share) {
                             share(songsList[index].name);
                           } else if (selectedValue == SongOptions.Downloads) {
-                            downloadMusic(songsList[index].songFile, context);
+                            downloadMusic(songsList[index].songFile, songsList[index], context);
                           } else if (selectedValue == SongOptions.Delete) {
                             deleteMusicFile(context);
                           }

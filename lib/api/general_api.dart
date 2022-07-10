@@ -39,6 +39,16 @@ class GeneralApi {
     return [];
   }
 
+  static Future<List<Song>> getDownloadSongs() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('download_songs')) {
+      final downloadSongsList =
+          json.decode(prefs.getString('download_songs').toString());
+      return constructSongsList(downloadSongsList);
+    }
+    return [];
+  }
+
   static List<Song> constructSongsList(responseData) {
     List<Song> songsList = [];
     for (var i = 0; i < responseData.length; i++) {

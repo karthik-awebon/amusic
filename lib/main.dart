@@ -22,6 +22,7 @@ import 'package:amusic_app/screens/videos_home.dart';
 import 'package:amusic_app/widgets/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,11 @@ import 'screens/splash_screen.dart';
 import 'screens/video_categories_home.dart';
 import 'screens/video_category_home.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(
+      debug: true // optional: set false to disable printing logs to console
+      );
   runApp(MyApp());
 }
 

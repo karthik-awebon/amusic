@@ -3,6 +3,7 @@ import 'package:amusic_app/widgets/songs_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../api/general_api.dart';
 import '../api/home_api.dart';
 import '../models/song.dart';
 import '../widgets/bottom_bar.dart';
@@ -41,7 +42,7 @@ class DownloadsHome extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               child: Column(children: [
                 FutureBuilder(
-                    future: HomeApi.getListCategotyForNewSongs(),
+                    future: GeneralApi.getDownloadSongs(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData) {
                         return SongsList(

@@ -108,7 +108,7 @@ class _AudioPlayerScreenState extends State<AudioPlayerScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    downloadMusic(playingSong.songFile, context);
+                    downloadMusic(playingSong.songFile, playingSong ,context);
                   },
                   child: const Icon(
                     Icons.download_sharp,
