@@ -51,6 +51,7 @@ class DownloadsHome extends StatelessWidget {
                               'Favorites': SongOptions.Favorites,
                               'Add to Queue': SongOptions.AddToQueue,
                               'Share': SongOptions.Share,
+                              'Delete': SongOptions.Delete,
                             });
                       } else if (snapshot.hasError) {
                         return Text("errir");

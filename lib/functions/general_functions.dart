@@ -11,10 +11,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:path/path.dart';
 
 import '../api/constants.dart';
 import '../models/song.dart';
 import '../models/video.dart';
+import '../screens/downloads_home.dart';
 import '../screens/select_package_screen.dart';
 import '../screens/video_player_screen.dart';
 
@@ -332,56 +334,68 @@ Future<void> downloadMusic(String url, Song song, context) async {
             Directory directory;
             try {
               //if (Platform.isAndroid) {
-                if (await _requestPermission(Permission.storage) &&
-                    // access media location needed for android 10/Q
-                    await _requestPermission(Permission.accessMediaLocation) &&
-                    // manage external storage needed for android 11/R
-                    await _requestPermission(Permission.manageExternalStorage)) {
-                  directory = (await getExternalStorageDirectory())!;
-                  String newPath = "";
-                  List<String> paths = directory.path.split("/");
-                  for (int x = 1; x < paths.length; x++) {
-                    String folder = paths[x];
-                    if (folder != "Android") {
-                      newPath += "/" + folder;
-                    } else {
-                      break;
-                    }
+              if (await _requestPermission(Permission.storage) &&
+                  // access media location needed for android 10/Q
+                  await _requestPermission(Permission.accessMediaLocation) &&
+                  // manage external storage needed for android 11/R
+                  await _requestPermission(Permission.manageExternalStorage)) {
+                directory = (await getExternalStorageDirectory())!;
+                String newPath = "";
+                List<String> paths = directory.path.split("/");
+                for (int x = 1; x < paths.length; x++) {
+                  String folder = paths[x];
+                  if (folder != "Android") {
+                    newPath += "/" + folder;
+                  } else {
+                    break;
                   }
-                  newPath = newPath + "/awebon";
-                  directory = Directory(newPath);
+                }
+                newPath = newPath + "/awebon";
+                directory = Directory(newPath);
 
-              if (!await directory.exists()) {
-                await directory.create(recursive: true);
-              }
-              if (await directory.exists()) {
-                FlutterDownloader.registerCallback(downloadCallback);
-                final taskId = await FlutterDownloader.enqueue(
-                  url: url,
-                  savedDir: directory.path,
-                  showNotification:
-                      true, // show download progress in status bar (for Android)
-                  openFileFromNotification:
-                      true, // click on notification to open downloaded file (for Android)
-                );
-                final prefs = await SharedPreferences.getInstance();
-                if (prefs.containsKey('download_songs')) {
-                  final downloadSongsList =
-                      json.decode(prefs.getString('download_songs').toString());
-                  var existingSong = downloadSongsList
-                      .firstWhere((element) => element['id'] == song.id, orElse: () => null);
-                  if (existingSong == null) {
-                    downloadSongsList.add(song);
-                    prefs.setString('download_songs', json.encode(downloadSongsList));
+                if (!await directory.exists()) {
+                  await directory.create(recursive: true);
+                }
+                if (await directory.exists()) {
+                  FlutterDownloader.registerCallback(downloadCallback);
+                  final taskId = await FlutterDownloader.enqueue(
+                    url: url,
+                    savedDir: directory.path,
+                    showNotification:
+                        true, // show download progress in status bar (for Android)
+                    openFileFromNotification:
+                        true, // click on notification to open downloaded file (for Android)
+                  );
+
+                  final File _file = File(url);
+                  final _filename = basename(_file.path);
+                  Song newSong = Song(
+                      id: song.id,
+                      name: song.name,
+                      imgThumb: song.imgThumb,
+                      songFile: directory.path + '/' + _filename,
+                      releaseDate: song.releaseDate,
+                      musicArtists: song.musicArtists);
+                  final prefs = await SharedPreferences.getInstance();
+                  if (prefs.containsKey('download_songs')) {
+                    final downloadSongsList = json
+                        .decode(prefs.getString('download_songs').toString());
+                    var existingSong = downloadSongsList.firstWhere(
+                        (element) => element['id'] == newSong.id,
+                        orElse: () => null);
+                    if (existingSong == null) {
+                      downloadSongsList.add(newSong);
+                      prefs.setString(
+                          'download_songs', json.encode(downloadSongsList));
+                    }
+                  } else {
+                    prefs.setString('download_songs', json.encode([newSong]));
                   }
-                } else {
-                  prefs.setString('download_songs', json.encode([song]));
                 }
-                }
+              }
+            } catch (e) {
+              print(e);
             }
-          } catch (e) {
-            print(e);
-          }
             return Navigator.pop(context, 'Cancel');
           },
           child: const Text('OK'),
@@ -483,7 +497,7 @@ Future<void> downloadMusic(String url, Song song, context) async {
 //   );
 // }
 
-Future<void> deleteMusicFile(context) async {
+Future<void> deleteMusicFile(Song song, context) async {
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
@@ -495,9 +509,16 @@ Future<void> deleteMusicFile(context) async {
           child: const Text('Cancel'),
         ),
         TextButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Permission Denied')));
+          onPressed: () async {
+            final prefs = await SharedPreferences.getInstance();
+            final downloadSongsList =
+                json.decode(prefs.getString('download_songs').toString());
+            var existingIndex = downloadSongsList
+                .indexWhere((element) => element['id'] == song.id);
+            if (existingIndex != -1) {
+              downloadSongsList.removeAt(existingIndex);
+              prefs.setString('download_songs', json.encode(downloadSongsList));
+            }            
             return Navigator.pop(context, 'Storage');
           },
           child: const Text('OK'),

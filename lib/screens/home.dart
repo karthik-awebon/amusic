@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
                                       );
                                     },
                                   ),
-                                  items: banners!
+                                  items: banners
                                       .map<Widget>((item) => InkWell(
                                           onTap: () {
                                             Navigator.of(context).pushNamed(
