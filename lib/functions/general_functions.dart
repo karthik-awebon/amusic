@@ -366,30 +366,36 @@ Future<void> downloadMusic(String url, Song song, context) async {
                     openFileFromNotification:
                         true, // click on notification to open downloaded file (for Android)
                   );
-
-                  final File _file = File(url);
-                  final _filename = basename(_file.path);
-                  Song newSong = Song(
-                      id: song.id,
-                      name: song.name,
-                      imgThumb: song.imgThumb,
-                      songFile: directory.path + '/' + _filename,
-                      releaseDate: song.releaseDate,
-                      musicArtists: song.musicArtists);
-                  final prefs = await SharedPreferences.getInstance();
-                  if (prefs.containsKey('download_songs')) {
-                    final downloadSongsList = json
-                        .decode(prefs.getString('download_songs').toString());
-                    var existingSong = downloadSongsList.firstWhere(
-                        (element) => element['id'] == newSong.id,
-                        orElse: () => null);
-                    if (existingSong == null) {
-                      downloadSongsList.add(newSong);
-                      prefs.setString(
-                          'download_songs', json.encode(downloadSongsList));
+                  final tasks = await FlutterDownloader.loadTasks();
+                  final task =
+                      tasks?.firstWhere((task) => task.taskId == taskId);
+                  if (task!.status != null &&
+                      task.status == DownloadTaskStatus.complete &&
+                      task.taskId != null) {
+                    final File _file = File(url);
+                    final _filename = basename(_file.path);
+                    Song newSong = Song(
+                        id: song.id,
+                        name: song.name,
+                        imgThumb: song.imgThumb,
+                        songFile: directory.path + '/' + _filename,
+                        releaseDate: song.releaseDate,
+                        musicArtists: song.musicArtists);
+                    final prefs = await SharedPreferences.getInstance();
+                    if (prefs.containsKey('download_songs')) {
+                      final downloadSongsList = json
+                          .decode(prefs.getString('download_songs').toString());
+                      var existingSong = downloadSongsList.firstWhere(
+                          (element) => element['id'] == newSong.id,
+                          orElse: () => null);
+                      if (existingSong == null) {
+                        downloadSongsList.add(newSong);
+                        prefs.setString(
+                            'download_songs', json.encode(downloadSongsList));
+                      }
+                    } else {
+                      prefs.setString('download_songs', json.encode([newSong]));
                     }
-                  } else {
-                    prefs.setString('download_songs', json.encode([newSong]));
                   }
                 }
               }
@@ -517,9 +523,11 @@ Future<void> deleteMusicFile(Song song, context) async {
                 .indexWhere((element) => element['id'] == song.id);
             if (existingIndex != -1) {
               downloadSongsList.removeAt(existingIndex);
+              final File _file = File(song.songFile);
+              await _file.delete();
               prefs.setString('download_songs', json.encode(downloadSongsList));
-            }            
-            return Navigator.pop(context, 'Storage');
+            }
+            Navigator.of(context).pushNamed(DownloadsHome.routeName);
           },
           child: const Text('OK'),
         ),
