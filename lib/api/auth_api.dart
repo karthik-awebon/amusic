@@ -49,4 +49,9 @@ class AuthApi {
           .showSnackBar(SnackBar(content: Text(error.toString())));
     }
   }
+
+  static Future registerDevice(token, gcmId, type) async {
+    http.Response response = await http.get(Uri.parse(
+        "$API_BASE_URL/device/index?token=$token&gcm_id=$gcmId&type=$type"));
+  }
 }

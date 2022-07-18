@@ -20,9 +20,11 @@ import 'package:amusic_app/screens/video_player_screen.dart';
 import 'package:amusic_app/screens/video_playlists_home.dart';
 import 'package:amusic_app/screens/videos_home.dart';
 import 'package:amusic_app/widgets/logo.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -32,11 +34,50 @@ import 'screens/splash_screen.dart';
 import 'screens/video_categories_home.dart';
 import 'screens/video_category_home.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDownloader.initialize(
       debug: true // optional: set false to disable printing logs to console
       );
+  await Firebase.initializeApp(
+    name: "Jhankar Music",
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+//   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+//     RemoteNotification notification = message.notification;
+//     AndroidNotification android = message.notification?.android;
+
+//     // If `onMessage` is triggered with a notification, construct our own
+//     // local notification to show to users using the created channel.
+//     if (notification != null && android != null) {
+//       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+//           FlutterLocalNotificationsPlugin();
+//       const AndroidInitializationSettings initializationSettingsAndroid =
+//           AndroidInitializationSettings('app_icon');
+//           final InitializationSettings initializationSettings = InitializationSettings(
+//     android: initializationSettingsAndroid,
+//     iOS: initializationSettingsIOS,
+//     macOS: initializationSettingsMacOS);
+// await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+//     onSelectNotification: selectNotification);
+//       flutterLocalNotificationsPlugin.show(
+//           notification.hashCode,
+//           notification.title,
+//           notification.body,
+//           NotificationDetails(
+//             android: AndroidNotificationDetails(
+//               channel.id,
+//               channel.name,
+//               channel.description,
+//               icon: android?.smallIcon,
+//               // other properties...
+//             ),
+//           ));
+//     }
+//   });
   runApp(MyApp());
 }
 

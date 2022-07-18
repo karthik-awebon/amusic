@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:amusic_app/api/general_api.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../api/auth_api.dart';
 import '../models/http_exception.dart';
 import '../models/song.dart';
 import '../screens/home.dart';
@@ -161,6 +163,8 @@ class Auth with ChangeNotifier {
           _favoriteSongsList = await GeneralApi.getFavoriteSongs();
         }
 
+        final gcmId = await FirebaseMessaging.instance.getToken();
+        AuthApi.registerDevice(_token, gcmId, 1);
         notifyListeners();
         Navigator.of(context).pushNamed(Home.routeName);
       } else {
@@ -220,7 +224,7 @@ class Auth with ChangeNotifier {
     if (prefs.containsKey('favorite_songs')) {
       _favoriteSongsList = await GeneralApi.getFavoriteSongs();
     }
-   
+
     return true;
   }
 }
